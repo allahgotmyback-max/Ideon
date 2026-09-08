@@ -2088,3 +2088,265 @@ body {
     }
 
 }
+
+/* =========================================================
+   MARKET LAB — HOLDINGS + ORDER FEEDBACK POLISH
+========================================================= */
+
+/* HOLDINGS AREA */
+
+.portfolio-holdings {
+    margin-top: 24px !important;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255,255,255,.055);
+}
+
+.portfolio-section-title {
+    margin-bottom: 13px !important;
+
+    color: #858b9d !important;
+
+    font-size: 9px !important;
+    font-weight: 800 !important;
+
+    letter-spacing: .16em !important;
+}
+
+
+/* Individual holding */
+
+.ideon-holding-row {
+    min-height: 68px !important;
+
+    padding: 13px 14px !important;
+
+    border: 1px solid rgba(255,255,255,.065) !important;
+
+    border-radius: 11px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.015)
+        ) !important;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+}
+
+.ideon-holding-row:hover {
+    transform: translateY(-1px);
+
+    border-color:
+        rgba(139,92,246,.25) !important;
+
+    background:
+        rgba(139,92,246,.035) !important;
+}
+
+
+/* Holding stock name */
+
+.ideon-holding-row > div:first-child strong {
+    font-size: 13px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: -.2px;
+}
+
+
+/* Holding details */
+
+.ideon-holding-row > div:first-child small {
+    margin-top: 5px !important;
+
+    color: #73798b !important;
+
+    font-size: 9px !important;
+}
+
+
+/* Holding value */
+
+.ideon-holding-row > div:last-child strong {
+    font-size: 13px !important;
+
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   ORDER SUCCESS / STATUS MESSAGE
+========================================================= */
+
+/* This targets the message created after Buy/Sell */
+
+.trade-message,
+.order-message,
+.trade-status,
+.order-status,
+#tradeMessage,
+#orderMessage {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 38px;
+
+    margin-top: 10px;
+
+    padding: 9px 13px;
+
+    border: 1px solid rgba(53,208,127,.14);
+
+    border-radius: 9px;
+
+    background:
+        rgba(53,208,127,.045);
+
+    color:
+        rgba(255,255,255,.58);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+
+/* Green accent */
+
+.trade-message::before,
+.order-message::before,
+.trade-status::before,
+.order-status::before,
+#tradeMessage::before,
+#orderMessage::before {
+    content: "✓";
+
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    margin-right: 9px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(53,208,127,.10);
+
+    color:
+        #35d07f;
+
+    font-size: 9px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   BUY / SELL BUTTON SPACING
+========================================================= */
+
+.order-actions {
+    margin-top: 15px !important;
+}
+
+.buy-button,
+.sell-button {
+    height: 45px !important;
+
+    border-radius: 9px !important;
+
+    font-size: 10px !important;
+
+    letter-spacing: .06em !important;
+}
+
+
+/* =========================================================
+   ORDER FORM SUMMARY
+========================================================= */
+
+.order-summary > div {
+    min-height: 54px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 9px 11px !important;
+}
+
+.order-summary span {
+    font-size: 8px !important;
+
+    color: #707688 !important;
+}
+
+.order-summary strong {
+    font-size: 11px !important;
+}
+
+
+/* =========================================================
+   PORTFOLIO EMPTY STATE
+========================================================= */
+
+.portfolio-empty {
+    min-height: 145px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px !important;
+
+    border: 1px dashed rgba(255,255,255,.07);
+
+    border-radius: 11px;
+
+    background:
+        rgba(255,255,255,.012);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:760px) {
+
+    .ideon-holding-row {
+        min-height: 64px !important;
+
+        padding: 11px !important;
+    }
+
+    .ideon-holding-row > div:first-child strong {
+        font-size: 12px !important;
+    }
+
+    .ideon-holding-row > div:last-child strong {
+        font-size: 12px !important;
+    }
+
+}
