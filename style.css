@@ -6058,3 +6058,31 @@ textarea {
     }
 
 }
+
+/* IDEON AI — FINAL CHAT CLEANUP */
+
+.ideon-chat,
+.ideon-chat-messages,
+.message-bubble {
+    overflow-x: hidden !important;
+}
+
+.message-bubble {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}
+
+.ideon-chat-messages {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.ideon-suggestions {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none;
+}
+
+.ideon-suggestions::-webkit-scrollbar {
+    display: none;
+}
