@@ -324,6 +324,7 @@
             .replaceAll('"', "&quot;")
 
             .replaceAll("'", "&#039;");
+
     }
 
 
@@ -344,6 +345,7 @@
 
         box.className =
             `market-search-message ${type}`;
+
     }
 
 
@@ -375,309 +377,211 @@
             box.id = "tradeMessage";
 
             terminal.appendChild(box);
+
         }
 
         box.textContent = message;
 
         box.className =
             `trade-message ${type}`;
+
     }
 
 
     /* =====================================================
-       PORTFOLIO
+       STORAGE HELPERS
        ===================================================== */
 
-    function renderPortfolio() {
+    function getPortfolio() {
 
-    const portfolio = getPortfolio();
+        try {
 
-    const emptyState =
-        document.querySelector(".portfolio-empty");
-
-    const holdingsContainer =
-        document.querySelector(".ideon-holdings");
-
-    const holdingsSection =
-        document.querySelector(".portfolio-holdings");
-
-    const totalValueEl =
-        document.querySelector(".portfolio-total-value");
-
-    const returnEl =
-        document.querySelector(".portfolio-return");
-
-    const statBoxes =
-        document.querySelectorAll(".portfolio-stat strong");
-
-    if (!portfolio) return;
-
-
-    /* =====================================================
-       CALCULATE PORTFOLIO
-    ===================================================== */
-
-    let invested = 0;
-    let holdingsValue = 0;
-
-    const holdings =
-        portfolio.holdings || {};
-
-    const symbols =
-        Object.keys(holdings);
-
-
-    symbols.forEach(symbol => {
-
-        const holding =
-            holdings[symbol];
-
-        const stock =
-            stocks[symbol];
-
-        if (!stock || !holding) return;
-
-        const shares =
-            Number(
-                holding.shares ??
-                holding.quantity ??
-                holding.qty ??
-                0
-            );
-
-        const averagePrice =
-            Number(
-                holding.averagePrice ??
-                holding.avgPrice ??
-                holding.price ??
-                stock.price
-            );
-
-        if (shares <= 0) return;
-
-        invested +=
-            shares * averagePrice;
-
-        holdingsValue +=
-            shares * stock.price;
-
-    });
-
-
-    const cash =
-        Number(portfolio.cash) || 0;
-
-    const totalValue =
-        cash + holdingsValue;
-
-    const profitLoss =
-        totalValue - 100000;
-
-    const returnPercent =
-        100000 > 0
-            ? (profitLoss / 100000) * 100
-            : 0;
-
-
-    /* =====================================================
-       UPDATE MAIN PORTFOLIO VALUE
-    ===================================================== */
-
-    if (totalValueEl) {
-
-        totalValueEl.textContent =
-            money(totalValue);
-
-    }
-
-
-    if (returnEl) {
-
-        returnEl.textContent =
-            `${profitLoss >= 0 ? "+" : ""}${money(profitLoss)}`;
-
-        returnEl.classList.toggle(
-            "negative",
-            profitLoss < 0
-        );
-
-    }
-
-
-    /* =====================================================
-       UPDATE STAT BOXES
-    ===================================================== */
-
-    if (statBoxes.length >= 3) {
-
-        statBoxes[0].textContent =
-            money(cash);
-
-        statBoxes[1].textContent =
-            money(invested);
-
-        statBoxes[2].textContent =
-            `${returnPercent >= 0 ? "+" : ""}${returnPercent.toFixed(2)}%`;
-
-    }
-
-
-    /* =====================================================
-       EMPTY STATE
-    ===================================================== */
-
-    const validSymbols =
-        symbols.filter(symbol => {
-
-            const holding =
-                holdings[symbol];
-
-            const shares =
-                Number(
-                    holding?.shares ??
-                    holding?.quantity ??
-                    holding?.qty ??
-                    0
+            const saved =
+                localStorage.getItem(
+                    PORTFOLIO_KEY
                 );
 
-            return (
-                stocks[symbol] &&
-                shares > 0
+            if (!saved) {
+
+                return {
+                    cash: STARTING_BALANCE,
+                    holdings: {}
+                };
+
+            }
+
+            const parsed =
+                JSON.parse(saved);
+
+            return {
+
+                cash:
+                    Number(parsed.cash) ||
+                    STARTING_BALANCE,
+
+                holdings:
+                    parsed.holdings &&
+                    typeof parsed.holdings === "object"
+                        ? parsed.holdings
+                        : {}
+
+            };
+
+        } catch (error) {
+
+            console.warn(
+                "IDEON portfolio reset:",
+                error
             );
 
-        });
-
-
-    const hasHoldings =
-        validSymbols.length > 0;
-
-
-    if (emptyState) {
-
-        emptyState.style.display =
-            hasHoldings
-                ? "none"
-                : "flex";
-
-    }
-
-
-    /* =====================================================
-       HOLDINGS CONTAINER
-    ===================================================== */
-
-    if (!holdingsContainer) {
-
-        if (hasHoldings) {
-
-            const container =
-                document.createElement("div");
-
-            container.className =
-                "ideon-holdings";
-
-            holdingsSection.appendChild(
-                container
-            );
+            return {
+                cash: STARTING_BALANCE,
+                holdings: {}
+            };
 
         }
 
     }
 
 
-    const container =
-        document.querySelector(
-            ".ideon-holdings"
+    function savePortfolio(portfolio) {
+
+        localStorage.setItem(
+
+            PORTFOLIO_KEY,
+
+            JSON.stringify({
+
+                cash:
+                    Number(portfolio.cash) || 0,
+
+                holdings:
+                    portfolio.holdings || {}
+
+            })
+
         );
 
-    if (!container) return;
+    }
 
 
-    container.innerHTML = "";
+    function getWatchlist() {
 
+        try {
 
-    /* =====================================================
-       SHOW HOLDINGS
-    ===================================================== */
+            const saved =
+                localStorage.getItem(
+                    WATCHLIST_KEY
+                );
 
-    validSymbols.forEach(symbol => {
+            if (!saved) {
 
-        const holding =
-            holdings[symbol];
+                return [
+                    ...DEFAULT_WATCHLIST
+                ];
 
-        const stock =
-            stocks[symbol];
+            }
 
-        const shares =
-            Number(
-                holding.shares ??
-                holding.quantity ??
-                holding.qty ??
-                0
+            const parsed =
+                JSON.parse(saved);
+
+            if (!Array.isArray(parsed)) {
+
+                return [
+                    ...DEFAULT_WATCHLIST
+                ];
+
+            }
+
+            const valid =
+                parsed.filter(
+                    symbol =>
+                        stocks[symbol]
+                );
+
+            return valid.length
+                ? valid
+                : [...DEFAULT_WATCHLIST];
+
+        } catch (error) {
+
+            console.warn(
+                "IDEON watchlist reset:",
+                error
             );
 
-        const averagePrice =
-            Number(
-                holding.averagePrice ??
-                holding.avgPrice ??
-                holding.price ??
-                stock.price
+            return [
+                ...DEFAULT_WATCHLIST
+            ];
+
+        }
+
+    }
+
+
+    function saveWatchlist(list) {
+
+        const cleanList = [
+            ...new Set(
+
+                (Array.isArray(list)
+                    ? list
+                    : [])
+
+                    .filter(
+                        symbol =>
+                            stocks[symbol]
+                    )
+
+            )
+        ];
+
+        localStorage.setItem(
+
+            WATCHLIST_KEY,
+
+            JSON.stringify(cleanList)
+
+        );
+
+    }
+
+
+    function addToWatchlist(symbol) {
+
+        if (!stocks[symbol]) return;
+
+        const list =
+            getWatchlist();
+
+        if (!list.includes(symbol)) {
+
+            list.push(symbol);
+
+            saveWatchlist(list);
+
+        }
+
+        renderWatchlist();
+
+    }
+
+
+    function removeFromWatchlist(symbol) {
+
+        const list =
+            getWatchlist().filter(
+                item =>
+                    item !== symbol
             );
 
-        const currentValue =
-            shares * stock.price;
+        saveWatchlist(list);
 
-        const cost =
-            shares * averagePrice;
+        renderWatchlist();
 
-        const pnl =
-            currentValue - cost;
+    }
 
 
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "ideon-holding-row";
-
-
-        row.innerHTML = `
-
-            <div>
-
-                <strong>
-                    ${escapeHTML(stock.symbol)}
-                </strong>
-
-                <small>
-                    ${shares}
-                    ${shares === 1 ? "share" : "shares"}
-                    · Avg ${money(averagePrice)}
-                </small>
-
-            </div>
-
-
-            <div>
-
-                <strong>
-                    ${money(currentValue)}
-                </strong>
-
-                <small class="${pnl >= 0 ? "positive" : "negative"}">
-                    ${pnl >= 0 ? "+" : ""}${money(pnl)}
-                </small>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(row);
-
-    });
-
-}
     /* =====================================================
        SEARCH STOCKS
        ===================================================== */
@@ -694,11 +598,8 @@
         if (!query) {
 
             showSearchMessage(
-
                 "Enter a stock name or symbol.",
-
                 "error"
-
             );
 
             return;
@@ -729,14 +630,12 @@
         if (!results.length) {
 
             showSearchMessage(
-
                 "No matching stocks found.",
-
                 "error"
-
             );
 
             return;
+
         }
 
 
@@ -748,16 +647,15 @@
         showSearchMessage(
 
             `${results.length} matching stock${
-
                 results.length === 1
                     ? ""
                     : "s"
-
             } found.`,
 
             "success"
 
         );
+
     }
 
 
@@ -871,12 +769,10 @@
 
 
         container.insertAdjacentElement(
-
             "afterend",
-
             wrapper
-
         );
+
     }
 
 
@@ -892,6 +788,7 @@
             results.remove();
 
         }
+
     }
 
 
@@ -955,6 +852,7 @@
 
             symbol.textContent =
                 selectedStock.symbol;
+
         }
 
 
@@ -962,6 +860,7 @@
 
             name.textContent =
                 selectedStock.name;
+
         }
 
 
@@ -969,6 +868,7 @@
 
             exchange.textContent =
                 selectedStock.exchange;
+
         }
 
 
@@ -992,7 +892,9 @@
                     money(
                         selectedStock.price
                     );
+
             }
+
         }
 
 
@@ -1010,21 +912,16 @@
 
 
             change.classList.toggle(
-
                 "positive",
-
                 percent >= 0
-
             );
 
 
             change.classList.toggle(
-
                 "negative",
-
                 percent < 0
-
             );
+
         }
 
 
@@ -1192,6 +1089,7 @@
 
 
             price = close;
+
         }
 
 
@@ -1231,11 +1129,13 @@
                     last.close
 
                 );
+
         }
 
 
         chartCandles =
             candles;
+
     }
 
 
@@ -1433,15 +1333,19 @@
                 (
 
                     (
+
                         price -
                         low
+
                     )
 
                     /
 
                     (
+
                         high -
                         low
+
                     )
 
                 )
@@ -1466,6 +1370,7 @@
         ) {
 
             const yy =
+
                 (
                     height / 5
                 ) *
@@ -1511,6 +1416,7 @@
             grid.appendChild(
                 line
             );
+
         }
 
 
@@ -1521,6 +1427,7 @@
         ) {
 
             const xx =
+
                 (
                     width / 6
                 ) *
@@ -1566,6 +1473,7 @@
             grid.appendChild(
                 line
             );
+
         }
 
 
@@ -1716,18 +1624,15 @@
                     )
                 );
 
-
                 rect.setAttribute(
                     "y",
                     String(top)
                 );
 
-
                 rect.setAttribute(
                     "width",
                     String(bodyWidth)
                 );
-
 
                 rect.setAttribute(
 
@@ -1812,6 +1717,7 @@
 
             count.textContent =
                 list.length;
+
         }
 
 
@@ -1836,7 +1742,6 @@
 
 
                 button.className =
-
                     "ideon-watch-item";
 
 
@@ -1848,6 +1753,7 @@
                     button.classList.add(
                         "active"
                     );
+
                 }
 
 
@@ -1921,7 +1827,7 @@
 
 
     /* =====================================================
-       PORTFOLIO RENDER
+       PORTFOLIO
        ===================================================== */
 
     function renderPortfolio() {
@@ -2008,6 +1914,7 @@
 
             totalElement.textContent =
                 money(totalValue);
+
         }
 
 
@@ -2026,6 +1933,7 @@
                 `${totalReturn >= 0 ? "+" : ""}${money(
                     totalReturn
                 )}`;
+
         }
 
 
@@ -2043,6 +1951,7 @@
                 money(
                     portfolio.cash
                 );
+
         }
 
 
@@ -2052,6 +1961,7 @@
                 money(
                     invested
                 );
+
         }
 
 
@@ -2060,6 +1970,7 @@
             stats[2].textContent =
 
                 `${returnPercent >= 0 ? "+" : ""}${returnPercent.toFixed(2)}%`;
+
         }
 
 
@@ -2075,6 +1986,7 @@
 
             hero.textContent =
                 money(totalValue);
+
         }
 
 
@@ -2108,6 +2020,7 @@
             holdingsSection.appendChild(
                 holdingsContainer
             );
+
         }
 
 
@@ -2244,6 +2157,7 @@
                 hasHoldings
                     ? "none"
                     : "block";
+
         }
 
     }
@@ -2296,6 +2210,7 @@
 
             name.textContent =
                 stock.name;
+
         }
 
 
@@ -2304,6 +2219,7 @@
             code.textContent =
 
                 `${stock.symbol}.${stock.exchange} · Virtual trading only`;
+
         }
 
 
@@ -2311,6 +2227,7 @@
 
             price.textContent =
                 money(stock.price);
+
         }
 
 
@@ -2331,6 +2248,7 @@
                 "negative",
                 stock.change < 0
             );
+
         }
 
 
@@ -2348,6 +2266,7 @@
 
             limitPrice.value =
                 stock.price.toFixed(2);
+
         }
 
 
@@ -2423,6 +2342,7 @@
 
             estimated.textContent =
                 money(orderValue);
+
         }
 
 
@@ -2432,6 +2352,7 @@
                 money(
                     portfolio.cash
                 );
+
         }
 
 
@@ -2452,6 +2373,7 @@
             buyButton.textContent =
 
                 `BUY ${selectedStock.symbol} →`;
+
         }
 
 
@@ -2460,6 +2382,7 @@
             sellButton.textContent =
 
                 `SELL ${selectedStock.symbol} →`;
+
         }
 
     }
@@ -2489,14 +2412,12 @@
         if (quantity < 1) {
 
             showTradeMessage(
-
                 "Enter a valid quantity.",
-
                 "error"
-
             );
 
             return;
+
         }
 
 
@@ -2568,14 +2489,12 @@
             ) {
 
                 showTradeMessage(
-
                     "Not enough virtual cash for this order.",
-
                     "error"
-
                 );
 
                 return;
+
             }
 
 
@@ -2651,6 +2570,7 @@
                 );
 
                 return;
+
             }
 
 
