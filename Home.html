@@ -461,26 +461,42 @@
      IDEA LAB
 ===================================================== -->
 
+<!-- =====================================================
+     IDEA LAB — PREMIUM AI WORKSPACE
+===================================================== -->
+
 <section
     class="idea-lab"
     id="idea-lab"
 >
 
+    <div class="idea-lab-background">
 
-    <div class="section-heading">
+        <div class="idea-glow idea-glow-one"></div>
+        <div class="idea-glow idea-glow-two"></div>
+
+    </div>
 
 
-        <div class="section-eyebrow">
+    <div class="idea-lab-heading">
+
+        <div class="idea-section-tag">
+
+            <span class="tag-line"></span>
+
             IDEA LAB
+
+            <span class="tag-line"></span>
+
         </div>
 
 
         <h2>
 
-            Let's make your idea
+            Turn a thought into
 
             <span>
-                practical.
+                something real.
             </span>
 
         </h2>
@@ -488,33 +504,49 @@
 
         <p>
 
-            You bring the idea.
-            IDEON AI helps you understand it.
+            Tell IDEON what you're thinking.
+            We'll help you understand how it could actually work.
 
         </p>
-
 
     </div>
 
 
 
     <!-- =================================================
-         PREMIUM IDEA CARD
+         AI WORKSPACE
     ================================================= -->
 
-    <div class="idea-card">
+    <div class="ideon-workspace">
 
 
-        <!-- TOP -->
+        <!-- WORKSPACE TOP -->
 
-        <div class="idea-card-top">
+        <div class="workspace-top">
 
 
-            <div class="idea-card-label">
+            <div class="workspace-brand">
 
-                <span class="idea-pulse"></span>
+                <div class="workspace-ai-icon">
+                    ✦
+                </div>
 
-                IDEON AI
+
+                <div>
+
+                    <div class="workspace-ai-title">
+                        IDEON AI
+                    </div>
+
+                    <div class="workspace-ai-status">
+
+                        <span></span>
+
+                        Ready to analyse
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -531,59 +563,57 @@
 
 
 
-        <!-- TITLE -->
+        <!-- PROMPT AREA -->
 
-        <div class="idea-input-heading">
-
-
-            <h3>
-                What are you thinking?
-            </h3>
+        <div class="workspace-prompt">
 
 
-            <p>
-                Don't overthink it. Just describe your idea.
-            </p>
+            <div class="prompt-heading">
 
+                <h3>
+                    What's the idea?
+                </h3>
 
-        </div>
+                <p>
+                    Don't worry about making it perfect.
+                    Just tell us what's on your mind.
+                </p>
 
-
-
-        <!-- TEXTAREA -->
-
-        <div class="idea-input-wrapper">
-
-
-            <div class="idea-input-icon">
-                ✦
             </div>
 
 
-            <textarea
-                id="ideaInput"
-                maxlength="500"
-                placeholder="Describe your idea..."
-            ></textarea>
+            <div class="premium-textarea">
 
 
-            <div class="idea-input-footer">
+                <div class="prompt-symbol">
+                    ✦
+                </div>
 
 
-                <span>
+                <textarea
+                    id="ideaInput"
+                    maxlength="500"
+                    placeholder="I have an idea for..."
+                ></textarea>
 
-                    IDEON AI will turn your thought
-                    into a practical concept.
 
-                </span>
+                <div class="textarea-bottom">
 
 
-                <span
-                    class="idea-counter"
-                    id="ideaCounter"
-                >
-                    0 / 500
-                </span>
+                    <span>
+                        IDEON AI will figure out the rest.
+                    </span>
+
+
+                    <span
+                        id="ideaCounter"
+                        class="idea-counter"
+                    >
+                        0 / 500
+                    </span>
+
+
+                </div>
 
 
             </div>
@@ -595,27 +625,27 @@
 
         <!-- EXAMPLES -->
 
-        <div class="idea-examples">
+        <div class="workspace-examples">
 
 
-            <div class="examples-title">
-                Try an example
+            <div class="examples-label">
+                NEED A START?
             </div>
 
 
-            <div class="example-chips">
+            <div class="premium-chips">
 
 
                 <button
                     type="button"
-                    class="example-chip"
+                    class="premium-chip"
                     onclick="
                         document.getElementById('ideaInput').value='A smart dustbin that automatically separates wet and dry waste.';
                         document.getElementById('ideaInput').dispatchEvent(new Event('input'));
                     "
                 >
 
-                    <span>♻</span>
+                    <span class="chip-icon">♻</span>
 
                     Smart dustbin
 
@@ -625,14 +655,14 @@
 
                 <button
                     type="button"
-                    class="example-chip"
+                    class="premium-chip"
                     onclick="
                         document.getElementById('ideaInput').value='A water-saving shower device that reduces water usage without affecting pressure.';
                         document.getElementById('ideaInput').dispatchEvent(new Event('input'));
                     "
                 >
 
-                    <span>💧</span>
+                    <span class="chip-icon">💧</span>
 
                     Water-saving device
 
@@ -642,14 +672,14 @@
 
                 <button
                     type="button"
-                    class="example-chip"
+                    class="premium-chip"
                     onclick="
                         document.getElementById('ideaInput').value='A backpack that charges a laptop while I carry it.';
                         document.getElementById('ideaInput').dispatchEvent(new Event('input'));
                     "
                 >
 
-                    <span>⚡</span>
+                    <span class="chip-icon">⚡</span>
 
                     Charging backpack
 
@@ -663,23 +693,22 @@
 
 
 
-        <!-- ANALYSE BUTTON -->
+        <!-- ACTION -->
 
         <button
             type="button"
             id="analyzeBtn"
-            class="analyze-button"
+            class="ideon-analyze-button"
             onclick="makePractical()"
         >
 
-
-            <span class="analyze-button-icon">
+            <span class="analyze-main-icon">
                 ✦
             </span>
 
 
-            <span>
-                MAKE IT PRACTICAL
+            <span class="analyze-text">
+                TURN IDEA INTO REALITY
             </span>
 
 
@@ -687,22 +716,30 @@
                 →
             </span>
 
-
         </button>
 
 
 
-        <!-- NOTE -->
+        <!-- FOOTER -->
 
-        <div class="idea-ai-note">
+        <div class="workspace-footer">
 
-            <span>
-                ✦
-            </span>
 
-            <span>
-                From imagination to implementation.
-            </span>
+            <div class="workspace-footer-left">
+
+                <span class="footer-ai-dot"></span>
+
+                AI-powered practical analysis
+
+            </div>
+
+
+            <div class="workspace-footer-right">
+
+                No real investment required
+
+            </div>
+
 
         </div>
 
@@ -720,7 +757,6 @@
 
 
 </section>
-
 
 
 <!-- =====================================================
