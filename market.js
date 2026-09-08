@@ -388,152 +388,296 @@
        PORTFOLIO
        ===================================================== */
 
-    function getPortfolio() {
+    function renderPortfolio() {
 
-        try {
+    const portfolio = getPortfolio();
 
-            const saved =
-                localStorage.getItem(
-                    PORTFOLIO_KEY
-                );
+    const emptyState =
+        document.querySelector(".portfolio-empty");
 
-            if (!saved) {
+    const holdingsContainer =
+        document.querySelector(".ideon-holdings");
 
-                return {
+    const holdingsSection =
+        document.querySelector(".portfolio-holdings");
 
-                    cash: STARTING_BALANCE,
+    const totalValueEl =
+        document.querySelector(".portfolio-total-value");
 
-                    holdings: {}
+    const returnEl =
+        document.querySelector(".portfolio-return");
 
-                };
-            }
+    const statBoxes =
+        document.querySelectorAll(".portfolio-stat strong");
 
-            const parsed =
-                JSON.parse(saved);
+    if (!portfolio) return;
 
-            if (
-                typeof parsed !== "object" ||
-                !parsed
-            ) {
 
-                throw new Error(
-                    "Invalid portfolio"
-                );
-            }
+    /* =====================================================
+       CALCULATE PORTFOLIO
+    ===================================================== */
 
-            return {
+    let invested = 0;
+    let holdingsValue = 0;
 
-                cash:
-                    Number.isFinite(
-                        Number(parsed.cash)
-                    )
-                        ? Number(parsed.cash)
-                        : STARTING_BALANCE,
+    const holdings =
+        portfolio.holdings || {};
 
-                holdings:
-                    parsed.holdings &&
-                    typeof parsed.holdings === "object"
-                        ? parsed.holdings
-                        : {}
+    const symbols =
+        Object.keys(holdings);
 
-            };
 
-        } catch {
+    symbols.forEach(symbol => {
 
-            return {
+        const holding =
+            holdings[symbol];
 
-                cash: STARTING_BALANCE,
+        const stock =
+            stocks[symbol];
 
-                holdings: {}
+        if (!stock || !holding) return;
 
-            };
-        }
+        const shares =
+            Number(
+                holding.shares ??
+                holding.quantity ??
+                holding.qty ??
+                0
+            );
+
+        const averagePrice =
+            Number(
+                holding.averagePrice ??
+                holding.avgPrice ??
+                holding.price ??
+                stock.price
+            );
+
+        if (shares <= 0) return;
+
+        invested +=
+            shares * averagePrice;
+
+        holdingsValue +=
+            shares * stock.price;
+
+    });
+
+
+    const cash =
+        Number(portfolio.cash) || 0;
+
+    const totalValue =
+        cash + holdingsValue;
+
+    const profitLoss =
+        totalValue - 100000;
+
+    const returnPercent =
+        100000 > 0
+            ? (profitLoss / 100000) * 100
+            : 0;
+
+
+    /* =====================================================
+       UPDATE MAIN PORTFOLIO VALUE
+    ===================================================== */
+
+    if (totalValueEl) {
+
+        totalValueEl.textContent =
+            money(totalValue);
+
     }
 
 
-    function savePortfolio(portfolio) {
+    if (returnEl) {
 
-        localStorage.setItem(
+        returnEl.textContent =
+            `${profitLoss >= 0 ? "+" : ""}${money(profitLoss)}`;
 
-            PORTFOLIO_KEY,
-
-            JSON.stringify(portfolio)
-
+        returnEl.classList.toggle(
+            "negative",
+            profitLoss < 0
         );
+
     }
 
 
     /* =====================================================
-       WATCHLIST
-       ===================================================== */
+       UPDATE STAT BOXES
+    ===================================================== */
 
-    function getWatchlist() {
+    if (statBoxes.length >= 3) {
 
-        try {
+        statBoxes[0].textContent =
+            money(cash);
 
-            const saved =
-                localStorage.getItem(
-                    WATCHLIST_KEY
+        statBoxes[1].textContent =
+            money(invested);
+
+        statBoxes[2].textContent =
+            `${returnPercent >= 0 ? "+" : ""}${returnPercent.toFixed(2)}%`;
+
+    }
+
+
+    /* =====================================================
+       EMPTY STATE
+    ===================================================== */
+
+    const validSymbols =
+        symbols.filter(symbol => {
+
+            const holding =
+                holdings[symbol];
+
+            const shares =
+                Number(
+                    holding?.shares ??
+                    holding?.quantity ??
+                    holding?.qty ??
+                    0
                 );
 
-            if (!saved) {
-
-                return [
-                    ...DEFAULT_WATCHLIST
-                ];
-            }
-
-            const parsed =
-                JSON.parse(saved);
-
-            if (!Array.isArray(parsed)) {
-
-                return [
-                    ...DEFAULT_WATCHLIST
-                ];
-            }
-
-            return parsed.filter(
-                symbol => stocks[symbol]
+            return (
+                stocks[symbol] &&
+                shares > 0
             );
 
-        } catch {
+        });
 
-            return [
-                ...DEFAULT_WATCHLIST
-            ];
-        }
+
+    const hasHoldings =
+        validSymbols.length > 0;
+
+
+    if (emptyState) {
+
+        emptyState.style.display =
+            hasHoldings
+                ? "none"
+                : "flex";
+
     }
 
 
-    function saveWatchlist(list) {
+    /* =====================================================
+       HOLDINGS CONTAINER
+    ===================================================== */
 
-        localStorage.setItem(
+    if (!holdingsContainer) {
 
-            WATCHLIST_KEY,
+        if (hasHoldings) {
 
-            JSON.stringify(list)
+            const container =
+                document.createElement("div");
 
+            container.className =
+                "ideon-holdings";
+
+            holdingsSection.appendChild(
+                container
+            );
+
+        }
+
+    }
+
+
+    const container =
+        document.querySelector(
+            ".ideon-holdings"
         );
-    }
+
+    if (!container) return;
 
 
-    function addToWatchlist(symbol) {
-
-        const list =
-            getWatchlist();
-
-        if (!list.includes(symbol)) {
-
-            list.push(symbol);
-
-            saveWatchlist(list);
-        }
-
-        renderWatchlist();
-    }
+    container.innerHTML = "";
 
 
+    /* =====================================================
+       SHOW HOLDINGS
+    ===================================================== */
+
+    validSymbols.forEach(symbol => {
+
+        const holding =
+            holdings[symbol];
+
+        const stock =
+            stocks[symbol];
+
+        const shares =
+            Number(
+                holding.shares ??
+                holding.quantity ??
+                holding.qty ??
+                0
+            );
+
+        const averagePrice =
+            Number(
+                holding.averagePrice ??
+                holding.avgPrice ??
+                holding.price ??
+                stock.price
+            );
+
+        const currentValue =
+            shares * stock.price;
+
+        const cost =
+            shares * averagePrice;
+
+        const pnl =
+            currentValue - cost;
+
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "ideon-holding-row";
+
+
+        row.innerHTML = `
+
+            <div>
+
+                <strong>
+                    ${escapeHTML(stock.symbol)}
+                </strong>
+
+                <small>
+                    ${shares}
+                    ${shares === 1 ? "share" : "shares"}
+                    · Avg ${money(averagePrice)}
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    ${money(currentValue)}
+                </strong>
+
+                <small class="${pnl >= 0 ? "positive" : "negative"}">
+                    ${pnl >= 0 ? "+" : ""}${money(pnl)}
+                </small>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(row);
+
+    });
+
+}
     /* =====================================================
        SEARCH STOCKS
        ===================================================== */
