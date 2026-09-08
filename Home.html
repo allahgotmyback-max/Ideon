@@ -21,7 +21,12 @@
         rel="stylesheet"
         href="style.css"
     >
-<link rel="stylesheet" href="chatbot.css">
+
+    <link
+        rel="stylesheet"
+        href="chatbot.css"
+    >
+
 </head>
 
 
@@ -254,6 +259,7 @@
                 <div class="ai-processing">
 
                     <span></span>
+
                     ANALYSING POSSIBILITY
 
                 </div>
@@ -473,6 +479,7 @@
     <div class="idea-lab-background">
 
         <div class="idea-glow idea-glow-one"></div>
+
         <div class="idea-glow idea-glow-two"></div>
 
     </div>
@@ -526,6 +533,7 @@
 
 
             <div class="workspace-brand">
+
 
                 <div class="workspace-ai-icon">
                     ✦
@@ -759,6 +767,7 @@
 </section>
 
 
+
 <!-- =====================================================
      ABOUT
 ===================================================== -->
@@ -988,6 +997,7 @@
                 Learn
             </a>
 
+
         </div>
 
 
@@ -1085,35 +1095,61 @@ document.addEventListener(
 ===================================================== -->
 
 <script src="script.js"></script>
-    
+
+
 <!-- =====================================================
      IDEON AI CHATBOT
-     ===================================================== -->
+===================================================== -->
 
-<button class="ideon-ai-launcher" id="ideonAIButton">
-    <span class="ai-spark">✦</span>
-    <span>IDEON AI</span>
+<button
+    class="ideon-ai-launcher"
+    id="ideonAIButton"
+>
+
+    <span class="ai-spark">
+        ✦
+    </span>
+
+    <span>
+        IDEON AI
+    </span>
+
 </button>
 
 
-<div class="ideon-chat" id="ideonChat">
+
+<div
+    class="ideon-chat"
+    id="ideonChat"
+>
+
 
     <div class="ideon-chat-header">
 
+
         <div class="ideon-chat-title">
+
 
             <div class="ideon-ai-icon">
                 ✦
             </div>
 
+
             <div>
-                <strong>IDEON AI</strong>
+
+                <strong>
+                    IDEON AI
+                </strong>
+
                 <small>
                     Your idea & market assistant
                 </small>
+
             </div>
 
+
         </div>
+
 
         <button
             class="ideon-chat-close"
@@ -1123,16 +1159,32 @@ document.addEventListener(
             ×
         </button>
 
+
     </div>
 
 
-    <div class="ideon-chat-messages" id="ideonChatMessages">
+
+    <div
+        class="ideon-chat-messages"
+        id="ideonChatMessages"
+    >
+
+
+        <!-- INITIAL IDEON AI MESSAGE -->
 
         <div class="ideon-message ai">
 
+
             <div class="message-avatar">
-                ✦
+
+                <img
+                    src="ideon-icon.png"
+                    alt="IDEON"
+                    class="chat-avatar"
+                >
+
             </div>
+
 
             <div class="message-bubble">
 
@@ -1149,33 +1201,55 @@ document.addEventListener(
 
             </div>
 
+
         </div>
 
+
     </div>
+
 
 
     <div class="ideon-suggestions">
 
-        <button type="button" data-question="How does IDEON work?">
+
+        <button
+            type="button"
+            data-question="How does IDEON work?"
+        >
             How does IDEON work?
         </button>
 
-        <button type="button" data-question="How can Idea Lab help me?">
+
+        <button
+            type="button"
+            data-question="How can Idea Lab help me?"
+        >
             Idea Lab
         </button>
 
-        <button type="button" data-question="Explain virtual trading">
+
+        <button
+            type="button"
+            data-question="Explain virtual trading"
+        >
             Explain trading
         </button>
 
-        <button type="button" data-question="What is a stock?">
+
+        <button
+            type="button"
+            data-question="What is a stock?"
+        >
             What is a stock?
         </button>
+
 
     </div>
 
 
+
     <div class="ideon-chat-input">
+
 
         <textarea
             id="ideonChatInput"
@@ -1184,6 +1258,7 @@ document.addEventListener(
             maxlength="500"
         ></textarea>
 
+
         <button
             id="ideonChatSend"
             type="button"
@@ -1191,7 +1266,9 @@ document.addEventListener(
             ↑
         </button>
 
+
     </div>
+
 
 
     <div class="ideon-chat-footer">
@@ -1200,10 +1277,13 @@ document.addEventListener(
 
     </div>
 
+
 </div>
 
 
+
 <script src="chatbot.js"></script>
+
 
 </body>
 
