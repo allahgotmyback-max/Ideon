@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDEON — Demo Checkout</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+<div class="checkout-glow glow-one"></div>
+<div class="checkout-glow glow-two"></div>
+
+<header class="checkout-nav">
+    <a href="Home.html" class="checkout-logo">
+        <img src="ideon-icon.png" alt="IDEON">
+        <span>IDE<span>O</span>N</span>
+    </a>
+    <div class="demo-pill">DEMO CHECKOUT</div>
+</header>
+
+<main class="checkout-page">
+    <section class="checkout-card">
+
+        <div class="checkout-head">
+            <div class="checkout-eyebrow"><span></span> IDEON PLANS</div>
+            <h1>Complete your <span>IDEON upgrade.</span></h1>
+            <p>This is a simulated payment for the IDEON expo demo. No real money is charged.</p>
+        </div>
+
+        <div class="checkout-grid">
+
+            <div class="order-card">
+                <div class="card-label">ORDER SUMMARY</div>
+
+                <div class="plan-row">
+                    <div>
+                        <div class="plan-kicker">IDEON PLAN</div>
+                        <h2 id="planName">PRO</h2>
+                        <p id="planDescription">Advanced business intelligence and market analytics.</p>
+                    </div>
+                    <div class="plan-price" id="planPrice">₹499</div>
+                </div>
+
+                <div class="order-line">
+                    <span>Plan</span>
+                    <strong id="planLine">PRO</strong>
+                </div>
+
+                <div class="order-line">
+                    <span>Billing</span>
+                    <strong>Monthly</strong>
+                </div>
+
+                <div class="order-line total">
+                    <span>Total</span>
+                    <strong id="totalPrice">₹499</strong>
+                </div>
+
+                <div class="demo-notice">
+                    <span class="notice-icon">✓</span>
+                    <div>
+                        <strong>Expo demo payment</strong>
+                        <p>No card, UPI, bank account or real payment is required.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-card">
+                <div class="card-label">PAYMENT</div>
+
+                <div class="fake-payment-box">
+                    <div class="fake-payment-icon">₹</div>
+                    <div>
+                        <strong>IDEON Demo Pay</strong>
+                        <p>Simulated checkout · Test only</p>
+                    </div>
+                    <span class="secure-dot">●</span>
+                </div>
+
+                <div class="payment-fields">
+                    <div class="fake-field">
+                        <span>Payment method</span>
+                        <strong>Demo Payment</strong>
+                    </div>
+                    <div class="fake-field">
+                        <span>Amount</span>
+                        <strong id="paymentAmount">₹499</strong>
+                    </div>
+                </div>
+
+                <button id="demoPayBtn" class="demo-pay-btn">
+                    <span>Simulate Payment</span>
+                    <span>→</span>
+                </button>
+
+                <div class="processing" id="processing">
+                    <div class="spinner"></div>
+                    <span>Processing demo payment...</span>
+                </div>
+
+                <div class="success-box" id="successBox">
+                    <div class="success-check">✓</div>
+                    <div>
+                        <strong>Payment Successful</strong>
+                        <p>Your IDEON plan has been upgraded.</p>
+                    </div>
+                </div>
+
+                <button id="backBtn" class="back-btn">← Back to Pricing</button>
+            </div>
+
+        </div>
+
+        <div class="demo-footer">
+            <span>✦ DEMO MODE</span>
+            <span>Virtual checkout only · No real transaction</span>
+        </div>
+
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://ceedwhwnpthqdzhtkemy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bGc_PDepTuhmmvVG1WMPUQ_-MlnP8hO";
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+const plans = {
+    free: {
+        name: "FREE",
+        price: 0,
+        description: "Start exploring IDEON at no cost."
+    },
+    starter: {
+        name: "STARTER",
+        price: 199,
+        description: "More powerful AI analysis and expanded learning tools."
+    },
+    pro: {
+        name: "PRO",
+        price: 499,
+        description: "Advanced business intelligence and market analytics."
+    },
+    premium: {
+        name: "PREMIUM",
+        price: 999,
+        description: "The complete IDEON experience for serious builders."
+    }
+};
+
+const params = new URLSearchParams(window.location.search);
+const planKey = (
+    params.get("plan") ||
+    localStorage.getItem("ideonPendingPlan") ||
+    "pro"
+).toLowerCase();
+
+const plan = plans[planKey] || plans.pro;
+
+const planName = document.getElementById("planName");
+const planPrice = document.getElementById("planPrice");
+const planLine = document.getElementById("planLine");
+const totalPrice = document.getElementById("totalPrice");
+const paymentAmount = document.getElementById("paymentAmount");
+const planDescription = document.getElementById("planDescription");
+const demoPayBtn = document.getElementById("demoPayBtn");
+const processing = document.getElementById("processing");
+const successBox = document.getElementById("successBox");
+const backBtn = document.getElementById("backBtn");
+
+if (planKey === "free") {
+    window.location.href = "Home.html";
+}
+
+planName.textContent = plan.name;
+planPrice.textContent = `₹${plan.price}`;
+planLine.textContent = plan.name;
+totalPrice.textContent = `₹${plan.price}`;
+paymentAmount.textContent = `₹${plan.price}`;
+planDescription.textContent = plan.description;
+
+async function startCheckout() {
+    const {
+        data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (!session || !session.user) {
+        localStorage.setItem("ideonPendingPlan", planKey);
+        window.location.href =
+            `signup.html?plan=${encodeURIComponent(planKey)}`;
+        return;
+    }
+
+    demoPayBtn.disabled = true;
+    demoPayBtn.classList.add("loading");
+    processing.classList.add("show");
+
+    setTimeout(async () => {
+        try {
+            const { data, error } =
+                await supabaseClient.auth.updateUser({
+                    data: {
+                        plan: planKey,
+                        selected_plan: planKey
+                    }
+                });
+
+            if (error) throw error;
+
+            const user = data.user || session.user;
+            const name =
+                user.user_metadata?.full_name ||
+                user.email?.split("@")[0] ||
+                "IDEON User";
+
+            localStorage.setItem(
+                "ideonUser",
+                JSON.stringify({
+                    name,
+                    email: user.email || "",
+                    plan: planKey,
+                    selectedPlan: planKey,
+                    demoPayment: true,
+                    upgradedAt: new Date().toISOString()
+                })
+            );
+
+            localStorage.removeItem("ideonPendingPlan");
+
+            processing.classList.remove("show");
+            successBox.classList.add("show");
+            demoPayBtn.innerHTML =
+                "<span>Plan Activated ✓</span>";
+
+            setTimeout(() => {
+                window.location.href = "Home.html";
+            }, 1200);
+
+        } catch (error) {
+            console.error("IDEON demo checkout error:", error);
+
+            processing.classList.remove("show");
+            demoPayBtn.disabled = false;
+            demoPayBtn.classList.remove("loading");
+            demoPayBtn.innerHTML =
+                "<span>Try Demo Payment Again</span><span>→</span>";
+
+            alert(
+                "Demo payment could not be completed. Please try again."
+            );
+        }
+    }, 1200);
+}
+
+demoPayBtn.addEventListener("click", startCheckout);
+
+backBtn.addEventListener("click", () => {
+    localStorage.removeItem("ideonPendingPlan");
+    window.location.href = "pricing.html";
+});
+</script>
+
+</body>
+</html>
