@@ -3,2682 +3,2396 @@
    DEMO / VIRTUAL STOCK MARKET
    ========================================================= */
 
-const STARTING_BALANCE = 100000;
+(() => {
 
-const PORTFOLIO_KEY = "ideonMarketPortfolio";
-const WATCHLIST_KEY = "ideonMarketWatchlist";
+    /* =====================================================
+       SETTINGS
+       ===================================================== */
 
+    const STARTING_BALANCE = 100000;
 
-/* =========================================================
-   STOCK DATABASE
-   ========================================================= */
+    const PORTFOLIO_KEY = "ideonMarketPortfolio";
+    const WATCHLIST_KEY = "ideonMarketWatchlist";
 
-const stocks = {
 
-    RELIANCE: {
-        symbol: "RELIANCE",
-        name: "Reliance Industries",
-        exchange: "NSE",
-        price: 1428.50,
-        change: 1.84
-    },
+    /* =====================================================
+       STOCK DATABASE
+       Real companies
+       Prices are DEMO values
+       ===================================================== */
 
-    TCS: {
-        symbol: "TCS",
-        name: "Tata Consultancy Services",
-        exchange: "NSE",
-        price: 3215.40,
-        change: -0.62
-    },
+    const stocks = {
 
-    INFY: {
-        symbol: "INFY",
-        name: "Infosys",
-        exchange: "NSE",
-        price: 1482.20,
-        change: 0.91
-    },
+        /* ================= INDIA ================= */
 
-    HDFCBANK: {
-        symbol: "HDFCBANK",
-        name: "HDFC Bank",
-        exchange: "NSE",
-        price: 1745.80,
-        change: -0.34
-    },
-
-    ICICIBANK: {
-        symbol: "ICICIBANK",
-        name: "ICICI Bank",
-        exchange: "NSE",
-        price: 1328.60,
-        change: 1.12
-    },
-
-    ITC: {
-        symbol: "ITC",
-        name: "ITC Limited",
-        exchange: "NSE",
-        price: 418.75,
-        change: 0.48
-    },
-
-    SBIN: {
-        symbol: "SBIN",
-        name: "State Bank of India",
-        exchange: "NSE",
-        price: 812.30,
-        change: 0.76
-    },
-
-    BHARTIARTL: {
-        symbol: "BHARTIARTL",
-        name: "Bharti Airtel",
-        exchange: "NSE",
-        price: 1912.40,
-        change: 1.28
-    },
-
-    HINDUNILVR: {
-        symbol: "HINDUNILVR",
-        name: "Hindustan Unilever",
-        exchange: "NSE",
-        price: 2475.60,
-        change: -0.28
-    },
-
-    MARUTI: {
-        symbol: "MARUTI",
-        name: "Maruti Suzuki",
-        exchange: "NSE",
-        price: 14820.00,
-        change: 0.63
-    },
-
-    AAPL: {
-        symbol: "AAPL",
-        name: "Apple Inc.",
-        exchange: "NASDAQ",
-        price: 319.97,
-        change: -2.51
-    },
-
-    MSFT: {
-        symbol: "MSFT",
-        name: "Microsoft Corporation",
-        exchange: "NASDAQ",
-        price: 507.00,
-        change: 0.72
-    },
-
-    TSLA: {
-        symbol: "TSLA",
-        name: "Tesla Inc.",
-        exchange: "NASDAQ",
-        price: 338.50,
-        change: 1.36
-    },
-
-    AMZN: {
-        symbol: "AMZN",
-        name: "Amazon",
-        exchange: "NASDAQ",
-        price: 229.40,
-        change: -0.44
-    }
-};
-
-
-/* =========================================================
-   STATE
-   ========================================================= */
-
-let selectedStock = stocks.RELIANCE;
-
-let selectedRange = "1D";
-
-let liveChartCandles = [];
-
-let chartZoom = 1;
-let chartOffset = 0;
-
-let isDraggingChart = false;
-let dragStartX = 0;
-let dragStartOffset = 0;
-
-let tradeSide = "BUY";
-let orderType = "MARKET";
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function money(value) {
-
-    const number = Number(value) || 0;
-
-    return "₹" + number.toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-}
-
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-
-function showSearchMessage(message, type = "info") {
-
-    const box =
-        document.getElementById("marketSearchMessage");
-
-    if (!box) return;
-
-    box.textContent = message;
-
-    box.className =
-        `market-search-message ${type}`;
-}
-
-
-function showTradeMessage(message, type = "info") {
-
-    let box =
-        document.getElementById("tradeMessage");
-
-    if (!box) {
-
-        const terminal =
-            document.querySelector(".order-terminal") ||
-            document.querySelector(".trade-terminal");
-
-        if (!terminal) return;
-
-        box =
-            document.createElement("div");
-
-        box.id = "tradeMessage";
-
-        box.className = "trade-message";
-
-        terminal.appendChild(box);
-    }
-
-    box.textContent = message;
-
-    box.className =
-        `trade-message ${type}`;
-}
-
-
-/* =========================================================
-   PORTFOLIO
-   ========================================================= */
-
-function getPortfolio() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(PORTFOLIO_KEY);
-
-        if (!saved) {
-
-            return {
-                cash: STARTING_BALANCE,
-                holdings: {}
-            };
-        }
-
-        const parsed =
-            JSON.parse(saved);
-
-        return {
-
-            cash:
-                Number.isFinite(Number(parsed.cash))
-                    ? Number(parsed.cash)
-                    : STARTING_BALANCE,
-
-            holdings:
-                parsed.holdings &&
-                typeof parsed.holdings === "object"
-                    ? parsed.holdings
-                    : {}
-        };
-
-    } catch {
-
-        return {
-            cash: STARTING_BALANCE,
-            holdings: {}
-        };
-    }
-}
-
-
-function savePortfolio(portfolio) {
-
-    localStorage.setItem(
-        PORTFOLIO_KEY,
-        JSON.stringify(portfolio)
-    );
-}
-
-
-/* =========================================================
-   WATCHLIST
-   ========================================================= */
-
-function getWatchlist() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(WATCHLIST_KEY);
-
-        if (!saved) {
-
-            return [
-                "RELIANCE",
-                "TCS",
-                "INFY",
-                "HDFCBANK",
-                "ICICIBANK",
-                "ITC"
-            ];
-        }
-
-        const parsed =
-            JSON.parse(saved);
-
-        return Array.isArray(parsed)
-            ? parsed
-            : [];
-
-    } catch {
-
-        return [];
-    }
-}
-
-
-function saveWatchlist(list) {
-
-    localStorage.setItem(
-        WATCHLIST_KEY,
-        JSON.stringify(list)
-    );
-}
-
-
-/* =========================================================
-   FIND STOCK
-   ========================================================= */
-
-function findStock(symbol) {
-
-    return stocks[
-        String(symbol)
-            .trim()
-            .toUpperCase()
-    ] || null;
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-function searchStocks(query) {
-
-    query =
-        String(query || "")
-            .trim()
-            .toLowerCase();
-
-    if (!query) {
-
-        showSearchMessage(
-            "Enter a stock name or symbol.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const results =
-        Object.values(stocks)
-            .filter(stock => {
-
-                return (
-                    stock.symbol
-                        .toLowerCase()
-                        .includes(query) ||
-
-                    stock.name
-                        .toLowerCase()
-                        .includes(query)
-                );
-            });
-
-
-    if (!results.length) {
-
-        showSearchMessage(
-            "No matching stocks found.",
-            "error"
-        );
-
-        removeSearchResults();
-
-        return;
-    }
-
-
-    renderSearchResults(results);
-
-
-    showSearchMessage(
-        `${results.length} matching stock${results.length === 1 ? "" : "s"} found.`,
-        "success"
-    );
-}
-
-
-function renderSearchResults(results) {
-
-    removeSearchResults();
-
-
-    const input =
-        document.getElementById("stockSearch");
-
-    if (!input) return;
-
-
-    const container =
-        input.parentElement?.parentElement;
-
-    if (!container) return;
-
-
-    const wrapper =
-        document.createElement("div");
-
-    wrapper.id =
-        "marketSearchResults";
-
-    wrapper.className =
-        "market-search-results";
-
-
-    results.slice(0, 8).forEach(stock => {
-
-        const button =
-            document.createElement("button");
-
-        button.className =
-            "market-search-result";
-
-
-        button.innerHTML = `
-            <span>
-                <strong>
-                    ${escapeHTML(stock.symbol)}
-                </strong>
-
-                <small>
-                    ${escapeHTML(stock.name)}
-                </small>
-            </span>
-
-            <span>
-                ${money(stock.price)}
-            </span>
-        `;
-
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                selectStock(stock);
-
-                addToWatchlist(stock.symbol);
-
-                removeSearchResults();
-
-                showSearchMessage(
-                    `${stock.symbol} selected.`,
-                    "success"
-                );
-            }
-        );
-
-
-        wrapper.appendChild(button);
-    });
-
-
-    container.insertAdjacentElement(
-        "afterend",
-        wrapper
-    );
-}
-
-
-function removeSearchResults() {
-
-    const results =
-        document.getElementById(
-            "marketSearchResults"
-        );
-
-    if (results) {
-        results.remove();
-    }
-}
-
-
-/* =========================================================
-   SELECT STOCK
-   ========================================================= */
-
-function selectStock(stock) {
-
-    selectedStock = stock;
-
-    chartZoom = 1;
-    chartOffset = 0;
-
-    renderSelectedStock();
-
-    generateSampleCandles();
-
-    drawCandlestickChart();
-}
-
-
-/* =========================================================
-   SELECTED STOCK
-   ========================================================= */
-
-function renderSelectedStock() {
-
-    if (!selectedStock) return;
-
-
-    const symbol =
-        document.querySelector(".stock-symbol");
-
-    const name =
-        document.querySelector(".stock-name");
-
-    const price =
-        document.querySelector(".stock-price");
-
-    const change =
-        document.querySelector(".stock-change");
-
-    const exchange =
-        document.querySelector(".market-badge");
-
-
-    if (symbol) {
-
-        symbol.textContent =
-            selectedStock.symbol;
-    }
-
-
-    if (name) {
-
-        name.textContent =
-            selectedStock.name;
-    }
-
-
-    if (exchange) {
-
-        exchange.textContent =
-            selectedStock.exchange;
-    }
-
-
-    if (price) {
-
-        price.textContent =
-            money(selectedStock.price);
-    }
-
-
-    if (change) {
-
-        const percent =
-            Number(selectedStock.change) || 0;
-
-
-        change.textContent =
-            `${percent >= 0 ? "+" : ""}${percent.toFixed(2)}%`;
-
-
-        change.classList.toggle(
-            "positive",
-            percent >= 0
-        );
-
-
-        change.classList.toggle(
-            "negative",
-            percent < 0
-        );
-    }
-
-
-    updateTradePanel();
-
-    renderPortfolio();
-}
-
-
-/* =========================================================
-   SAMPLE CANDLE GENERATOR
-   ========================================================= */
-
-function generateSampleCandles() {
-
-    const stock =
-        selectedStock;
-
-
-    const rangeSettings = {
-
-        "1D": {
-            count: 72,
-            volatility: 0.004
+        RELIANCE: {
+            symbol: "RELIANCE",
+            name: "Reliance Industries",
+            exchange: "NSE",
+            price: 1428.50,
+            change: 1.84
         },
 
-        "1W": {
-            count: 70,
-            volatility: 0.012
+        TCS: {
+            symbol: "TCS",
+            name: "Tata Consultancy Services",
+            exchange: "NSE",
+            price: 3215.40,
+            change: -0.62
         },
 
-        "1M": {
-            count: 80,
-            volatility: 0.018
+        INFY: {
+            symbol: "INFY",
+            name: "Infosys",
+            exchange: "NSE",
+            price: 1482.20,
+            change: 0.91
         },
 
-        "1Y": {
-            count: 100,
-            volatility: 0.035
+        HDFCBANK: {
+            symbol: "HDFCBANK",
+            name: "HDFC Bank",
+            exchange: "NSE",
+            price: 1745.80,
+            change: -0.34
+        },
+
+        ICICIBANK: {
+            symbol: "ICICIBANK",
+            name: "ICICI Bank",
+            exchange: "NSE",
+            price: 1328.60,
+            change: 1.12
+        },
+
+        ITC: {
+            symbol: "ITC",
+            name: "ITC Limited",
+            exchange: "NSE",
+            price: 418.75,
+            change: 0.48
+        },
+
+        SBIN: {
+            symbol: "SBIN",
+            name: "State Bank of India",
+            exchange: "NSE",
+            price: 812.30,
+            change: 0.76
+        },
+
+        BHARTIARTL: {
+            symbol: "BHARTIARTL",
+            name: "Bharti Airtel",
+            exchange: "NSE",
+            price: 1912.40,
+            change: 1.28
+        },
+
+        HINDUNILVR: {
+            symbol: "HINDUNILVR",
+            name: "Hindustan Unilever",
+            exchange: "NSE",
+            price: 2475.60,
+            change: -0.28
+        },
+
+        MARUTI: {
+            symbol: "MARUTI",
+            name: "Maruti Suzuki",
+            exchange: "NSE",
+            price: 14820.00,
+            change: 0.63
+        },
+
+        ADANIENT: {
+            symbol: "ADANIENT",
+            name: "Adani Enterprises",
+            exchange: "NSE",
+            price: 2475.20,
+            change: 1.47
+        },
+
+        LT: {
+            symbol: "LT",
+            name: "Larsen & Toubro",
+            exchange: "NSE",
+            price: 3650.40,
+            change: 0.58
+        },
+
+        AXISBANK: {
+            symbol: "AXISBANK",
+            name: "Axis Bank",
+            exchange: "NSE",
+            price: 1128.30,
+            change: -0.41
+        },
+
+        KOTAKBANK: {
+            symbol: "KOTAKBANK",
+            name: "Kotak Mahindra Bank",
+            exchange: "NSE",
+            price: 1975.80,
+            change: 0.36
+        },
+
+        SUNPHARMA: {
+            symbol: "SUNPHARMA",
+            name: "Sun Pharmaceutical",
+            exchange: "NSE",
+            price: 1718.60,
+            change: 1.02
+        },
+
+
+        /* ================= USA ================= */
+
+        AAPL: {
+            symbol: "AAPL",
+            name: "Apple Inc.",
+            exchange: "NASDAQ",
+            price: 319.97,
+            change: -2.51
+        },
+
+        MSFT: {
+            symbol: "MSFT",
+            name: "Microsoft Corporation",
+            exchange: "NASDAQ",
+            price: 507.00,
+            change: 0.72
+        },
+
+        TSLA: {
+            symbol: "TSLA",
+            name: "Tesla Inc.",
+            exchange: "NASDAQ",
+            price: 338.50,
+            change: 1.36
+        },
+
+        AMZN: {
+            symbol: "AMZN",
+            name: "Amazon.com Inc.",
+            exchange: "NASDAQ",
+            price: 229.40,
+            change: -0.44
+        },
+
+        GOOGL: {
+            symbol: "GOOGL",
+            name: "Alphabet Inc.",
+            exchange: "NASDAQ",
+            price: 291.20,
+            change: 0.84
+        },
+
+        META: {
+            symbol: "META",
+            name: "Meta Platforms Inc.",
+            exchange: "NASDAQ",
+            price: 742.30,
+            change: -0.31
+        },
+
+        NFLX: {
+            symbol: "NFLX",
+            name: "Netflix Inc.",
+            exchange: "NASDAQ",
+            price: 1185.60,
+            change: 1.08
+        },
+
+        NVDA: {
+            symbol: "NVDA",
+            name: "NVIDIA Corporation",
+            exchange: "NASDAQ",
+            price: 176.40,
+            change: 2.14
+        },
+
+        KO: {
+            symbol: "KO",
+            name: "Coca-Cola Company",
+            exchange: "NYSE",
+            price: 69.80,
+            change: 0.42
+        },
+
+        JPM: {
+            symbol: "JPM",
+            name: "JPMorgan Chase & Co.",
+            exchange: "NYSE",
+            price: 294.10,
+            change: -0.27
+        },
+
+        DIS: {
+            symbol: "DIS",
+            name: "Walt Disney Company",
+            exchange: "NYSE",
+            price: 113.20,
+            change: 0.63
+        },
+
+        MCD: {
+            symbol: "MCD",
+            name: "McDonald's Corporation",
+            exchange: "NYSE",
+            price: 312.50,
+            change: -0.22
+        },
+
+        NIKE: {
+            symbol: "NKE",
+            name: "Nike Inc.",
+            exchange: "NYSE",
+            price: 68.40,
+            change: 1.17
         }
+
     };
 
 
-    const settings =
-        rangeSettings[selectedRange] ||
-        rangeSettings["1D"];
+    /* =====================================================
+       DEFAULT WATCHLIST
+       ===================================================== */
+
+    const DEFAULT_WATCHLIST = [
+        "RELIANCE",
+        "TCS",
+        "INFY",
+        "HDFCBANK",
+        "ICICIBANK",
+        "ITC"
+    ];
 
 
-    const candles = [];
+    /* =====================================================
+       STATE
+       ===================================================== */
+
+    let selectedStock = stocks.RELIANCE;
+
+    let selectedRange = "1D";
+
+    let chartCandles = [];
+
+    let chartZoom = 1;
+
+    let chartOffset = 0;
+
+    let tradeSide = "BUY";
+
+    let orderType = "MARKET";
 
 
-    let price =
-        stock.price *
-        (
-            1 -
-            stock.change / 100
-        );
+    /* =====================================================
+       MONEY FORMAT
+       ===================================================== */
 
+    function money(value) {
 
-    const now =
-        Date.now();
+        const number = Number(value) || 0;
 
+        return "₹" + number.toLocaleString("en-IN", {
 
-    for (
-        let i = 0;
-        i < settings.count;
-        i++
-    ) {
+            minimumFractionDigits: 2,
 
-        const trend =
-            stock.change >= 0
-                ? 0.0007
-                : -0.0004;
+            maximumFractionDigits: 2
 
-
-        const randomMove =
-            (
-                Math.random() - 0.5
-            ) *
-            settings.volatility;
-
-
-        const movement =
-            trend +
-            randomMove;
-
-
-        const open =
-            price;
-
-
-        const close =
-            Math.max(
-                0.01,
-                open *
-                (1 + movement)
-            );
-
-
-        const high =
-            Math.max(
-                open,
-                close
-            ) *
-            (
-                1 +
-                Math.random() *
-                settings.volatility *
-                0.55
-            );
-
-
-        const low =
-            Math.min(
-                open,
-                close
-            ) *
-            (
-                1 -
-                Math.random() *
-                settings.volatility *
-                0.55
-            );
-
-
-        candles.push({
-
-            time:
-                now -
-                (
-                    settings.count -
-                    i
-                ) *
-                600000,
-
-            open,
-            high,
-            low,
-            close
         });
 
-
-        price =
-            close;
     }
 
 
-    /* Make final candle match stock price */
+    /* =====================================================
+       ESCAPE HTML
+       ===================================================== */
 
-    if (candles.length) {
+    function escapeHTML(value) {
 
-        const last =
-            candles[
-                candles.length - 1
+        return String(value)
+
+            .replaceAll("&", "&amp;")
+
+            .replaceAll("<", "&lt;")
+
+            .replaceAll(">", "&gt;")
+
+            .replaceAll('"', "&quot;")
+
+            .replaceAll("'", "&#039;");
+    }
+
+
+    /* =====================================================
+       SEARCH MESSAGE
+       ===================================================== */
+
+    function showSearchMessage(message, type = "info") {
+
+        const box =
+            document.getElementById(
+                "marketSearchMessage"
+            );
+
+        if (!box) return;
+
+        box.textContent = message;
+
+        box.className =
+            `market-search-message ${type}`;
+    }
+
+
+    /* =====================================================
+       TRADE MESSAGE
+       ===================================================== */
+
+    function showTradeMessage(message, type = "info") {
+
+        let box =
+            document.getElementById(
+                "tradeMessage"
+            );
+
+        const terminal =
+            document.querySelector(
+                ".order-terminal"
+            );
+
+        if (!terminal) return;
+
+        if (!box) {
+
+            box =
+                document.createElement(
+                    "div"
+                );
+
+            box.id = "tradeMessage";
+
+            terminal.appendChild(box);
+        }
+
+        box.textContent = message;
+
+        box.className =
+            `trade-message ${type}`;
+    }
+
+
+    /* =====================================================
+       PORTFOLIO
+       ===================================================== */
+
+    function getPortfolio() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    PORTFOLIO_KEY
+                );
+
+            if (!saved) {
+
+                return {
+
+                    cash: STARTING_BALANCE,
+
+                    holdings: {}
+
+                };
+            }
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (
+                typeof parsed !== "object" ||
+                !parsed
+            ) {
+
+                throw new Error(
+                    "Invalid portfolio"
+                );
+            }
+
+            return {
+
+                cash:
+                    Number.isFinite(
+                        Number(parsed.cash)
+                    )
+                        ? Number(parsed.cash)
+                        : STARTING_BALANCE,
+
+                holdings:
+                    parsed.holdings &&
+                    typeof parsed.holdings === "object"
+                        ? parsed.holdings
+                        : {}
+
+            };
+
+        } catch {
+
+            return {
+
+                cash: STARTING_BALANCE,
+
+                holdings: {}
+
+            };
+        }
+    }
+
+
+    function savePortfolio(portfolio) {
+
+        localStorage.setItem(
+
+            PORTFOLIO_KEY,
+
+            JSON.stringify(portfolio)
+
+        );
+    }
+
+
+    /* =====================================================
+       WATCHLIST
+       ===================================================== */
+
+    function getWatchlist() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    WATCHLIST_KEY
+                );
+
+            if (!saved) {
+
+                return [
+                    ...DEFAULT_WATCHLIST
+                ];
+            }
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (!Array.isArray(parsed)) {
+
+                return [
+                    ...DEFAULT_WATCHLIST
+                ];
+            }
+
+            return parsed.filter(
+                symbol => stocks[symbol]
+            );
+
+        } catch {
+
+            return [
+                ...DEFAULT_WATCHLIST
             ];
-
-        last.close =
-            stock.price;
-
-        last.high =
-            Math.max(
-                last.high,
-                last.open,
-                stock.price
-            );
-
-        last.low =
-            Math.min(
-                last.low,
-                last.open,
-                stock.price
-            );
+        }
     }
 
 
-    liveChartCandles =
-        candles;
-}
+    function saveWatchlist(list) {
+
+        localStorage.setItem(
+
+            WATCHLIST_KEY,
+
+            JSON.stringify(list)
+
+        );
+    }
 
 
-/* =========================================================
-   DRAW CHART
-   ========================================================= */
+    function addToWatchlist(symbol) {
 
-function drawCandlestickChart() {
+        const list =
+            getWatchlist();
 
-    const svg =
-        document.getElementById("stockChart");
+        if (!list.includes(symbol)) {
 
-    if (!svg) return;
+            list.push(symbol);
 
+            saveWatchlist(list);
+        }
 
-    const width =
-        svg.clientWidth ||
-        svg.parentElement?.clientWidth ||
-        800;
+        renderWatchlist();
+    }
 
 
-    const height =
-        svg.clientHeight ||
-        420;
+    /* =====================================================
+       SEARCH STOCKS
+       ===================================================== */
+
+    function searchStocks(query) {
+
+        query =
+            String(query || "")
+                .trim()
+                .toLowerCase();
+
+        removeSearchResults();
+
+        if (!query) {
+
+            showSearchMessage(
+
+                "Enter a stock name or symbol.",
+
+                "error"
+
+            );
+
+            return;
+        }
 
 
-    svg.setAttribute(
-        "viewBox",
-        `0 0 ${width} ${height}`
-    );
+        const results =
+            Object.values(stocks)
+                .filter(stock => {
+
+                    return (
+
+                        stock.symbol
+                            .toLowerCase()
+                            .includes(query)
+
+                        ||
+
+                        stock.name
+                            .toLowerCase()
+                            .includes(query)
+
+                    );
+
+                });
 
 
-    svg.innerHTML = "";
+        if (!results.length) {
+
+            showSearchMessage(
+
+                "No matching stocks found.",
+
+                "error"
+
+            );
+
+            return;
+        }
 
 
-    const candles =
-        liveChartCandles;
-
-
-    if (!candles.length) return;
-
-
-    const total =
-        candles.length;
-
-
-    const visibleCount =
-        Math.max(
-            8,
-            Math.floor(
-                total / chartZoom
-            )
+        renderSearchResults(
+            results
         );
 
 
-    const maxOffset =
-        Math.max(
-            0,
-            total - visibleCount
+        showSearchMessage(
+
+            `${results.length} matching stock${
+
+                results.length === 1
+                    ? ""
+                    : "s"
+
+            } found.`,
+
+            "success"
+
         );
+    }
 
 
-    chartOffset =
-        Math.max(
-            0,
-            Math.min(
-                chartOffset,
-                maxOffset
-            )
+    /* =====================================================
+       SEARCH RESULTS
+       ===================================================== */
+
+    function renderSearchResults(results) {
+
+        removeSearchResults();
+
+        const input =
+            document.getElementById(
+                "stockSearch"
+            );
+
+        if (!input) return;
+
+        const container =
+            input.parentElement?.parentElement;
+
+        if (!container) return;
+
+
+        const wrapper =
+            document.createElement(
+                "div"
+            );
+
+        wrapper.id =
+            "marketSearchResults";
+
+        wrapper.className =
+            "market-search-results";
+
+
+        results
+            .slice(0, 10)
+            .forEach(stock => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.type = "button";
+
+                button.className =
+                    "market-search-result";
+
+
+                button.innerHTML = `
+
+                    <span>
+
+                        <strong>
+                            ${escapeHTML(
+                                stock.symbol
+                            )}
+                        </strong>
+
+                        <small>
+                            ${escapeHTML(
+                                stock.name
+                            )}
+                        </small>
+
+                    </span>
+
+                    <span>
+                        ${money(
+                            stock.price
+                        )}
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        selectStock(
+                            stock
+                        );
+
+                        addToWatchlist(
+                            stock.symbol
+                        );
+
+                        removeSearchResults();
+
+
+                        showSearchMessage(
+
+                            `${stock.symbol} selected · DEMO DATA`,
+
+                            "success"
+
+                        );
+
+                    }
+                );
+
+
+                wrapper.appendChild(
+                    button
+                );
+
+            });
+
+
+        container.insertAdjacentElement(
+
+            "afterend",
+
+            wrapper
+
         );
+    }
 
 
-    const start =
-        Math.max(
-            0,
-            total -
-            visibleCount -
-            chartOffset
-        );
+    function removeSearchResults() {
+
+        const results =
+            document.getElementById(
+                "marketSearchResults"
+            );
+
+        if (results) {
+
+            results.remove();
+
+        }
+    }
 
 
-    const end =
-        Math.min(
-            total,
-            start + visibleCount
-        );
+    /* =====================================================
+       SELECT STOCK
+       ===================================================== */
+
+    function selectStock(stock) {
+
+        selectedStock = stock;
+
+        chartZoom = 1;
+
+        chartOffset = 0;
+
+        renderSelectedStock();
+
+        generateSampleCandles();
+
+        drawCandlestickChart();
+
+    }
 
 
-    const visible =
-        candles.slice(
-            start,
-            end
-        );
+    /* =====================================================
+       RENDER SELECTED STOCK
+       ===================================================== */
+
+    function renderSelectedStock() {
+
+        if (!selectedStock) return;
 
 
-    if (!visible.length) return;
+        const symbol =
+            document.querySelector(
+                ".stock-symbol"
+            );
+
+        const name =
+            document.querySelector(
+                ".stock-name"
+            );
+
+        const price =
+            document.querySelector(
+                ".stock-price"
+            );
+
+        const change =
+            document.querySelector(
+                ".stock-change"
+            );
+
+        const exchange =
+            document.querySelector(
+                ".market-badge"
+            );
 
 
-    /* PRICE RANGE */
+        if (symbol) {
 
-    let minPrice =
-        Math.min(
-            ...visible.map(
-                candle =>
-                    candle.low
-            )
-        );
+            symbol.textContent =
+                selectedStock.symbol;
+        }
 
 
-    let maxPrice =
-        Math.max(
-            ...visible.map(
-                candle =>
-                    candle.high
-            )
-        );
+        if (name) {
+
+            name.textContent =
+                selectedStock.name;
+        }
 
 
-    const priceRange =
-        maxPrice -
-        minPrice;
+        if (exchange) {
+
+            exchange.textContent =
+                selectedStock.exchange;
+        }
 
 
-    const padding =
-        priceRange > 0
-            ? priceRange * 0.12
-            : maxPrice * 0.02;
+        if (price) {
+
+            const strong =
+                price.querySelector(
+                    "strong"
+                );
+
+            if (strong) {
+
+                strong.textContent =
+                    money(
+                        selectedStock.price
+                    );
+
+            } else {
+
+                price.textContent =
+                    money(
+                        selectedStock.price
+                    );
+            }
+        }
 
 
-    minPrice -= padding;
-    maxPrice += padding;
+        if (change) {
+
+            const percent =
+                Number(
+                    selectedStock.change
+                ) || 0;
 
 
-    /* CHART AREA */
+            change.textContent =
 
-    const left = 50;
-    const right = 15;
-    const top = 20;
-    const bottom = 30;
+                `${percent >= 0 ? "+" : ""}${percent.toFixed(2)}%`;
 
 
-    const chartWidth =
-        width -
-        left -
-        right;
+            change.classList.toggle(
+
+                "positive",
+
+                percent >= 0
+
+            );
 
 
-    const chartHeight =
-        height -
-        top -
-        bottom;
+            change.classList.toggle(
+
+                "negative",
+
+                percent < 0
+
+            );
+        }
 
 
-    function priceToY(price) {
+        updateTradePanel();
 
-        return (
-            top +
+        renderPortfolio();
+
+        renderWatchlist();
+
+    }
+
+
+    /* =====================================================
+       SAMPLE CANDLE GENERATOR
+       ===================================================== */
+
+    function generateSampleCandles() {
+
+        const settings = {
+
+            "1D": {
+                count: 72,
+                volatility: 0.004
+            },
+
+            "1W": {
+                count: 70,
+                volatility: 0.012
+            },
+
+            "1M": {
+                count: 80,
+                volatility: 0.018
+            },
+
+            "1Y": {
+                count: 100,
+                volatility: 0.035
+            }
+
+        };
+
+
+        const config =
+            settings[selectedRange]
+            || settings["1D"];
+
+
+        const candles = [];
+
+
+        let price =
+
+            selectedStock.price *
+
             (
-                (maxPrice - price) /
-                (maxPrice - minPrice)
-            ) *
-            chartHeight
-        );
-    }
-
-
-    /* GRID */
-
-    const grid =
-        document.getElementById(
-            "chartGrid"
-        );
-
-
-    if (grid) {
-
-        grid.innerHTML = "";
+                1 -
+                selectedStock.change / 100
+            );
 
 
         for (
             let i = 0;
-            i <= 5;
+            i < config.count;
             i++
         ) {
 
-            const y =
-                top +
+            const trend =
+
+                selectedStock.change >= 0
+
+                    ? 0.0007
+
+                    : -0.0004;
+
+
+            const randomMove =
+
                 (
-                    chartHeight /
-                    5
+                    Math.random() - 0.5
+                )
+
+                *
+
+                config.volatility;
+
+
+            const movement =
+
+                trend +
+                randomMove;
+
+
+            const open =
+                price;
+
+
+            const close =
+
+                Math.max(
+
+                    0.01,
+
+                    open *
+
+                    (
+                        1 +
+                        movement
+                    )
+
+                );
+
+
+            const high =
+
+                Math.max(
+                    open,
+                    close
+                )
+
+                *
+
+                (
+                    1 +
+
+                    Math.random()
+                    *
+                    config.volatility
+                    *
+                    0.55
+                );
+
+
+            const low =
+
+                Math.min(
+                    open,
+                    close
+                )
+
+                *
+
+                (
+                    1 -
+
+                    Math.random()
+                    *
+                    config.volatility
+                    *
+                    0.55
+                );
+
+
+            candles.push({
+
+                open,
+
+                high,
+
+                low,
+
+                close
+
+            });
+
+
+            price = close;
+        }
+
+
+        /* Make final candle end at demo price */
+
+        if (candles.length) {
+
+            const last =
+                candles[
+                    candles.length - 1
+                ];
+
+
+            last.close =
+                selectedStock.price;
+
+
+            last.high =
+                Math.max(
+
+                    last.high,
+
+                    last.open,
+
+                    last.close
+
+                );
+
+
+            last.low =
+                Math.min(
+
+                    last.low,
+
+                    last.open,
+
+                    last.close
+
+                );
+        }
+
+
+        chartCandles =
+            candles;
+    }
+
+
+    /* =====================================================
+       DRAW CANDLESTICK CHART
+       ===================================================== */
+
+    function drawCandlestickChart() {
+
+        const svg =
+            document.getElementById(
+                "stockChart"
+            );
+
+
+        if (!svg) return;
+
+
+        const grid =
+            document.getElementById(
+                "chartGrid"
+            );
+
+
+        const layer =
+            document.getElementById(
+                "ideonCandleLayer"
+            );
+
+
+        if (!grid || !layer) return;
+
+
+        const width =
+            svg.clientWidth || 800;
+
+
+        const height =
+            svg.clientHeight || 300;
+
+
+        svg.setAttribute(
+
+            "viewBox",
+
+            `0 0 ${width} ${height}`
+
+        );
+
+
+        /*
+         IMPORTANT:
+
+         Do NOT use:
+
+         svg.innerHTML = "";
+
+         because that deletes
+         chartGrid and candleLayer.
+
+         Only clear their contents.
+        */
+
+        grid.innerHTML = "";
+
+        layer.innerHTML = "";
+
+
+        if (!chartCandles.length) return;
+
+
+        const total =
+            chartCandles.length;
+
+
+        const visibleCount =
+
+            Math.max(
+
+                12,
+
+                Math.min(
+
+                    total,
+
+                    Math.floor(
+                        total / chartZoom
+                    )
+
+                )
+
+            );
+
+
+        const maxOffset =
+
+            Math.max(
+
+                0,
+
+                total -
+                visibleCount
+
+            );
+
+
+        chartOffset =
+
+            Math.max(
+
+                0,
+
+                Math.min(
+
+                    chartOffset,
+
+                    maxOffset
+
+                )
+
+            );
+
+
+        const start =
+
+            Math.max(
+
+                0,
+
+                total -
+                visibleCount -
+                chartOffset
+
+            );
+
+
+        const visibleCandles =
+
+            chartCandles.slice(
+
+                start,
+
+                start +
+                visibleCount
+
+            );
+
+
+        const minPrice =
+
+            Math.min(
+
+                ...visibleCandles.map(
+                    candle => candle.low
+                )
+
+            );
+
+
+        const maxPrice =
+
+            Math.max(
+
+                ...visibleCandles.map(
+                    candle => candle.high
+                )
+
+            );
+
+
+        const padding =
+
+            (
+                maxPrice -
+                minPrice
+            ) *
+
+            0.10;
+
+
+        const low =
+            minPrice - padding;
+
+
+        const high =
+            maxPrice + padding;
+
+
+        function y(price) {
+
+            return (
+
+                height -
+
+                (
+
+                    (
+                        price -
+                        low
+                    )
+
+                    /
+
+                    (
+                        high -
+                        low
+                    )
+
+                )
+
+                *
+
+                height
+
+            );
+
+        }
+
+
+        /* =================================================
+           GRID
+           ================================================= */
+
+        for (
+            let i = 1;
+            i < 5;
+            i++
+        ) {
+
+            const yy =
+                (
+                    height / 5
                 ) *
                 i;
 
 
             const line =
                 document.createElementNS(
+
                     "http://www.w3.org/2000/svg",
+
                     "line"
+
                 );
 
 
             line.setAttribute(
                 "x1",
-                left
+                "0"
             );
 
             line.setAttribute(
                 "x2",
-                width - right
+                String(width)
             );
 
             line.setAttribute(
                 "y1",
-                y
+                String(yy)
             );
 
             line.setAttribute(
                 "y2",
-                y
+                String(yy)
             );
 
             line.setAttribute(
-                "stroke",
-                "currentColor"
-            );
-
-            line.setAttribute(
-                "opacity",
-                "0.08"
+                "class",
+                "chart-grid-line"
             );
 
 
-            grid.appendChild(line);
+            grid.appendChild(
+                line
+            );
+        }
 
 
-            const label =
-                document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "text"
-                );
+        for (
+            let i = 1;
+            i < 6;
+            i++
+        ) {
 
-
-            const value =
-                maxPrice -
+            const xx =
                 (
-                    (maxPrice - minPrice) /
-                    5
+                    width / 6
                 ) *
                 i;
 
 
-            label.setAttribute(
-                "x",
-                4
-            );
-
-            label.setAttribute(
-                "y",
-                y + 4
-            );
-
-            label.setAttribute(
-                "fill",
-                "currentColor"
-            );
-
-            label.setAttribute(
-                "opacity",
-                "0.55"
-            );
-
-            label.setAttribute(
-                "font-size",
-                "10"
-            );
-
-
-            label.textContent =
-                formatCompactPrice(value);
-
-
-            grid.appendChild(label);
-        }
-    }
-
-
-    /* CANDLES */
-
-    const layer =
-        document.getElementById(
-            "ideonCandleLayer"
-        );
-
-
-    if (!layer) return;
-
-
-    layer.innerHTML = "";
-
-
-    const step =
-        chartWidth /
-        visible.length;
-
-
-    const candleWidth =
-        Math.max(
-            2,
-            step * 0.58
-        );
-
-
-    visible.forEach(
-        (candle, index) => {
-
-            const x =
-                left +
-                step * index +
-                step / 2;
-
-
-            const yOpen =
-                priceToY(
-                    candle.open
-                );
-
-
-            const yClose =
-                priceToY(
-                    candle.close
-                );
-
-
-            const yHigh =
-                priceToY(
-                    candle.high
-                );
-
-
-            const yLow =
-                priceToY(
-                    candle.low
-                );
-
-
-            const bullish =
-                candle.close >=
-                candle.open;
-
-
-            /* WICK */
-
-            const wick =
+            const line =
                 document.createElementNS(
+
                     "http://www.w3.org/2000/svg",
+
                     "line"
+
                 );
 
 
-            wick.setAttribute(
+            line.setAttribute(
                 "x1",
-                x
+                String(xx)
             );
 
-            wick.setAttribute(
+            line.setAttribute(
                 "x2",
-                x
+                String(xx)
             );
 
-            wick.setAttribute(
+            line.setAttribute(
                 "y1",
-                yHigh
+                "0"
             );
 
-            wick.setAttribute(
+            line.setAttribute(
                 "y2",
-                yLow
+                String(height)
             );
 
-            wick.setAttribute(
-                "stroke",
-                bullish
-                    ? "#35d07f"
-                    : "#ff5f6d"
-            );
-
-            wick.setAttribute(
-                "stroke-width",
-                "1"
+            line.setAttribute(
+                "class",
+                "chart-grid-line"
             );
 
 
-            layer.appendChild(wick);
+            grid.appendChild(
+                line
+            );
+        }
 
 
-            /* BODY */
+        /* =================================================
+           CANDLESTICKS
+           ================================================= */
 
-            const body =
-                document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "rect"
+        const step =
+            width /
+            visibleCandles.length;
+
+
+        const bodyWidth =
+            Math.max(
+                3,
+                step * 0.58
+            );
+
+
+        visibleCandles.forEach(
+            (candle, index) => {
+
+                const x =
+
+                    index *
+                    step
+
+                    +
+
+                    step / 2;
+
+
+                const isUp =
+
+                    candle.close >=
+                    candle.open;
+
+
+                const candleColor =
+
+                    isUp
+
+                        ? "#35d07f"
+
+                        : "#ff5f6d";
+
+
+                /* WICK */
+
+                const wick =
+
+                    document.createElementNS(
+
+                        "http://www.w3.org/2000/svg",
+
+                        "line"
+
+                    );
+
+
+                wick.setAttribute(
+                    "x1",
+                    String(x)
+                );
+
+                wick.setAttribute(
+                    "x2",
+                    String(x)
+                );
+
+                wick.setAttribute(
+                    "y1",
+                    String(
+                        y(candle.high)
+                    )
+                );
+
+                wick.setAttribute(
+                    "y2",
+                    String(
+                        y(candle.low)
+                    )
+                );
+
+                wick.setAttribute(
+                    "stroke",
+                    candleColor
+                );
+
+                wick.setAttribute(
+                    "stroke-width",
+                    "1.5"
+                );
+
+                wick.setAttribute(
+                    "class",
+                    isUp
+                        ? "candle-up"
+                        : "candle-down"
                 );
 
 
-            body.setAttribute(
-                "x",
-                x -
-                candleWidth / 2
-            );
+                layer.appendChild(
+                    wick
+                );
 
 
-            body.setAttribute(
-                "y",
-                Math.min(
-                    yOpen,
-                    yClose
-                )
-            );
+                /* BODY */
+
+                const rect =
+
+                    document.createElementNS(
+
+                        "http://www.w3.org/2000/svg",
+
+                        "rect"
+
+                    );
 
 
-            body.setAttribute(
-                "width",
-                candleWidth
-            );
+                const openY =
+                    y(candle.open);
 
 
-            body.setAttribute(
-                "height",
-                Math.max(
-                    1,
-                    Math.abs(
-                        yClose -
-                        yOpen
+                const closeY =
+                    y(candle.close);
+
+
+                const top =
+                    Math.min(
+                        openY,
+                        closeY
+                    );
+
+
+                const bottom =
+                    Math.max(
+                        openY,
+                        closeY
+                    );
+
+
+                rect.setAttribute(
+                    "x",
+                    String(
+                        x -
+                        bodyWidth / 2
                     )
-                )
-            );
+                );
 
 
-            body.setAttribute(
-                "fill",
-                bullish
-                    ? "#35d07f"
-                    : "#ff5f6d"
-            );
+                rect.setAttribute(
+                    "y",
+                    String(top)
+                );
 
 
-            body.setAttribute(
-                "rx",
-                "1"
-            );
+                rect.setAttribute(
+                    "width",
+                    String(bodyWidth)
+                );
 
 
-            layer.appendChild(body);
-        }
-    );
+                rect.setAttribute(
 
+                    "height",
 
-    createDemoBadge();
+                    String(
 
-    ensureChartControls();
-
-    bindChartPan();
-}
-
-
-/* =========================================================
-   PRICE LABEL
-   ========================================================= */
-
-function formatCompactPrice(value) {
-
-    const number =
-        Number(value) || 0;
-
-
-    if (number >= 100000) {
-
-        return "₹" +
-            (
-                number / 100000
-            ).toFixed(1) +
-            "L";
-    }
-
-
-    if (number >= 1000) {
-
-        return "₹" +
-            (
-                number / 1000
-            ).toFixed(1) +
-            "K";
-    }
-
-
-    return "₹" +
-        number.toFixed(0);
-}
-
-
-/* =========================================================
-   DEMO BADGE
-   ========================================================= */
-
-function createDemoBadge() {
-
-    const chart =
-        document.querySelector(
-            ".stock-chart"
-        );
-
-    if (!chart) return;
-
-
-    let badge =
-        chart.querySelector(
-            ".ideon-live-badge"
-        );
-
-
-    if (!badge) {
-
-        badge =
-            document.createElement("div");
-
-        badge.className =
-            "ideon-live-badge";
-
-        chart.appendChild(badge);
-    }
-
-
-    badge.innerHTML = `
-        <span></span>
-        DEMO DATA
-    `;
-}
-
-
-/* =========================================================
-   CHART CONTROLS
-   ========================================================= */
-
-function ensureChartControls() {
-
-    const chart =
-        document.querySelector(
-            ".stock-chart"
-        );
-
-    if (!chart) return;
-
-
-    let controls =
-        chart.querySelector(
-            ".ideon-chart-zoom"
-        );
-
-
-    if (!controls) {
-
-        controls =
-            document.createElement("div");
-
-        controls.className =
-            "ideon-chart-zoom";
-
-
-        controls.innerHTML = `
-            <button data-chart-action="left">←</button>
-            <button data-chart-action="zoomOut">−</button>
-            <button data-chart-action="reset">⟳</button>
-            <button data-chart-action="zoomIn">+</button>
-            <button data-chart-action="right">→</button>
-        `;
-
-
-        chart.appendChild(controls);
-    }
-
-
-    if (
-        controls.dataset.bound === "true"
-    ) {
-        return;
-    }
-
-
-    controls.dataset.bound =
-        "true";
-
-
-    controls
-        .querySelectorAll(
-            "[data-chart-action]"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const action =
-                        button.dataset.chartAction;
-
-
-                    if (
-                        action === "zoomIn"
-                    ) {
-
-                        chartZoom =
-                            Math.min(
-                                8,
-                                chartZoom * 1.35
-                            );
-                    }
-
-
-                    if (
-                        action === "zoomOut"
-                    ) {
-
-                        chartZoom =
-                            Math.max(
-                                1,
-                                chartZoom / 1.35
-                            );
-                    }
-
-
-                    if (
-                        action === "reset"
-                    ) {
-
-                        chartZoom = 1;
-
-                        chartOffset = 0;
-                    }
-
-
-                    const movement =
                         Math.max(
-                            2,
-                            Math.floor(
-                                liveChartCandles.length /
-                                12
-                            )
+
+                            3,
+
+                            bottom -
+                            top
+
+                        )
+
+                    )
+
+                );
+
+
+                rect.setAttribute(
+                    "rx",
+                    "1"
+                );
+
+
+                rect.setAttribute(
+                    "fill",
+                    candleColor
+                );
+
+
+                rect.setAttribute(
+                    "class",
+                    isUp
+                        ? "candle-up"
+                        : "candle-down"
+                );
+
+
+                layer.appendChild(
+                    rect
+                );
+
+            }
+
+        );
+
+    }
+
+
+    /* =====================================================
+       WATCHLIST
+       ===================================================== */
+
+    function renderWatchlist() {
+
+        const container =
+            document.getElementById(
+                "watchlistItems"
+            );
+
+
+        if (!container) return;
+
+
+        const list =
+            getWatchlist();
+
+
+        container.innerHTML = "";
+
+
+        const count =
+            document.getElementById(
+                "watchlistCount"
+            );
+
+
+        if (count) {
+
+            count.textContent =
+                list.length;
+        }
+
+
+        list.forEach(
+            symbol => {
+
+                const stock =
+                    stocks[symbol];
+
+
+                if (!stock) return;
+
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+
+                    "ideon-watch-item";
+
+
+                if (
+                    selectedStock.symbol ===
+                    symbol
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+                }
+
+
+                button.innerHTML = `
+
+                    <div>
+
+                        <strong>
+                            ${escapeHTML(
+                                stock.symbol
+                            )}
+                        </strong>
+
+                        <small>
+                            ${escapeHTML(
+                                stock.name
+                            )}
+                        </small>
+
+                    </div>
+
+                    <div class="ideon-watch-price">
+
+                        <strong>
+                            ${money(
+                                stock.price
+                            )}
+                        </strong>
+
+                        <small class="${
+                            stock.change >= 0
+                                ? "positive"
+                                : "negative"
+                        }">
+
+                            ${
+                                stock.change >= 0
+                                    ? "+"
+                                    : ""
+                            }
+
+                            ${stock.change.toFixed(2)}%
+
+                        </small>
+
+                    </div>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        selectStock(
+                            stock
                         );
 
-
-                    if (
-                        action === "left"
-                    ) {
-
-                        chartOffset +=
-                            movement;
                     }
-
-
-                    if (
-                        action === "right"
-                    ) {
-
-                        chartOffset =
-                            Math.max(
-                                0,
-                                chartOffset -
-                                movement
-                            );
-                    }
-
-
-                    drawCandlestickChart();
-                }
-            );
-        });
-}
-
-
-/* =========================================================
-   DRAG / PAN
-   ========================================================= */
-
-function bindChartPan() {
-
-    const chart =
-        document.querySelector(
-            ".stock-chart"
-        );
-
-    if (!chart) return;
-
-
-    if (
-        chart.dataset.panBound === "true"
-    ) {
-        return;
-    }
-
-
-    chart.dataset.panBound =
-        "true";
-
-
-    chart.addEventListener(
-        "pointerdown",
-        event => {
-
-            if (
-                event.target.closest(
-                    ".ideon-chart-zoom"
-                )
-            ) {
-                return;
-            }
-
-
-            isDraggingChart = true;
-
-            dragStartX =
-                event.clientX;
-
-            dragStartOffset =
-                chartOffset;
-
-
-            chart.setPointerCapture?.(
-                event.pointerId
-            );
-
-
-            chart.classList.add(
-                "dragging"
-            );
-        }
-    );
-
-
-    chart.addEventListener(
-        "pointermove",
-        event => {
-
-            if (!isDraggingChart) {
-                return;
-            }
-
-
-            const distance =
-                event.clientX -
-                dragStartX;
-
-
-            const width =
-                chart.clientWidth ||
-                800;
-
-
-            const visibleCount =
-                Math.max(
-                    8,
-                    Math.floor(
-                        liveChartCandles.length /
-                        chartZoom
-                    )
                 );
 
 
-            const candlesPerPixel =
-                visibleCount /
-                width;
-
-
-            chartOffset =
-                Math.round(
-                    dragStartOffset -
-                    distance *
-                    candlesPerPixel
+                container.appendChild(
+                    button
                 );
 
-
-            const maxOffset =
-                Math.max(
-                    0,
-                    liveChartCandles.length -
-                    visibleCount
-                );
-
-
-            chartOffset =
-                Math.max(
-                    0,
-                    Math.min(
-                        chartOffset,
-                        maxOffset
-                    )
-                );
-
-
-            drawCandlestickChart();
-        }
-    );
-
-
-    function stopDragging() {
-
-        isDraggingChart = false;
-
-        chart.classList.remove(
-            "dragging"
-        );
-    }
-
-
-    chart.addEventListener(
-        "pointerup",
-        stopDragging
-    );
-
-
-    chart.addEventListener(
-        "pointercancel",
-        stopDragging
-    );
-
-
-    chart.addEventListener(
-        "pointerleave",
-        stopDragging
-    );
-}
-
-
-/* =========================================================
-   RANGE BUTTONS
-   ========================================================= */
-
-function setupRangeButtons() {
-
-    document
-        .querySelectorAll(
-            ".chart-range button"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    selectedRange =
-                        button.dataset.range ||
-                        button.textContent.trim();
-
-
-                    document
-                        .querySelectorAll(
-                            ".chart-range button"
-                        )
-                        .forEach(btn => {
-
-                            btn.classList.toggle(
-                                "active",
-                                btn === button
-                            );
-                        });
-
-
-                    chartZoom = 1;
-
-                    chartOffset = 0;
-
-
-                    generateSampleCandles();
-
-                    drawCandlestickChart();
-                }
-            );
-        });
-}
-
-
-/* =========================================================
-   WATCHLIST
-   ========================================================= */
-
-function renderWatchlist() {
-
-    const container =
-        document.querySelector(
-            ".ideon-watchlist"
-        );
-
-    if (!container) return;
-
-
-    let toggle =
-        document.getElementById(
-            "watchlistToggle"
-        );
-
-
-    let content =
-        document.getElementById(
-            "watchlistContent"
-        );
-
-
-    let items =
-        document.getElementById(
-            "watchlistItems"
-        );
-
-
-    if (!toggle) {
-
-        toggle =
-            document.createElement("button");
-
-        toggle.id =
-            "watchlistToggle";
-
-        toggle.className =
-            "ideon-watchlist-toggle";
-
-        container.prepend(toggle);
-    }
-
-
-    if (!content) {
-
-        content =
-            document.createElement("div");
-
-        content.id =
-            "watchlistContent";
-
-        content.className =
-            "ideon-watchlist-content";
-
-        container.appendChild(content);
-    }
-
-
-    if (!items) {
-
-        items =
-            document.createElement("div");
-
-        items.id =
-            "watchlistItems";
-
-        items.className =
-            "ideon-watchlist-items";
-
-        content.appendChild(items);
-    }
-
-
-    const list =
-        getWatchlist();
-
-
-    toggle.innerHTML = `
-        <span>
-            Watchlist
-            <small>${list.length}</small>
-        </span>
-
-        <span class="watchlist-arrow">
-            ${
-                container.dataset.expanded === "true"
-                    ? "▲"
-                    : "▼"
-            }
-        </span>
-    `;
-
-
-    if (
-        toggle.dataset.bound !== "true"
-    ) {
-
-        toggle.dataset.bound =
-            "true";
-
-
-        toggle.addEventListener(
-            "click",
-            () => {
-
-                const expanded =
-                    container.dataset.expanded === "true";
-
-
-                container.dataset.expanded =
-                    expanded
-                        ? "false"
-                        : "true";
-
-
-                renderWatchlist();
-            }
-        );
-    }
-
-
-    content.style.display =
-        container.dataset.expanded === "true"
-            ? "block"
-            : "none";
-
-
-    items.innerHTML = "";
-
-
-    if (!list.length) {
-
-        items.innerHTML = `
-            <div class="watchlist-empty">
-                No stocks in watchlist.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    list.forEach(symbol => {
-
-        const stock =
-            findStock(symbol);
-
-        if (!stock) return;
-
-
-        const button =
-            document.createElement("button");
-
-        button.className =
-            "ideon-watch-item";
-
-
-        button.innerHTML = `
-            <span>
-                <strong>
-                    ${escapeHTML(stock.symbol)}
-                </strong>
-
-                <small>
-                    ${escapeHTML(stock.name)}
-                </small>
-            </span>
-
-            <span>
-                ${money(stock.price)}
-            </span>
-        `;
-
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                selectStock(stock);
             }
         );
 
-
-        items.appendChild(button);
-    });
-}
-
-
-/* =========================================================
-   ADD WATCHLIST
-   ========================================================= */
-
-function addToWatchlist(symbol) {
-
-    const stock =
-        findStock(symbol);
-
-    if (!stock) return;
-
-
-    const list =
-        getWatchlist();
-
-
-    if (
-        list.includes(
-            stock.symbol
-        )
-    ) {
-        return;
     }
 
 
-    list.push(
-        stock.symbol
-    );
+    /* =====================================================
+       PORTFOLIO RENDER
+       ===================================================== */
 
+    function renderPortfolio() {
 
-    saveWatchlist(list);
+        const portfolio =
+            getPortfolio();
 
-    renderWatchlist();
-}
 
+        let invested = 0;
 
-/* =========================================================
-   REMOVE WATCHLIST
-   ========================================================= */
+        let marketValue = 0;
 
-function removeFromWatchlist(symbol) {
 
-    const list =
-        getWatchlist().filter(
-            item =>
-                item !==
-                String(symbol)
-                    .toUpperCase()
-        );
-
-
-    saveWatchlist(list);
-
-    renderWatchlist();
-}
-
-
-/* =========================================================
-   PORTFOLIO VALUE
-   ========================================================= */
-
-function calculatePortfolioValue() {
-
-    const portfolio =
-        getPortfolio();
-
-
-    let total =
-        Number(portfolio.cash) || 0;
-
-
-    Object.entries(
-        portfolio.holdings
-    ).forEach(
-        ([symbol, holding]) => {
-
-            const stock =
-                findStock(symbol);
-
-            if (!stock) return;
-
-
-            total +=
-                Number(holding.quantity || 0) *
-                Number(stock.price || 0);
-        }
-    );
-
-
-    return total;
-}
-
-
-/* =========================================================
-   INVESTED VALUE
-   ========================================================= */
-
-function calculatePortfolioInvested() {
-
-    const portfolio =
-        getPortfolio();
-
-
-    let invested = 0;
-
-
-    Object.values(
-        portfolio.holdings
-    ).forEach(holding => {
-
-        invested +=
-            Number(
-                holding.quantity || 0
-            ) *
-            Number(
-                holding.averagePrice || 0
-            );
-    });
-
-
-    return invested;
-}
-
-
-/* =========================================================
-   RENDER PORTFOLIO
-   ========================================================= */
-
-function renderPortfolio() {
-
-    const portfolio =
-        getPortfolio();
-
-
-    const total =
-        calculatePortfolioValue();
-
-
-    const invested =
-        calculatePortfolioInvested();
-
-
-    const pnl =
-        total -
-        STARTING_BALANCE;
-
-
-    const pnlPercent =
-        (
-            pnl /
-            STARTING_BALANCE
-        ) *
-        100;
-
-
-    /* HERO */
-
-    const hero =
-        document.getElementById(
-            "heroPortfolioValue"
-        );
-
-
-    if (hero) {
-
-        hero.textContent =
-            money(total);
-    }
-
-
-    /* TOTAL */
-
-    const totalElement =
-        document.querySelector(
-            ".portfolio-total-value"
-        );
-
-
-    if (totalElement) {
-
-        totalElement.textContent =
-            money(total);
-    }
-
-
-    /* CASH */
-
-    const cashElement =
-        document.querySelector(
-            ".portfolio-cash"
-        );
-
-
-    if (cashElement) {
-
-        cashElement.textContent =
-            money(portfolio.cash);
-    }
-
-
-    /* INVESTED */
-
-    const investedElement =
-        document.querySelector(
-            ".portfolio-invested"
-        );
-
-
-    if (investedElement) {
-
-        investedElement.textContent =
-            money(invested);
-    }
-
-
-    /* P&L */
-
-    const pnlElement =
-        document.querySelector(
-            ".portfolio-pnl"
-        );
-
-
-    if (pnlElement) {
-
-        pnlElement.textContent =
-            `${pnl >= 0 ? "+" : ""}${money(pnl)}`;
-
-
-        pnlElement.classList.toggle(
-            "positive",
-            pnl >= 0
-        );
-
-
-        pnlElement.classList.toggle(
-            "negative",
-            pnl < 0
-        );
-    }
-
-
-    /* RETURN */
-
-    const returnElement =
-        document.querySelector(
-            ".portfolio-return"
-        );
-
-
-    if (returnElement) {
-
-        returnElement.textContent =
-            `${pnlPercent >= 0 ? "+" : ""}${pnlPercent.toFixed(2)}%`;
-
-
-        returnElement.classList.toggle(
-            "positive",
-            pnlPercent >= 0
-        );
-
-
-        returnElement.classList.toggle(
-            "negative",
-            pnlPercent < 0
-        );
-    }
-
-
-    renderHoldings();
-}
-
-
-/* =========================================================
-   HOLDINGS
-   ========================================================= */
-
-function renderHoldings() {
-
-    const container =
-        document.querySelector(
-            ".portfolio-holdings"
-        );
-
-
-    if (!container) return;
-
-
-    let list =
-        container.querySelector(
-            ".ideon-holdings"
-        );
-
-
-    if (!list) {
-
-        list =
-            document.createElement("div");
-
-        list.className =
-            "ideon-holdings";
-
-        container.appendChild(list);
-    }
-
-
-    const portfolio =
-        getPortfolio();
-
-
-    const holdings =
         Object.entries(
             portfolio.holdings
-        ).filter(
-            ([, holding]) =>
-                Number(
-                    holding.quantity
-                ) > 0
+        ).forEach(
+            ([symbol, holding]) => {
+
+                const stock =
+                    stocks[symbol];
+
+
+                if (!stock) return;
+
+
+                const quantity =
+                    Number(
+                        holding.quantity
+                    ) || 0;
+
+
+                const averagePrice =
+                    Number(
+                        holding.avgPrice
+                    ) || stock.price;
+
+
+                invested +=
+
+                    quantity *
+                    averagePrice;
+
+
+                marketValue +=
+
+                    quantity *
+                    stock.price;
+
+            }
         );
 
 
-    if (!holdings.length) {
+        const totalValue =
 
-        list.innerHTML = `
-            <div class="portfolio-empty">
-                You don't own any stocks yet.
-            </div>
-        `;
-
-        return;
-    }
+            portfolio.cash +
+            marketValue;
 
 
-    list.innerHTML = "";
+        const totalReturn =
+
+            totalValue -
+            STARTING_BALANCE;
 
 
-    holdings.forEach(
-        ([symbol, holding]) => {
+        const returnPercent =
 
-            const stock =
-                findStock(symbol);
+            (
+                totalReturn /
+                STARTING_BALANCE
+            ) *
 
-            if (!stock) return;
-
-
-            const quantity =
-                Number(
-                    holding.quantity
-                ) || 0;
+            100;
 
 
-            const averagePrice =
-                Number(
-                    holding.averagePrice
-                ) || 0;
+        /* TOTAL VALUE */
+
+        const totalElement =
+            document.querySelector(
+                ".portfolio-total-value"
+            );
 
 
-            const currentPrice =
-                Number(
-                    stock.price
-                ) || 0;
+        if (totalElement) {
+
+            totalElement.textContent =
+                money(totalValue);
+        }
 
 
-            const value =
-                quantity *
-                currentPrice;
+        /* RETURN */
+
+        const returnElement =
+            document.querySelector(
+                ".portfolio-return"
+            );
 
 
-            const pnl =
-                quantity *
-                (
-                    currentPrice -
-                    averagePrice
+        if (returnElement) {
+
+            returnElement.textContent =
+
+                `${totalReturn >= 0 ? "+" : ""}${money(
+                    totalReturn
+                )}`;
+        }
+
+
+        /* STATS */
+
+        const stats =
+            document.querySelectorAll(
+                ".portfolio-stat strong"
+            );
+
+
+        if (stats[0]) {
+
+            stats[0].textContent =
+                money(
+                    portfolio.cash
+                );
+        }
+
+
+        if (stats[1]) {
+
+            stats[1].textContent =
+                money(
+                    invested
+                );
+        }
+
+
+        if (stats[2]) {
+
+            stats[2].textContent =
+
+                `${returnPercent >= 0 ? "+" : ""}${returnPercent.toFixed(2)}%`;
+        }
+
+
+        /* HERO BALANCE */
+
+        const hero =
+            document.getElementById(
+                "heroPortfolioValue"
+            );
+
+
+        if (hero) {
+
+            hero.textContent =
+                money(totalValue);
+        }
+
+
+        /* HOLDINGS */
+
+        const holdingsSection =
+            document.querySelector(
+                ".portfolio-holdings"
+            );
+
+
+        if (!holdingsSection) return;
+
+
+        let holdingsContainer =
+            holdingsSection.querySelector(
+                ".ideon-holdings"
+            );
+
+
+        if (!holdingsContainer) {
+
+            holdingsContainer =
+                document.createElement(
+                    "div"
                 );
 
+            holdingsContainer.className =
+                "ideon-holdings";
 
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "ideon-holding";
-
-
-            item.innerHTML = `
-                <div>
-                    <strong>
-                        ${escapeHTML(stock.symbol)}
-                    </strong>
-
-                    <small>
-                        ${quantity} shares
-                    </small>
-                </div>
-
-                <div>
-                    <strong>
-                        ${money(value)}
-                    </strong>
-
-                    <small class="${
-                        pnl >= 0
-                            ? "positive"
-                            : "negative"
-                    }">
-                        ${pnl >= 0 ? "+" : ""}
-                        ${money(pnl)}
-                    </small>
-                </div>
-            `;
+            holdingsSection.appendChild(
+                holdingsContainer
+            );
+        }
 
 
-            item.addEventListener(
-                "click",
-                () => {
+        holdingsContainer.innerHTML = "";
 
-                    selectStock(stock);
-                }
+
+        let hasHoldings = false;
+
+
+        Object.entries(
+            portfolio.holdings
+        ).forEach(
+            ([symbol, holding]) => {
+
+                const stock =
+                    stocks[symbol];
+
+
+                if (!stock) return;
+
+
+                const quantity =
+                    Number(
+                        holding.quantity
+                    ) || 0;
+
+
+                if (quantity <= 0) return;
+
+
+                hasHoldings = true;
+
+
+                const averagePrice =
+                    Number(
+                        holding.avgPrice
+                    ) || stock.price;
+
+
+                const currentValue =
+                    quantity *
+                    stock.price;
+
+
+                const pnl =
+
+                    (
+                        stock.price -
+                        averagePrice
+                    )
+
+                    *
+
+                    quantity;
+
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "ideon-holding";
+
+
+                row.innerHTML = `
+
+                    <div>
+
+                        <strong>
+                            ${escapeHTML(
+                                symbol
+                            )}
+                        </strong>
+
+                        <small>
+                            ${quantity} shares
+                            · Avg ${money(
+                                averagePrice
+                            )}
+                        </small>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${money(
+                                currentValue
+                            )}
+                        </strong>
+
+                        <small class="${
+                            pnl >= 0
+                                ? "positive"
+                                : "negative"
+                        }">
+
+                            ${
+                                pnl >= 0
+                                    ? "+"
+                                    : "-"
+                            }
+
+                            ${money(
+                                Math.abs(pnl)
+                            )}
+
+                        </small>
+
+                    </div>
+
+                `;
+
+
+                holdingsContainer.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        const empty =
+            holdingsSection.querySelector(
+                ".portfolio-empty"
             );
 
 
-            list.appendChild(item);
+        if (empty) {
+
+            empty.style.display =
+                hasHoldings
+                    ? "none"
+                    : "block";
         }
-    );
-}
 
-
-/* =========================================================
-   TRADE PANEL
-   ========================================================= */
-
-function updateTradePanel() {
-
-    if (!selectedStock) return;
-
-
-    const price =
-        document.querySelector(
-            ".trade-current-price"
-        );
-
-
-    const change =
-        document.querySelector(
-            ".trade-current-change"
-        );
-
-
-    if (price) {
-
-        price.textContent =
-            money(selectedStock.price);
     }
 
 
-    if (change) {
+    /* =====================================================
+       TRADE PANEL
+       ===================================================== */
 
-        const percent =
-            Number(
-                selectedStock.change
-            ) || 0;
+    function updateTradePanel() {
 
-
-        change.textContent =
-            `${percent >= 0 ? "+" : ""}${percent.toFixed(2)}%`;
+        const stock =
+            selectedStock;
 
 
-        change.classList.toggle(
-            "positive",
-            percent >= 0
-        );
-
-
-        change.classList.toggle(
-            "negative",
-            percent < 0
-        );
-    }
-
-
-    updateOrderEstimate();
-}
-
-
-/* =========================================================
-   TRADE CONTROLS
-   ========================================================= */
-
-function setupTradeControls() {
-
-    const buySide =
-        document.getElementById(
-            "buySideBtn"
-        );
-
-
-    const sellSide =
-        document.getElementById(
-            "sellSideBtn"
-        );
-
-
-    const marketOrder =
-        document.getElementById(
-            "marketOrderBtn"
-        );
-
-
-    const limitOrder =
-        document.getElementById(
-            "limitOrderBtn"
-        );
-
-
-    buySide?.addEventListener(
-        "click",
-        () => {
-
-            tradeSide = "BUY";
-
-            buySide.classList.add(
-                "active"
+        const info =
+            document.querySelector(
+                ".trade-info"
             );
 
-            sellSide?.classList.remove(
-                "active"
+
+        if (!info) return;
+
+
+        const name =
+            info.querySelector(
+                "strong"
             );
 
-            updateOrderEstimate();
+
+        const code =
+            info.querySelector(
+                "small"
+            );
+
+
+        const price =
+            document.querySelector(
+                ".trade-current-price"
+            );
+
+
+        const change =
+            document.querySelector(
+                ".trade-current-change"
+            );
+
+
+        if (name) {
+
+            name.textContent =
+                stock.name;
         }
-    );
 
 
-    sellSide?.addEventListener(
-        "click",
-        () => {
+        if (code) {
 
-            tradeSide = "SELL";
+            code.textContent =
 
-            sellSide.classList.add(
-                "active"
-            );
-
-            buySide?.classList.remove(
-                "active"
-            );
-
-            updateOrderEstimate();
+                `${stock.symbol}.${stock.exchange} · Virtual trading only`;
         }
-    );
 
 
-    marketOrder?.addEventListener(
-        "click",
-        () => {
+        if (price) {
 
-            orderType = "MARKET";
-
-            marketOrder.classList.add(
-                "active"
-            );
-
-            limitOrder?.classList.remove(
-                "active"
-            );
-
-            toggleLimitPrice();
-
-            updateOrderEstimate();
+            price.textContent =
+                money(stock.price);
         }
-    );
 
 
-    limitOrder?.addEventListener(
-        "click",
-        () => {
+        if (change) {
 
-            orderType = "LIMIT";
+            change.textContent =
 
-            limitOrder.classList.add(
-                "active"
+                `${stock.change >= 0 ? "+" : ""}${stock.change.toFixed(2)}%`;
+
+
+            change.classList.toggle(
+                "positive",
+                stock.change >= 0
             );
 
-            marketOrder?.classList.remove(
-                "active"
+
+            change.classList.toggle(
+                "negative",
+                stock.change < 0
             );
-
-            toggleLimitPrice();
-
-            updateOrderEstimate();
         }
-    );
 
 
-    document
-        .getElementById("tradeQuantity")
-        ?.addEventListener(
-            "input",
-            updateOrderEstimate
-        );
-
-
-    document
-        .getElementById("limitPrice")
-        ?.addEventListener(
-            "input",
-            updateOrderEstimate
-        );
-
-
-    document
-        .getElementById("buyStockBtn")
-        ?.addEventListener(
-            "click",
-            () => executeTrade("BUY")
-        );
-
-
-    document
-        .getElementById("sellStockBtn")
-        ?.addEventListener(
-            "click",
-            () => executeTrade("SELL")
-        );
-
-
-    toggleLimitPrice();
-
-    updateOrderEstimate();
-}
-
-
-/* =========================================================
-   LIMIT PRICE
-   ========================================================= */
-
-function toggleLimitPrice() {
-
-    const group =
-        document.getElementById(
-            "limitPriceGroup"
-        );
-
-
-    if (!group) return;
-
-
-    group.style.display =
-        orderType === "LIMIT"
-            ? ""
-            : "none";
-}
-
-
-/* =========================================================
-   ORDER ESTIMATE
-   ========================================================= */
-
-function updateOrderEstimate() {
-
-    if (!selectedStock) return;
-
-
-    const quantity =
-        Number(
+        const limitPrice =
             document.getElementById(
-                "tradeQuantity"
-            )?.value || 0
-        );
+                "limitPrice"
+            );
 
 
-    let price =
-        Number(
-            selectedStock.price
-        );
+        if (
+            limitPrice &&
+            document.activeElement !==
+            limitPrice
+        ) {
+
+            limitPrice.value =
+                stock.price.toFixed(2);
+        }
 
 
-    if (
-        orderType === "LIMIT"
-    ) {
+        updateOrderPreview();
+
+    }
+
+
+    /* =====================================================
+       ORDER PREVIEW
+       ===================================================== */
+
+    function updateOrderPreview() {
+
+        const quantity =
+            Math.max(
+
+                0,
+
+                Number(
+
+                    document.getElementById(
+                        "tradeQuantity"
+                    )?.value
+
+                ) || 0
+
+            );
+
 
         const limit =
             Number(
+
                 document.getElementById(
                     "limitPrice"
                 )?.value
-            );
+
+            ) || selectedStock.price;
 
 
-        if (
-            Number.isFinite(limit) &&
-            limit > 0
-        ) {
+        const unitPrice =
 
-            price =
-                limit;
-        }
-    }
+            orderType === "LIMIT"
+
+                ? limit
+
+                : selectedStock.price;
 
 
-    const total =
-        Math.max(
-            0,
-            quantity
-        ) *
-        price;
+        const orderValue =
+
+            quantity *
+            unitPrice;
 
 
-    const estimate =
-        document.getElementById(
-            "estimatedOrderValue"
-        );
+        const portfolio =
+            getPortfolio();
 
 
-    if (estimate) {
-
-        estimate.textContent =
-            money(total);
-    }
-
-
-    const cash =
-        document.getElementById(
-            "availableOrderCash"
-        );
-
-
-    if (cash) {
-
-        cash.textContent =
-            money(
-                getPortfolio().cash
-            );
-    }
-}
-
-
-/* =========================================================
-   EXECUTE TRADE
-   ========================================================= */
-
-function executeTrade(side) {
-
-    if (!selectedStock) {
-
-        showTradeMessage(
-            "Select a stock first.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const quantity =
-        Number(
+        const estimated =
             document.getElementById(
-                "tradeQuantity"
-            )?.value || 0
-        );
+                "estimatedOrderValue"
+            );
 
 
-    if (
-        !Number.isFinite(quantity) ||
-        quantity <= 0
-    ) {
+        const cash =
+            document.getElementById(
+                "availableOrderCash"
+            );
 
-        showTradeMessage(
-            "Enter a valid quantity.",
-            "error"
-        );
 
-        return;
+        if (estimated) {
+
+            estimated.textContent =
+                money(orderValue);
+        }
+
+
+        if (cash) {
+
+            cash.textContent =
+                money(
+                    portfolio.cash
+                );
+        }
+
+
+        const buyButton =
+            document.getElementById(
+                "buyStockBtn"
+            );
+
+
+        const sellButton =
+            document.getElementById(
+                "sellStockBtn"
+            );
+
+
+        if (buyButton) {
+
+            buyButton.textContent =
+
+                `BUY ${selectedStock.symbol} →`;
+        }
+
+
+        if (sellButton) {
+
+            sellButton.textContent =
+
+                `SELL ${selectedStock.symbol} →`;
+        }
+
     }
 
 
-    let price =
-        Number(
-            selectedStock.price
-        );
+    /* =====================================================
+       EXECUTE VIRTUAL TRADE
+       ===================================================== */
+
+    function executeTrade(side) {
+
+        const quantity =
+
+            Math.floor(
+
+                Number(
+
+                    document.getElementById(
+                        "tradeQuantity"
+                    )?.value
+
+                ) || 0
+
+            );
 
 
-    if (
-        orderType === "LIMIT"
-    ) {
+        if (quantity < 1) {
+
+            showTradeMessage(
+
+                "Enter a valid quantity.",
+
+                "error"
+
+            );
+
+            return;
+        }
+
 
         const limitPrice =
+
             Number(
+
                 document.getElementById(
                     "limitPrice"
                 )?.value
-            );
+
+            ) || selectedStock.price;
 
 
-        if (
-            !Number.isFinite(limitPrice) ||
-            limitPrice <= 0
-        ) {
+        const price =
 
-            showTradeMessage(
-                "Enter a valid limit price.",
-                "error"
-            );
+            orderType === "LIMIT"
 
-            return;
-        }
+                ? limitPrice
+
+                : selectedStock.price;
 
 
-        price =
-            limitPrice;
-    }
+        const portfolio =
+            getPortfolio();
 
 
-    const total =
-        quantity *
-        price;
-
-
-    const portfolio =
-        getPortfolio();
-
-
-    const symbol =
-        selectedStock.symbol;
-
-
-    /* BUY */
-
-    if (side === "BUY") {
-
-        if (
-            total >
-            portfolio.cash
-        ) {
-
-            showTradeMessage(
-                "Not enough virtual cash for this order.",
-                "error"
-            );
-
-            return;
-        }
+        const symbol =
+            selectedStock.symbol;
 
 
         const existing =
-            portfolio.holdings[symbol] || {
+            portfolio.holdings[
+                symbol
+            ] || {
+
                 quantity: 0,
-                averagePrice: 0
+
+                avgPrice: 0
+
             };
 
 
@@ -2690,376 +2404,810 @@ function executeTrade(side) {
 
         const oldAverage =
             Number(
-                existing.averagePrice
+                existing.avgPrice
             ) || 0;
 
 
-        const newQuantity =
-            oldQuantity +
-            quantity;
+        /* ================= BUY ================= */
 
+        if (side === "BUY") {
 
-        const newAverage =
-            (
-                oldQuantity *
-                oldAverage +
+            const cost =
+
                 quantity *
-                price
-            ) /
-            newQuantity;
+                price;
 
 
-        portfolio.holdings[symbol] = {
+            if (
+                cost >
+                portfolio.cash
+            ) {
 
-            quantity:
-                newQuantity,
+                showTradeMessage(
 
-            averagePrice:
-                newAverage
-        };
+                    "Not enough virtual cash for this order.",
 
+                    "error"
 
-        portfolio.cash -=
-            total;
+                );
 
-
-        savePortfolio(
-            portfolio
-        );
+                return;
+            }
 
 
-        showTradeMessage(
-            `Bought ${quantity} ${symbol} shares for ${money(total)}.`,
-            "success"
-        );
-    }
+            const newQuantity =
+
+                oldQuantity +
+                quantity;
 
 
-    /* SELL */
+            const newAverage =
 
-    else {
+                (
 
-        const holding =
-            portfolio.holdings[symbol];
+                    (
+                        oldQuantity *
+                        oldAverage
+                    )
+
+                    +
+
+                    cost
+
+                )
+
+                /
+
+                newQuantity;
 
 
-        if (
-            !holding ||
-            Number(
-                holding.quantity
-            ) < quantity
-        ) {
+            portfolio.holdings[
+                symbol
+            ] = {
+
+                quantity:
+                    newQuantity,
+
+                avgPrice:
+                    newAverage
+
+            };
+
+
+            portfolio.cash -=
+                cost;
+
 
             showTradeMessage(
-                `You don't own enough ${symbol} shares.`,
-                "error"
+
+                `Bought ${quantity} ${symbol} for ${money(cost)}.`,
+
+                "success"
+
             );
 
-            return;
         }
 
 
-        holding.quantity =
-            Number(
-                holding.quantity
-            ) -
-            quantity;
+        /* ================= SELL ================= */
+
+        else {
+
+            if (
+                oldQuantity <
+                quantity
+            ) {
+
+                showTradeMessage(
+
+                    `You only hold ${oldQuantity} ${symbol}.`,
+
+                    "error"
+
+                );
+
+                return;
+            }
 
 
-        portfolio.cash +=
-            total;
+            const saleValue =
+
+                quantity *
+                price;
 
 
-        if (
-            holding.quantity <= 0
-        ) {
+            portfolio.cash +=
+                saleValue;
 
-            delete portfolio
-                .holdings[symbol];
+
+            const remaining =
+
+                oldQuantity -
+                quantity;
+
+
+            if (remaining <= 0) {
+
+                delete portfolio.holdings[
+                    symbol
+                ];
+
+            } else {
+
+                portfolio.holdings[
+                    symbol
+                ].quantity =
+                    remaining;
+
+            }
+
+
+            showTradeMessage(
+
+                `Sold ${quantity} ${symbol} for ${money(saleValue)}.`,
+
+                "success"
+
+            );
+
         }
 
 
         savePortfolio(
             portfolio
-        );
-
-
-        showTradeMessage(
-            `Sold ${quantity} ${symbol} shares for ${money(total)}.`,
-            "success"
-        );
-    }
-
-
-    renderPortfolio();
-
-    updateTradePanel();
-
-    updateOrderEstimate();
-}
-
-
-/* =========================================================
-   SEARCH SETUP
-   ========================================================= */
-
-function setupSearch() {
-
-    const input =
-        document.getElementById(
-            "stockSearch"
-        );
-
-
-    const button =
-        document.getElementById(
-            "searchStockBtn"
-        );
-
-
-    button?.addEventListener(
-        "click",
-        () => {
-
-            searchStocks(
-                input?.value
-            );
-        }
-    );
-
-
-    input?.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Enter"
-            ) {
-
-                searchStocks(
-                    input.value
-                );
-            }
-        }
-    );
-
-
-    input?.addEventListener(
-        "input",
-        removeSearchResults
-    );
-}
-
-
-/* =========================================================
-   GENERAL UI
-   ========================================================= */
-
-function setupGeneralUI() {
-
-    document.addEventListener(
-        "click",
-        event => {
-
-            const results =
-                document.getElementById(
-                    "marketSearchResults"
-                );
-
-
-            const input =
-                document.getElementById(
-                    "stockSearch"
-                );
-
-
-            if (
-                results &&
-                input &&
-                !event.target.closest(
-                    "#marketSearchResults"
-                ) &&
-                !event.target.closest(
-                    "#stockSearch"
-                )
-            ) {
-
-                results.remove();
-            }
-        }
-    );
-}
-
-
-/* =========================================================
-   RESIZE
-   ========================================================= */
-
-function setupResize() {
-
-    let timer;
-
-
-    window.addEventListener(
-        "resize",
-        () => {
-
-            clearTimeout(timer);
-
-
-            timer =
-                setTimeout(
-                    () => {
-
-                        if (
-                            liveChartCandles.length
-                        ) {
-
-                            drawCandlestickChart();
-                        }
-
-                    },
-                    150
-                );
-        }
-    );
-}
-
-
-/* =========================================================
-   RESET FUNCTIONS
-   ========================================================= */
-
-window.IDEONMarket = {
-
-    resetPortfolio() {
-
-        localStorage.removeItem(
-            PORTFOLIO_KEY
         );
 
 
         renderPortfolio();
 
-        updateTradePanel();
+        updateOrderPreview();
 
-        updateOrderEstimate();
+    }
+
+
+    /* =====================================================
+       RESET PORTFOLIO
+       ===================================================== */
+
+    function resetPortfolio() {
+
+        savePortfolio({
+
+            cash:
+                STARTING_BALANCE,
+
+            holdings: {}
+
+        });
+
+
+        renderPortfolio();
+
+        updateOrderPreview();
 
 
         showTradeMessage(
+
             "Virtual portfolio reset to ₹1,00,000.",
+
             "success"
+
         );
-    },
+
+    }
 
 
-    resetWatchlist() {
+    /* =====================================================
+       RESET WATCHLIST
+       ===================================================== */
 
-        localStorage.removeItem(
-            WATCHLIST_KEY
+    function resetWatchlist() {
+
+        saveWatchlist(
+            [
+                ...DEFAULT_WATCHLIST
+            ]
         );
 
 
         renderWatchlist();
 
-
-        showSearchMessage(
-            "Watchlist reset.",
-            "success"
-        );
-    },
+    }
 
 
-    getPortfolio,
+    /* =====================================================
+       INITIALIZE
+       ===================================================== */
 
-    getWatchlist,
+    function init() {
 
-    addToWatchlist,
+        /* ================= SEARCH ================= */
 
-    removeFromWatchlist,
-
-    selectStock
-};
-
-
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
-
-function initMarketLab() {
-
-    console.log(
-        "IDEON Market Lab started."
-    );
-
-
-    setupSearch();
-
-    setupRangeButtons();
-
-    setupTradeControls();
-
-    setupGeneralUI();
-
-    setupResize();
-
-
-    /* Default range */
-
-    document
-        .querySelectorAll(
-            ".chart-range button"
-        )
-        .forEach(button => {
-
-            const range =
-                button.dataset.range ||
-                button.textContent.trim();
-
-
-            button.classList.toggle(
-                "active",
-                range === selectedRange
+        const searchInput =
+            document.getElementById(
+                "stockSearch"
             );
-        });
 
 
-    /* Initial UI */
-
-    renderWatchlist();
-
-    renderPortfolio();
-
-    renderSelectedStock();
+        const searchButton =
+            document.getElementById(
+                "searchStockBtn"
+            );
 
 
-    /* Generate sample chart */
+        if (searchButton) {
 
-    generateSampleCandles();
+            searchButton.addEventListener(
 
-    drawCandlestickChart();
+                "click",
+
+                () => {
+
+                    searchStocks(
+                        searchInput?.value
+                    );
+
+                }
+
+            );
+
+        }
 
 
-    console.log(
-        "IDEON Market Lab ready."
-    );
-}
+        if (searchInput) {
+
+            searchInput.addEventListener(
+
+                "keydown",
+
+                event => {
+
+                    if (
+                        event.key ===
+                        "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                        searchStocks(
+                            searchInput.value
+                        );
+
+                    }
+
+                }
+
+            );
+
+        }
 
 
-/* =========================================================
-   START
-   ========================================================= */
+        /* ================= CLOSE SEARCH ================= */
 
-if (
-    document.readyState === "loading"
-) {
+        document.addEventListener(
+
+            "click",
+
+            event => {
+
+                if (
+
+                    !event.target.closest(
+                        ".market-search-section"
+                    )
+
+                    &&
+
+                    !event.target.closest(
+                        "#marketSearchResults"
+                    )
+
+                ) {
+
+                    removeSearchResults();
+
+                }
+
+            }
+
+        );
+
+
+        /* ================= WATCHLIST ================= */
+
+        const watchlistToggle =
+            document.getElementById(
+                "watchlistToggle"
+            );
+
+
+        if (watchlistToggle) {
+
+            watchlistToggle.addEventListener(
+
+                "click",
+
+                () => {
+
+                    const content =
+                        document.getElementById(
+                            "watchlistContent"
+                        );
+
+
+                    if (!content) return;
+
+
+                    const isOpen =
+
+                        content.style.display !==
+                        "none";
+
+
+                    content.style.display =
+
+                        isOpen
+                            ? "none"
+                            : "block";
+
+
+                    watchlistToggle.setAttribute(
+
+                        "aria-expanded",
+
+                        String(!isOpen)
+
+                    );
+
+                }
+
+            );
+
+        }
+
+
+        /* ================= RANGE BUTTONS ================= */
+
+        document
+            .querySelectorAll(
+                ".chart-range button"
+            )
+            .forEach(
+
+                button => {
+
+                    button.addEventListener(
+
+                        "click",
+
+                        () => {
+
+                            document
+                                .querySelectorAll(
+                                    ".chart-range button"
+                                )
+                                .forEach(
+                                    b =>
+                                        b.classList.remove(
+                                            "active"
+                                        )
+                                );
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            selectedRange =
+                                button.textContent.trim();
+
+
+                            chartZoom = 1;
+
+                            chartOffset = 0;
+
+
+                            generateSampleCandles();
+
+                            drawCandlestickChart();
+
+                        }
+
+                    );
+
+                }
+
+            );
+
+
+        /* ================= CHART CONTROLS ================= */
+
+        document
+            .querySelectorAll(
+                "[data-chart-action]"
+            )
+            .forEach(
+
+                button => {
+
+                    button.addEventListener(
+
+                        "click",
+
+                        () => {
+
+                            const action =
+                                button.dataset.chartAction;
+
+
+                            if (
+                                action ===
+                                "in"
+                            ) {
+
+                                chartZoom =
+
+                                    Math.min(
+
+                                        4,
+
+                                        chartZoom *
+                                        1.35
+
+                                    );
+
+                            }
+
+
+                            if (
+                                action ===
+                                "out"
+                            ) {
+
+                                chartZoom =
+
+                                    Math.max(
+
+                                        1,
+
+                                        chartZoom /
+                                        1.35
+
+                                    );
+
+                            }
+
+
+                            if (
+                                action ===
+                                "back"
+                            ) {
+
+                                chartOffset +=
+                                    8;
+
+                            }
+
+
+                            if (
+                                action ===
+                                "forward"
+                            ) {
+
+                                chartOffset =
+
+                                    Math.max(
+
+                                        0,
+
+                                        chartOffset -
+                                        8
+
+                                    );
+
+                            }
+
+
+                            if (
+                                action ===
+                                "reset"
+                            ) {
+
+                                chartZoom = 1;
+
+                                chartOffset = 0;
+
+                            }
+
+
+                            drawCandlestickChart();
+
+                        }
+
+                    );
+
+                }
+
+            );
+
+
+        /* ================= BUY / SELL ================= */
+
+        const buySideButton =
+            document.getElementById(
+                "buySideBtn"
+            );
+
+
+        const sellSideButton =
+            document.getElementById(
+                "sellSideBtn"
+            );
+
+
+        if (buySideButton) {
+
+            buySideButton.addEventListener(
+
+                "click",
+
+                () => {
+
+                    tradeSide = "BUY";
+
+                    buySideButton.classList.add(
+                        "active"
+                    );
+
+                    sellSideButton?.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            );
+
+        }
+
+
+        if (sellSideButton) {
+
+            sellSideButton.addEventListener(
+
+                "click",
+
+                () => {
+
+                    tradeSide = "SELL";
+
+                    sellSideButton.classList.add(
+                        "active"
+                    );
+
+                    buySideButton?.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            );
+
+        }
+
+
+        /* ================= ORDER TYPE ================= */
+
+        const marketButton =
+            document.getElementById(
+                "marketOrderBtn"
+            );
+
+
+        const limitButton =
+            document.getElementById(
+                "limitOrderBtn"
+            );
+
+
+        const limitGroup =
+            document.getElementById(
+                "limitPriceGroup"
+            );
+
+
+        if (marketButton) {
+
+            marketButton.addEventListener(
+
+                "click",
+
+                () => {
+
+                    orderType =
+                        "MARKET";
+
+
+                    marketButton.classList.add(
+                        "active"
+                    );
+
+
+                    limitButton?.classList.remove(
+                        "active"
+                    );
+
+
+                    if (limitGroup) {
+
+                        limitGroup.style.display =
+                            "none";
+
+                    }
+
+
+                    updateOrderPreview();
+
+                }
+
+            );
+
+        }
+
+
+        if (limitButton) {
+
+            limitButton.addEventListener(
+
+                "click",
+
+                () => {
+
+                    orderType =
+                        "LIMIT";
+
+
+                    limitButton.classList.add(
+                        "active"
+                    );
+
+
+                    marketButton?.classList.remove(
+                        "active"
+                    );
+
+
+                    if (limitGroup) {
+
+                        limitGroup.style.display =
+                            "block";
+
+                    }
+
+
+                    updateOrderPreview();
+
+                }
+
+            );
+
+        }
+
+
+        /* ================= ORDER INPUTS ================= */
+
+        document
+            .getElementById(
+                "tradeQuantity"
+            )
+            ?.addEventListener(
+
+                "input",
+
+                updateOrderPreview
+
+            );
+
+
+        document
+            .getElementById(
+                "limitPrice"
+            )
+            ?.addEventListener(
+
+                "input",
+
+                updateOrderPreview
+
+            );
+
+
+        /* ================= TRADE BUTTONS ================= */
+
+        document
+            .getElementById(
+                "buyStockBtn"
+            )
+            ?.addEventListener(
+
+                "click",
+
+                () =>
+                    executeTrade(
+                        "BUY"
+                    )
+
+            );
+
+
+        document
+            .getElementById(
+                "sellStockBtn"
+            )
+            ?.addEventListener(
+
+                "click",
+
+                () =>
+                    executeTrade(
+                        "SELL"
+                    )
+
+            );
+
+
+        /* ================= RESIZE ================= */
+
+        window.addEventListener(
+
+            "resize",
+
+            () => {
+
+                drawCandlestickChart();
+
+            }
+
+        );
+
+
+        /* ================= FIRST LOAD ================= */
+
+        renderWatchlist();
+
+        renderSelectedStock();
+
+        generateSampleCandles();
+
+        drawCandlestickChart();
+
+
+        /* ================= DEBUG / RESET ================= */
+
+        window.IDEONMarket = {
+
+            resetPortfolio,
+
+            resetWatchlist,
+
+            getStocks: () =>
+                ({ ...stocks })
+
+        };
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
 
     document.addEventListener(
+
         "DOMContentLoaded",
-        initMarketLab
+
+        init
+
     );
 
-} else {
-
-    initMarketLab();
-}
+})();
