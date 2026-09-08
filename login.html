@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | IDEON</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <nav class="navbar">
+        <a href="Home.html" class="brand">
+            <img src="ideon-icon.png" alt="IDEON">
+            <span>IDEON</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="Home.html">Home</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="signup.html">Create Account</a>
+        </div>
+    </nav>
+
+    <main class="login-section">
+
+        <div class="login-container">
+
+            <div class="login-info">
+                <div class="eyebrow">
+                    <span></span>
+                    WELCOME BACK
+                </div>
+
+                <h1>
+                    Your ideas are<br>
+                    <span>waiting for you.</span>
+                </h1>
+
+                <p>
+                    Sign in to continue exploring Idea Lab,
+                    Market Lab, virtual trading and your IDEON journey.
+                </p>
+
+                <div class="feature-list">
+                    <div class="feature">
+                        <div class="feature-icon">✦</div>
+                        <div>
+                            <strong>Idea Lab</strong>
+                            <p>Turn ideas into practical business concepts.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">↗</div>
+                        <div>
+                            <strong>Market Lab</strong>
+                            <p>Learn markets with virtual ₹1,00,000.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">◈</div>
+                        <div>
+                            <strong>Your account</strong>
+                            <p>Start free and upgrade whenever you want.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-card">
+
+                <div class="card-header">
+                    <div class="mobile-logo">
+                        <img src="ideon-icon.png" alt="IDEON">
+                    </div>
+
+                    <h2>Welcome back</h2>
+                    <p>Sign in to your IDEON account.</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="password-label">
+                            <label for="password">Password</label>
+                            <button type="button" id="togglePassword">
+                                SHOW
+                            </button>
+                        </div>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-message" id="formMessage"></div>
+
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        <span>Sign In</span>
+                        <span class="arrow">→</span>
+                    </button>
+
+                </form>
+
+                <div class="forgot-note">
+                    Forgot your password?
+                    <button type="button" id="resetPassword">
+                        Reset it
+                    </button>
+                </div>
+
+                <div class="signup-note">
+                    Don't have an account?
+                    <a href="signup.html">Create one for free</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <span>© 2026 IDEON</span>
+        <span>Where Ideas Take Shape.</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const SUPABASE_URL =
+            "https://ceedwhwnpthqdzhtkemy.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_bGc_PDepTuhmmvVG1WMPUQ_-MlnP8hO";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const formMessage =
+            document.getElementById("formMessage");
+
+        const loginBtn =
+            document.getElementById("loginBtn");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        document
+            .getElementById("togglePassword")
+            .addEventListener("click", function () {
+
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    this.textContent = "HIDE";
+                } else {
+                    passwordInput.type = "password";
+                    this.textContent = "SHOW";
+                }
+            });
+
+        loginForm.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                passwordInput.value;
+
+            if (!email || !password) {
+                showMessage(
+                    "Please enter your email and password.",
+                    "error"
+                );
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML =
+                "<span>Signing in...</span>";
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+                if (error) {
+                    throw error;
+                }
+
+                const user = data.user;
+
+                const metadata =
+                    user.user_metadata || {};
+
+                localStorage.setItem(
+                    "ideonUser",
+                    JSON.stringify({
+                        id: user.id,
+                        name: metadata.full_name || "IDEON User",
+                        email: user.email,
+                        plan: metadata.plan || "free",
+                        selectedPlan: metadata.selected_plan || "free"
+                    })
+                );
+
+                showMessage(
+                    "Signed in successfully! Welcome back.",
+                    "success"
+                );
+
+                loginBtn.innerHTML =
+                    "<span>Signed In ✓</span>";
+
+                setTimeout(function () {
+                    window.location.href = "Home.html";
+                }, 700);
+
+            } catch (error) {
+
+                console.error("IDEON login error:", error);
+
+                let message =
+                    "Unable to sign in. Please check your details.";
+
+                const errorText =
+                    (error.message || "").toLowerCase();
+
+                if (
+                    errorText.includes("invalid login credentials")
+                ) {
+                    message =
+                        "Incorrect email or password.";
+                } else if (
+                    errorText.includes("email not confirmed")
+                ) {
+                    message =
+                        "Please confirm your email before signing in.";
+                } else if (
+                    errorText.includes("too many requests")
+                ) {
+                    message =
+                        "Too many attempts. Please wait a moment and try again.";
+                }
+
+                showMessage(message, "error");
+
+                loginBtn.disabled = false;
+                loginBtn.innerHTML =
+                    "<span>Sign In</span><span class='arrow'>→</span>";
+            }
+        });
+
+        document
+            .getElementById("resetPassword")
+            .addEventListener("click", async function () {
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                if (!email) {
+                    showMessage(
+                        "Enter your email address first, then click Reset it.",
+                        "info"
+                    );
+                    return;
+                }
+
+                try {
+
+                    const { error } =
+                        await supabaseClient.auth.resetPasswordForEmail(
+                            email,
+                            {
+                                redirectTo:
+                                    window.location.origin + "/login.html"
+                            }
+                        );
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    showMessage(
+                        "Password reset email sent. Check your inbox.",
+                        "success"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "IDEON password reset error:",
+                        error
+                    );
+
+                    showMessage(
+                        "We couldn't send the reset email. Please try again.",
+                        "error"
+                    );
+                }
+            });
+
+        function showMessage(message, type) {
+
+            formMessage.textContent = message;
+
+            formMessage.className =
+                "form-message " + type;
+        }
+    </script>
+
+</body>
+</html>
