@@ -149,11 +149,19 @@ function addMessage(text, type) {
     bubble.className =
         "message-bubble";
 
+let formattedText = escapeHTML(text);
 
-    bubble.innerHTML =
-        escapeHTML(text)
-            .replace(/\n/g, "<br>");
+/* Basic Markdown formatting */
+formattedText = formattedText
+    .replace(/^### (.*)$/gm, "<strong>$1</strong>")
+    .replace(/^## (.*)$/gm, "<strong>$1</strong>")
+    .replace(/^# (.*)$/gm, "<strong>$1</strong>")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/^- (.*)$/gm, "• $1")
+    .replace(/\n/g, "<br>");
 
+bubble.innerHTML = formattedText;
 
     /*
      AI:
