@@ -276,237 +276,116 @@
 
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://ceedwhwnpthqdzhtkemy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_bGc_PDepTuhmmvVG1WMPUQ_-MlnP8hO";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-    <script>
+const params=new URLSearchParams(window.location.search);
+const selectedPlan=(params.get("plan")||"free").toLowerCase();
 
-        /* --------------------------------
-           PLAN SELECTION
-        -------------------------------- */
+const plans={
+  free:{name:"FREE",price:"₹0"},
+  starter:{name:"STARTER",price:"₹199"},
+  pro:{name:"PRO",price:"₹499"},
+  premium:{name:"PREMIUM",price:"₹999"}
+};
+const plan=plans[selectedPlan]||plans.free;
+document.getElementById("planName").textContent=plan.name;
+document.getElementById("planPrice").textContent=plan.price;
 
-        const params = new URLSearchParams(window.location.search);
+function setupPasswordToggle(buttonId,inputId){
+  const button=document.getElementById(buttonId);
+  const input=document.getElementById(inputId);
+  button.addEventListener("click",()=>{
+    if(input.type==="password"){input.type="text";button.textContent="HIDE";}
+    else{input.type="password";button.textContent="SHOW";}
+  });
+}
+setupPasswordToggle("togglePassword","password");
+setupPasswordToggle("toggleConfirmPassword","confirmPassword");
 
-        const selectedPlan =
-            (params.get("plan") || "free").toLowerCase();
+const signupForm=document.getElementById("signupForm");
+const formMessage=document.getElementById("formMessage");
+const createButton=document.querySelector(".create-btn");
 
+signupForm.addEventListener("submit",async function(event){
+  event.preventDefault();
 
-        const plans = {
+  const name=document.getElementById("fullName").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  const confirmPassword=document.getElementById("confirmPassword").value;
 
-            free: {
-                name: "FREE",
-                price: "₹0"
-            },
+  if(!name){showMessage("Please enter your full name.","error");return;}
+  if(password.length<6){showMessage("Password must contain at least 6 characters.","error");return;}
+  if(password!==confirmPassword){showMessage("Passwords do not match.","error");return;}
 
-            starter: {
-                name: "STARTER",
-                price: "₹199"
-            },
+  createButton.disabled=true;
+  createButton.innerHTML="<span>Creating account...</span>";
 
-            pro: {
-                name: "PRO",
-                price: "₹499"
-            },
-
-            premium: {
-                name: "PREMIUM",
-                price: "₹999"
-            }
-
-        };
-
-
-        const plan =
-            plans[selectedPlan] || plans.free;
-
-
-        document.getElementById("planName").textContent =
-            plan.name;
-
-        document.getElementById("planPrice").textContent =
-            plan.price;
-
-
-        /* --------------------------------
-           PASSWORD TOGGLE
-        -------------------------------- */
-
-        function setupPasswordToggle(buttonId, inputId) {
-
-            const button =
-                document.getElementById(buttonId);
-
-            const input =
-                document.getElementById(inputId);
-
-
-            button.addEventListener("click", () => {
-
-                if (input.type === "password") {
-
-                    input.type = "text";
-                    button.textContent = "HIDE";
-
-                } else {
-
-                    input.type = "password";
-                    button.textContent = "SHOW";
-
-                }
-
-            });
-
+  try{
+    const {data,error}=await supabaseClient.auth.signUp({
+      email,
+      password,
+      options:{
+        data:{
+          full_name:name,
+          plan:"free",
+          selected_plan:selectedPlan
         }
+      }
+    });
 
+    if(error) throw error;
 
-        setupPasswordToggle(
-            "togglePassword",
-            "password"
-        );
+    localStorage.setItem("ideonUser",JSON.stringify({
+      name,
+      email,
+      plan:"free",
+      selectedPlan:selectedPlan
+    }));
 
-        setupPasswordToggle(
-            "toggleConfirmPassword",
-            "confirmPassword"
-        );
+    if(data.session){
+      showMessage("Account created successfully! Welcome to IDEON.","success");
+      createButton.innerHTML="<span>Account Created ✓</span>";
+      setTimeout(()=>{window.location.href="Home.html";},1000);
+    }else{
+      showMessage("Account created! Please check your email to confirm your account.","success");
+      createButton.innerHTML="<span>Check Your Email ✓</span>";
+    }
 
+  }catch(error){
+    console.error("IDEON signup error:",error);
 
-        /* --------------------------------
-           SIGNUP
-        -------------------------------- */
+    let message="Unable to create your account. Please try again.";
+    const t=(error.message||"").toLowerCase();
 
-        const signupForm =
-            document.getElementById("signupForm");
+    if(t.includes("already registered")||t.includes("already been registered")||t.includes("user already registered")){
+      message="An account with this email already exists. Try signing in.";
+    }else if(t.includes("invalid email")){
+      message="Please enter a valid email address.";
+    }else if(t.includes("password")&&t.includes("6")){
+      message="Password must contain at least 6 characters.";
+    }
 
-        const formMessage =
-            document.getElementById("formMessage");
+    showMessage(message,"error");
+    createButton.disabled=false;
+    createButton.innerHTML="<span>Create Free Account</span><span class='arrow'>→</span>";
+  }
+});
 
+function showMessage(message,type){
+  formMessage.textContent=message;
+  formMessage.className="form-message "+type;
+}
 
-        signupForm.addEventListener("submit", function(event) {
-
-            event.preventDefault();
-
-
-            const name =
-                document.getElementById("fullName").value.trim();
-
-            const email =
-                document.getElementById("email").value.trim();
-
-            const password =
-                document.getElementById("password").value;
-
-            const confirmPassword =
-                document.getElementById("confirmPassword").value;
-
-
-            /* PASSWORD CHECK */
-
-            if (password.length < 6) {
-
-                showMessage(
-                    "Password must contain at least 6 characters.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            /* MATCH CHECK */
-
-            if (password !== confirmPassword) {
-
-                showMessage(
-                    "Passwords do not match.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-
-            /* DEMO ACCOUNT */
-
-            const user = {
-
-                name: name,
-
-                email: email,
-
-                plan: "free",
-
-                createdAt: new Date().toISOString()
-
-            };
-
-
-            localStorage.setItem(
-                "ideonUser",
-                JSON.stringify(user)
-            );
-
-
-            /*
-                IMPORTANT:
-                Password is NOT stored in localStorage.
-                This page currently acts as a front-end
-                demo account system.
-            */
-
-
-            showMessage(
-                "Account created successfully! Welcome to IDEON.",
-                "success"
-            );
-
-
-            const button =
-                document.querySelector(".create-btn");
-
-            button.innerHTML =
-                "<span>Account Created ✓</span>";
-
-
-            button.disabled = true;
-
-
-            setTimeout(() => {
-
-                window.location.href = "Home.html";
-
-            }, 1200);
-
-        });
-
-
-        function showMessage(message, type) {
-
-            formMessage.textContent = message;
-
-            formMessage.className =
-                "form-message " + type;
-
-        }
-
-
-        /* --------------------------------
-           SIGN IN
-        -------------------------------- */
-
-        document
-            .getElementById("loginLink")
-            .addEventListener("click", function(event) {
-
-                event.preventDefault();
-
-                showMessage(
-                    "Sign in will be available when full authentication is connected.",
-                    "info"
-                );
-
-            });
-
-    </script>
+document.getElementById("loginLink").addEventListener("click",function(event){
+  event.preventDefault();
+  showMessage("Sign in page will be connected next.","info");
+});
+</script>
 
 </body>
 </html>
