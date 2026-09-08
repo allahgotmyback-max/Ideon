@@ -2145,21 +2145,16 @@
         );
 
 
-        const empty =
-            holdingsSection.querySelector(
-                ".portfolio-empty"
-            );
+   const empty =
+    holdingsSection.querySelector(
+        ".portfolio-empty"
+    );
 
+if (empty) {
 
-        if (empty) {
+    empty.hidden = hasHoldings;
 
-            empty.style.display =
-                hasHoldings
-                    ? "none"
-                    : "block";
-
-        }
-
+}
     }
 
 
