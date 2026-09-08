@@ -1085,7 +1085,125 @@ document.addEventListener(
 ===================================================== -->
 
 <script src="script.js"></script>
+    
+<!-- =====================================================
+     IDEON AI CHATBOT
+     ===================================================== -->
 
+<button class="ideon-ai-launcher" id="ideonAIButton">
+    <span class="ai-spark">✦</span>
+    <span>IDEON AI</span>
+</button>
+
+
+<div class="ideon-chat" id="ideonChat">
+
+    <div class="ideon-chat-header">
+
+        <div class="ideon-chat-title">
+
+            <div class="ideon-ai-icon">
+                ✦
+            </div>
+
+            <div>
+                <strong>IDEON AI</strong>
+                <small>
+                    Your idea & market assistant
+                </small>
+            </div>
+
+        </div>
+
+        <button
+            class="ideon-chat-close"
+            id="ideonChatClose"
+            type="button"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="ideon-chat-messages" id="ideonChatMessages">
+
+        <div class="ideon-message ai">
+
+            <div class="message-avatar">
+                ✦
+            </div>
+
+            <div class="message-bubble">
+
+                Hey! I'm <strong>IDEON AI</strong> 👋
+
+                <br><br>
+
+                I can help you understand your ideas,
+                business concepts, stocks and how IDEON works.
+
+                <br><br>
+
+                What would you like to know?
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="ideon-suggestions">
+
+        <button type="button" data-question="How does IDEON work?">
+            How does IDEON work?
+        </button>
+
+        <button type="button" data-question="How can Idea Lab help me?">
+            Idea Lab
+        </button>
+
+        <button type="button" data-question="Explain virtual trading">
+            Explain trading
+        </button>
+
+        <button type="button" data-question="What is a stock?">
+            What is a stock?
+        </button>
+
+    </div>
+
+
+    <div class="ideon-chat-input">
+
+        <textarea
+            id="ideonChatInput"
+            placeholder="Ask IDEON anything..."
+            rows="1"
+            maxlength="500"
+        ></textarea>
+
+        <button
+            id="ideonChatSend"
+            type="button"
+        >
+            ↑
+        </button>
+
+    </div>
+
+
+    <div class="ideon-chat-footer">
+
+        ✦ AI-powered · Educational use only
+
+    </div>
+
+</div>
+
+
+<script src="chatbot.js"></script>
 
 </body>
 
