@@ -12,113 +12,104 @@
 
 
     const button =
-        document.getElementById(
-            "ideonAIButton"
-        );
+        document.getElementById("ideonAIButton");
 
     const chat =
-        document.getElementById(
-            "ideonChat"
-        );
+        document.getElementById("ideonChat");
 
     const close =
-        document.getElementById(
-            "ideonChatClose"
-        );
+        document.getElementById("ideonChatClose");
 
-    const messages =
-        document.getElementById(
-            "ideonChatMessages"
-        );
+    const messagesBox =
+        document.getElementById("ideonChatMessages");
 
     const input =
-        document.getElementById(
-            "ideonChatInput"
-        );
+        document.getElementById("ideonChatInput");
 
     const send =
-        document.getElementById(
-            "ideonChatSend"
-        );
+        document.getElementById("ideonChatSend");
 
 
     if (
         !button ||
         !chat ||
-        !messages ||
+        !messagesBox ||
         !input ||
         !send
     ) {
-
         return;
-
     }
+
+
+    /* =====================================================
+       CONVERSATION MEMORY
+       ===================================================== */
+
+    const conversation = [];
 
 
     /* =====================================================
        OPEN / CLOSE
        ===================================================== */
 
-    button.addEventListener(
-        "click",
-        () => {
+    button.addEventListener("click", () => {
 
-            chat.classList.toggle(
-                "open"
-            );
+        chat.classList.toggle("open");
 
-            if (
-                chat.classList.contains(
-                    "open"
-                )
-            ) {
+        if (chat.classList.contains("open")) {
 
-                setTimeout(
-                    () =>
-                        input.focus(),
-                    150
-                );
-
-            }
+            setTimeout(() => {
+                input.focus();
+            }, 150);
 
         }
-    );
+
+    });
 
 
-    close?.addEventListener(
-        "click",
-        () => {
+    if (close) {
 
-            chat.classList.remove(
-                "open"
-            );
+        close.addEventListener("click", () => {
 
-        }
-    );
+            chat.classList.remove("open");
+
+        });
+
+    }
 
 
     /* =====================================================
-       ADD MESSAGE
+       ESCAPE HTML
        ===================================================== */
 
-    function addMessage(
-        text,
-        type
-    ) {
+    function escapeHTML(text) {
+
+        return String(text)
+
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+
+    /* =====================================================
+       ADD MESSAGE TO SCREEN
+       ===================================================== */
+
+    function addMessage(text, type) {
 
         const wrapper =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         wrapper.className =
             `ideon-message ${type}`;
 
 
         const avatar =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         avatar.className =
             "message-avatar";
@@ -130,79 +121,26 @@
 
 
         const bubble =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         bubble.className =
             "message-bubble";
 
 
-        /*
-         Keep AI text safe.
-         Convert line breaks to <br>.
-        */
-
         bubble.innerHTML =
             escapeHTML(text)
-                .replace(
-                    /\n/g,
-                    "<br>"
-                );
+                .replace(/\n/g, "<br>");
 
 
-        wrapper.appendChild(
-            avatar
-        );
+        wrapper.appendChild(avatar);
 
-        wrapper.appendChild(
-            bubble
-        );
+        wrapper.appendChild(bubble);
+
+        messagesBox.appendChild(wrapper);
 
 
-        messages.appendChild(
-            wrapper
-        );
-
-
-        messages.scrollTop =
-            messages.scrollHeight;
-
-    }
-
-
-    /* =====================================================
-       HTML ESCAPE
-       ===================================================== */
-
-    function escapeHTML(text) {
-
-        return String(text)
-
-            .replaceAll(
-                "&",
-                "&amp;"
-            )
-
-            .replaceAll(
-                "<",
-                "&lt;"
-            )
-
-            .replaceAll(
-                ">",
-                "&gt;"
-            )
-
-            .replaceAll(
-                '"',
-                "&quot;"
-            )
-
-            .replaceAll(
-                "'",
-                "&#039;"
-            );
+        messagesBox.scrollTop =
+            messagesBox.scrollHeight;
 
     }
 
@@ -211,12 +149,10 @@
        TYPING INDICATOR
        ===================================================== */
 
-    function addTyping() {
+    function showTyping() {
 
         const wrapper =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         wrapper.className =
             "ideon-message ai";
@@ -238,30 +174,31 @@
         `;
 
 
-        messages.appendChild(
-            wrapper
-        );
+        messagesBox.appendChild(wrapper);
 
 
-        messages.scrollTop =
-            messages.scrollHeight;
+        messagesBox.scrollTop =
+            messagesBox.scrollHeight;
 
     }
 
 
-    function removeTyping() {
+    function hideTyping() {
 
-        document
-            .getElementById(
+        const typing =
+            document.getElementById(
                 "ideonTyping"
-            )
-            ?.remove();
+            );
+
+        if (typing) {
+            typing.remove();
+        }
 
     }
 
 
     /* =====================================================
-       ASK AI
+       ASK IDEON AI
        ===================================================== */
 
     async function askIDEON(question) {
@@ -271,9 +208,35 @@
             "user"
         );
 
+
+        /*
+         Add the user's question
+         to conversation history.
+        */
+
+        conversation.push({
+
+            role: "user",
+
+            content: question
+
+        });
+
+
+        /*
+         Keep the conversation small
+         so the AI doesn't receive
+         unlimited history.
+        */
+
+        const recentConversation =
+            conversation.slice(-12);
+
+
         input.value = "";
 
-        addTyping();
+
+        showTyping();
 
 
         try {
@@ -283,8 +246,7 @@
                     SUPABASE_FUNCTION_URL,
                     {
 
-                        method:
-                            "POST",
+                        method: "POST",
 
                         headers: {
 
@@ -302,11 +264,14 @@
                         body:
                             JSON.stringify({
 
-                                action:
-                                    "chat",
+                                /*
+                                 THIS is the important fix.
+                                 Your Supabase function expects
+                                 an array called "messages".
+                                */
 
-                                message:
-                                    question
+                                messages:
+                                    recentConversation
 
                             })
 
@@ -318,12 +283,15 @@
                 await response.json();
 
 
-            removeTyping();
+            hideTyping();
 
 
-            if (
-                !response.ok
-            ) {
+            if (!response.ok) {
+
+                console.error(
+                    "IDEON AI ERROR:",
+                    data
+                );
 
                 throw new Error(
                     data?.error ||
@@ -334,25 +302,30 @@
 
 
             const answer =
-
-                data.answer ||
-
-                data.response ||
-
-                data.message ||
-
-                data.result ||
-
-                data.text;
+                data?.answer;
 
 
             if (!answer) {
 
                 throw new Error(
-                    "No AI response received."
+                    "IDEON AI returned no answer."
                 );
 
             }
+
+
+            /*
+             Add AI response to
+             conversation memory.
+            */
+
+            conversation.push({
+
+                role: "assistant",
+
+                content: answer
+
+            });
 
 
             addMessage(
@@ -369,7 +342,7 @@
             );
 
 
-            removeTyping();
+            hideTyping();
 
 
             addMessage(
@@ -386,7 +359,7 @@
 
 
     /* =====================================================
-       SEND
+       SEND MESSAGE
        ===================================================== */
 
     async function sendMessage() {
@@ -395,20 +368,22 @@
             input.value.trim();
 
 
-        if (!question) return;
+        if (!question) {
+            return;
+        }
 
 
-        send.disabled =
-            true;
+        send.disabled = true;
+
+        input.disabled = true;
 
 
-        await askIDEON(
-            question
-        );
+        await askIDEON(question);
 
 
-        send.disabled =
-            false;
+        send.disabled = false;
+
+        input.disabled = false;
 
 
         input.focus();
@@ -416,20 +391,26 @@
     }
 
 
+    /* =====================================================
+       SEND BUTTON
+       ===================================================== */
+
     send.addEventListener(
         "click",
         sendMessage
     );
 
 
+    /* =====================================================
+       ENTER TO SEND
+       ===================================================== */
+
     input.addEventListener(
         "keydown",
         event => {
 
             if (
-                event.key ===
-                "Enter"
-                &&
+                event.key === "Enter" &&
                 !event.shiftKey
             ) {
 
@@ -455,24 +436,25 @@
             suggestion => {
 
                 suggestion.addEventListener(
-
                     "click",
-
                     () => {
 
                         const question =
                             suggestion.dataset.question;
 
-                        if (!question)
+
+                        if (!question) {
                             return;
+                        }
+
 
                         input.value =
                             question;
 
+
                         sendMessage();
 
                     }
-
                 );
 
             }
