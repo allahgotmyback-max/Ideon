@@ -3385,3 +3385,494 @@ textarea {
     }
 
 }
+
+/* =========================================================
+   IDEON IDEA LAB — PREMIUM WORKSPACE FIX
+========================================================= */
+
+.idea-lab {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 140px 7.5% 150px !important;
+    background: #050507 !important;
+}
+
+.idea-lab-heading {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.idea-section-tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #a889ff;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    margin-bottom: 22px;
+}
+
+.tag-line {
+    width: 28px;
+    height: 1px;
+    background: rgba(139,92,246,.55);
+}
+
+.idea-lab-heading h2 {
+    margin: 0 0 20px !important;
+    font-size: clamp(48px,5.5vw,72px) !important;
+    line-height: .94 !important;
+    letter-spacing: -4px !important;
+    font-weight: 900 !important;
+}
+
+.idea-lab-heading h2 span {
+    display: block;
+    color: #8b5cf6 !important;
+}
+
+.idea-lab-heading p {
+    max-width: 570px;
+    margin: auto;
+    color: rgba(255,255,255,.40);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* WORKSPACE */
+
+.ideon-workspace {
+    position: relative;
+    z-index: 5;
+    width: min(860px,100%);
+    margin: auto;
+    padding: 26px;
+    border: 1px solid rgba(255,255,255,.11);
+    border-radius: 22px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19,18,27,.96),
+            rgba(7,7,11,.98)
+        );
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.45),
+        0 0 80px rgba(139,92,246,.06);
+}
+
+.ideon-workspace::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 70%;
+    height: 1px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(139,92,246,.65),
+            transparent
+        );
+}
+
+
+/* TOP */
+
+.workspace-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 21px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.workspace-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.workspace-ai-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(139,92,246,.35);
+    border-radius: 10px;
+    background: rgba(139,92,246,.10);
+    color: #a98cff;
+    font-size: 15px;
+}
+
+.workspace-ai-title {
+    color: rgba(255,255,255,.82);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.workspace-ai-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    color: rgba(255,255,255,.28);
+    font-size: 9px;
+}
+
+.workspace-ai-status span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #35d07f;
+    box-shadow: 0 0 9px rgba(53,208,127,.7);
+}
+
+.workspace-top .char-count {
+    color: rgba(255,255,255,.25) !important;
+    font-size: 10px !important;
+}
+
+
+/* PROMPT */
+
+.workspace-prompt {
+    padding-top: 28px;
+}
+
+.prompt-heading {
+    margin-bottom: 16px;
+}
+
+.prompt-heading h3 {
+    margin: 0 0 7px;
+    color: white;
+    font-size: 23px;
+    font-weight: 850;
+    letter-spacing: -.7px;
+}
+
+.prompt-heading p {
+    color: rgba(255,255,255,.30);
+    font-size: 11px;
+}
+
+
+/* TEXTAREA */
+
+.premium-textarea {
+    position: relative;
+}
+
+.prompt-symbol {
+    position: absolute;
+    top: 18px;
+    left: 19px;
+    z-index: 3;
+    color: #9b79ff;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.premium-textarea textarea {
+    display: block;
+    width: 100%;
+    height: 180px;
+    min-height: 180px;
+    resize: vertical;
+    padding: 18px 20px 50px 48px;
+
+    border: 1px solid rgba(255,255,255,.09) !important;
+    border-radius: 14px !important;
+
+    outline: none !important;
+
+    background: rgba(2,2,5,.85) !important;
+    color: white !important;
+
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif !important;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.premium-textarea textarea:hover {
+    border-color: rgba(255,255,255,.16) !important;
+}
+
+.premium-textarea textarea:focus {
+    border-color: rgba(139,92,246,.65) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(139,92,246,.05),
+        0 0 45px rgba(139,92,246,.07);
+}
+
+.premium-textarea textarea::placeholder {
+    color: rgba(255,255,255,.20);
+}
+
+
+/* TEXTAREA FOOTER */
+
+.textarea-bottom {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    pointer-events: none;
+
+    color: rgba(255,255,255,.20);
+    font-size: 9px;
+}
+
+.idea-counter {
+    color: rgba(255,255,255,.28);
+}
+
+
+/* EXAMPLES */
+
+.workspace-examples {
+    margin-top: 19px;
+}
+
+.examples-label {
+    margin-bottom: 9px;
+
+    color: rgba(255,255,255,.22);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.premium-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.premium-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 34px;
+
+    padding: 0 13px;
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.025);
+
+    color: rgba(255,255,255,.48);
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition: all .22s ease;
+}
+
+.premium-chip:hover {
+    color: white;
+
+    border-color: rgba(139,92,246,.45);
+
+    background: rgba(139,92,246,.08);
+
+    transform: translateY(-2px);
+}
+
+.chip-icon {
+    color: #9b79ff;
+}
+
+
+/* BUTTON */
+
+.ideon-analyze-button {
+    position: relative;
+
+    width: 100%;
+    height: 58px;
+
+    margin-top: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(166,137,255,.55) !important;
+    border-radius: 11px !important;
+
+    background:
+        linear-gradient(
+            100deg,
+            #7650e8,
+            #9a70ff,
+            #7650e8
+        ) !important;
+
+    background-size: 200% 100%;
+
+    color: white !important;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .8px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 35px rgba(104,68,210,.18);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background-position .5s ease;
+}
+
+.ideon-analyze-button:hover {
+    transform: translateY(-2px);
+
+    background-position: 100% 0;
+
+    box-shadow:
+        0 18px 45px rgba(104,68,210,.30);
+}
+
+.ideon-analyze-button:disabled {
+    opacity: .65;
+    cursor: wait;
+}
+
+.analyze-main-icon {
+    color: white;
+}
+
+.analyze-arrow {
+    margin-left: 7px;
+}
+
+
+/* FOOTER */
+
+.workspace-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-top: 16px;
+}
+
+.workspace-footer-left,
+.workspace-footer-right {
+    color: rgba(255,255,255,.18);
+    font-size: 9px;
+}
+
+.workspace-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.footer-ai-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    box-shadow: 0 0 8px rgba(139,92,246,.8);
+}
+
+
+/* RESULT */
+
+.idea-lab .result-section {
+    position: relative;
+    z-index: 5;
+    margin-top: 70px;
+}
+
+
+/* MOBILE */
+
+@media (max-width:760px) {
+
+    .idea-lab {
+        padding:
+            100px 5% 110px !important;
+    }
+
+    .idea-lab-heading h2 {
+        font-size:
+            clamp(42px,11vw,58px) !important;
+
+        letter-spacing:
+            -3px !important;
+    }
+
+    .ideon-workspace {
+        padding: 18px;
+        border-radius: 17px;
+    }
+
+    .workspace-prompt {
+        padding-top: 23px;
+    }
+
+    .premium-textarea textarea {
+        height: 180px;
+        min-height: 180px;
+        font-size: 14px !important;
+    }
+
+    .textarea-bottom span:first-child {
+        display: none;
+    }
+
+    .premium-chips {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .premium-chip {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .workspace-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+    }
+}
