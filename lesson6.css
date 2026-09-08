@@ -1,0 +1,2479 @@
+/* =========================================================
+   IDEON TRADE — LESSON 06
+   UNDERSTANDING RISK
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #050507;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.lesson-navbar {
+    height: 74px;
+    padding: 0 8%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(5,5,7,0.94);
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.06);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    backdrop-filter: blur(16px);
+}
+
+.lesson-logo {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 25px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.lesson-logo img {
+    width: 36px;
+    height: 36px;
+
+    object-fit: contain;
+}
+
+.lesson-logo span span {
+    color: #8b5cf6;
+}
+
+.back-link {
+    color: rgba(255,255,255,0.48);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.lesson-hero {
+    position: relative;
+
+    min-height: 560px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(124,58,237,0.12),
+            rgba(124,58,237,0.035) 30%,
+            transparent 65%
+        ),
+        #050507;
+}
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+
+    z-index: -6;
+
+    opacity: 0.2;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 25%,
+            black 70%,
+            transparent
+        );
+}
+
+.hero-glow {
+    position: absolute;
+
+    width: 720px;
+    height: 420px;
+
+    left: 50%;
+    top: 48%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: -5;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(139,92,246,0.14),
+            rgba(124,58,237,0.04) 42%,
+            transparent 72%
+        );
+
+    filter: blur(35px);
+}
+
+
+/* =========================================================
+   RISK HERO VISUAL
+   ========================================================= */
+
+.risk-hero-bg {
+    position: absolute;
+    inset: 0;
+
+    z-index: -3;
+
+    pointer-events: none;
+}
+
+.risk-orbit {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border:
+        1px solid rgba(139,92,246,0.08);
+
+    border-radius: 50%;
+}
+
+.orbit-one {
+    width: 300px;
+    height: 300px;
+
+    animation:
+        orbitRotate 22s linear infinite;
+}
+
+.orbit-two {
+    width: 470px;
+    height: 470px;
+
+    border-color:
+        rgba(139,92,246,0.05);
+
+    animation:
+        orbitRotateReverse 32s linear infinite;
+}
+
+.orbit-three {
+    width: 680px;
+    height: 680px;
+
+    border-color:
+        rgba(139,92,246,0.035);
+
+    animation:
+        orbitRotate 45s linear infinite;
+}
+
+.risk-center {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 105px;
+    height: 105px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(8,7,12,0.8);
+
+    border:
+        1px solid rgba(139,92,246,0.13);
+
+    box-shadow:
+        0 0 60px rgba(139,92,246,0.07);
+}
+
+.risk-symbol {
+    color: rgba(167,139,250,0.55);
+
+    font-size: 25px;
+}
+
+.risk-center small {
+    color: rgba(255,255,255,0.25);
+
+    font-size: 7px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.risk-particle {
+    position: absolute;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(139,92,246,0.1);
+
+    border-radius: 12px;
+
+    background:
+        rgba(10,8,16,0.65);
+
+    color: rgba(167,139,250,0.4);
+
+    font-size: 12px;
+
+    animation:
+        particleFloat 5s ease-in-out infinite;
+}
+
+.particle-one {
+    left: 17%;
+    top: 25%;
+}
+
+.particle-two {
+    right: 17%;
+    top: 30%;
+
+    animation-delay: -1.3s;
+}
+
+.particle-three {
+    left: 19%;
+    bottom: 23%;
+
+    animation-delay: -2.6s;
+}
+
+.particle-four {
+    right: 20%;
+    bottom: 20%;
+
+    animation-delay: -3.9s;
+}
+
+@keyframes orbitRotate {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
+
+}
+
+@keyframes orbitRotateReverse {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+}
+
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.lesson-hero-content {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(1100px,92%);
+
+    text-align: center;
+
+    margin: 0 auto;
+}
+
+.lesson-hero-eyebrow {
+    margin-bottom: 26px;
+
+    color: #a78bfa;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.lesson-hero h1 {
+    margin: 0;
+
+    font-size: clamp(55px,7vw,92px);
+
+    line-height: 0.98;
+
+    font-weight: 800;
+
+    letter-spacing: -4px;
+
+    color: #ffffff;
+}
+
+.lesson-hero h1 span {
+    color: #9b6cff;
+
+    text-shadow:
+        0 0 35px rgba(139,92,246,0.18);
+}
+
+.lesson-hero p {
+    max-width: 720px;
+
+    margin: 28px auto 0;
+
+    color: rgba(255,255,255,0.52);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.lesson-meta {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-top: 25px;
+
+    color: rgba(255,255,255,0.38);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.lesson-content {
+    width: min(1050px,90%);
+
+    margin: 0 auto;
+
+    padding: 100px 0 130px;
+}
+
+.lesson-block {
+    position: relative;
+
+    margin-bottom: 120px;
+}
+
+.lesson-step {
+    margin-bottom: 18px;
+
+    color: rgba(139,92,246,0.65);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.eyebrow {
+    margin-bottom: 14px;
+
+    color: #a78bfa;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.lesson-text {
+    max-width: 800px;
+}
+
+.lesson-text h2 {
+    font-size: clamp(32px,4vw,48px);
+
+    line-height: 1.08;
+
+    letter-spacing: -1.8px;
+
+    margin-bottom: 20px;
+}
+
+.lesson-text p {
+    max-width: 720px;
+
+    color: rgba(255,255,255,0.52);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   RISK SCALE
+   ========================================================= */
+
+.risk-scale {
+    margin-top: 50px;
+
+    padding: 40px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+.scale-labels {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+    color: rgba(255,255,255,0.3);
+
+    font-size: 9px;
+
+    letter-spacing: 1.2px;
+}
+
+.risk-track {
+    position: relative;
+
+    height: 12px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(74,222,128,0.15),
+            rgba(251,191,36,0.18),
+            rgba(248,113,113,0.2)
+        );
+
+    overflow: visible;
+}
+
+.risk-fill {
+    width: 58%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #55d99a,
+            #a78bfa
+        );
+
+    opacity: 0.7;
+}
+
+.risk-marker {
+    position: absolute;
+
+    left: 58%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #050507;
+
+    font-size: 6px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.15);
+}
+
+.scale-note {
+    margin-top: 25px;
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   LOSS VISUAL
+   ========================================================= */
+
+.loss-visual {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 35px;
+
+    margin-top: 50px;
+
+    padding: 45px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+.loss-price {
+    text-align: center;
+}
+
+.loss-price span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: rgba(255,255,255,0.3);
+
+    font-size: 8px;
+
+    letter-spacing: 1.5px;
+}
+
+.loss-price strong {
+    font-size: 42px;
+
+    letter-spacing: -2px;
+}
+
+.loss-price.loss strong {
+    color: #fca5a5;
+}
+
+.loss-arrow {
+    color: rgba(248,113,113,0.55);
+
+    font-size: 30px;
+}
+
+.loss-percent {
+    padding: 10px 13px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(248,113,113,0.08);
+
+    color: #fca5a5;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.important-box {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding: 20px 22px;
+
+    border:
+        1px solid rgba(139,92,246,0.13);
+
+    background:
+        rgba(139,92,246,0.045);
+
+    border-radius: 16px;
+}
+
+.important-box > span {
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background:
+        rgba(139,92,246,0.1);
+
+    color: #a78bfa;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.important-box p {
+    color: rgba(255,255,255,0.45);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   VOLATILITY
+   ========================================================= */
+
+.volatility-card {
+    margin-top: 50px;
+
+    padding: 30px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+.volatility-chart {
+    position: relative;
+
+    height: 300px;
+
+    overflow: hidden;
+}
+
+.vol-grid {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    border-top:
+        1px solid rgba(255,255,255,0.04);
+}
+
+.grid-one {
+    top: 25%;
+}
+
+.grid-two {
+    top: 50%;
+}
+
+.grid-three {
+    top: 75%;
+}
+
+.volatility-chart svg {
+    width: 100%;
+    height: 100%;
+}
+
+.calm-line,
+.volatile-line {
+    fill: none;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.calm-line {
+    stroke: rgba(167,139,250,0.55);
+
+    stroke-width: 3;
+}
+
+.volatile-line {
+    stroke: #9b6cff;
+
+    stroke-width: 3;
+
+    filter:
+        drop-shadow(
+            0 0 10px rgba(139,92,246,0.25)
+        );
+}
+
+.volatility-labels {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 30px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+}
+
+.volatility-labels > div {
+    position: relative;
+
+    padding-left: 18px;
+}
+
+.volatility-labels span {
+    position: absolute;
+
+    left: 0;
+    top: 5px;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+}
+
+.calm-dot {
+    background: #a78bfa;
+}
+
+.volatile-dot {
+    background: #9b6cff;
+}
+
+.volatility-labels strong {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+}
+
+.volatility-labels p {
+    color: rgba(255,255,255,0.35);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   DIVERSIFICATION
+   ========================================================= */
+
+.basket-visual {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 50px;
+}
+
+.basket {
+    padding: 35px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,0.02);
+
+    text-align: center;
+}
+
+.basket-title {
+    margin-bottom: 25px;
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.egg-row {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+.egg-row span {
+    width: 42px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    background:
+        rgba(139,92,246,0.12);
+
+    border:
+        1px solid rgba(139,92,246,0.18);
+
+    color: #b59cff;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.egg-row.mixed span:nth-child(2) {
+    background:
+        rgba(74,222,128,0.08);
+
+    color: #75e0a8;
+}
+
+.egg-row.mixed span:nth-child(3) {
+    background:
+        rgba(251,191,36,0.08);
+
+    color: #fbbf24;
+}
+
+.basket small {
+    color: rgba(255,255,255,0.35);
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+.basket-arrow {
+    color: rgba(139,92,246,0.55);
+
+    font-size: 28px;
+}
+
+
+/* =========================================================
+   POSITION SIZE
+   ========================================================= */
+
+.position-comparison {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 18px;
+
+    margin-top: 50px;
+}
+
+.position-card {
+    padding: 35px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+.position-label {
+    color: rgba(255,255,255,0.3);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.position-number {
+    margin-top: 20px;
+
+    color: #ffffff;
+
+    font-size: 58px;
+
+    font-weight: 800;
+
+    letter-spacing: -3px;
+}
+
+.position-card > span {
+    color: rgba(255,255,255,0.3);
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+}
+
+.position-example {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+
+    color: #b59cff;
+
+    font-size: 14px;
+}
+
+.large-position {
+    border-color:
+        rgba(139,92,246,0.16);
+
+    background:
+        rgba(139,92,246,0.035);
+}
+
+.tip-box {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding: 20px 22px;
+
+    border:
+        1px solid rgba(139,92,246,0.12);
+
+    border-radius: 16px;
+
+    background:
+        rgba(139,92,246,0.045);
+}
+
+.tip-box span {
+    font-size: 16px;
+}
+
+.tip-box p {
+    color: rgba(255,255,255,0.42);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   LEVERAGE
+   ========================================================= */
+
+.leverage-visual {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 50px;
+
+    padding: 40px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+.leverage-side > span {
+    display: block;
+
+    margin-bottom: 20px;
+
+    color: rgba(255,255,255,0.3);
+
+    font-size: 8px;
+
+    letter-spacing: 1.4px;
+}
+
+.lever-bar {
+    height: 16px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    overflow: hidden;
+}
+
+.lever-fill {
+    width: 30%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        #9b6cff;
+}
+
+.danger-fill {
+    width: 80%;
+
+    background:
+        #a78bfa;
+}
+
+.leverage-side strong {
+    display: block;
+
+    margin-top: 15px;
+
+    font-size: 14px;
+}
+
+.leverage-arrow {
+    color: #a78bfa;
+
+    font-size: 25px;
+}
+
+.warning-box {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding: 20px 22px;
+
+    border:
+        1px solid rgba(251,191,36,0.15);
+
+    border-radius: 15px;
+
+    background:
+        rgba(251,191,36,0.04);
+}
+
+.warning-box > span {
+    color: #fbbf24;
+
+    font-size: 17px;
+}
+
+.warning-box p {
+    color: rgba(255,255,255,0.45);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   EMOTIONS
+   ========================================================= */
+
+.emotion-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 14px;
+
+    margin-top: 50px;
+}
+
+.emotion-card {
+    padding: 28px 18px;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+.emotion-icon {
+    width: 50px;
+    height: 50px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(139,92,246,0.08);
+
+    font-size: 20px;
+}
+
+.emotion-card strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 10px;
+
+    letter-spacing: 1.3px;
+}
+
+.emotion-card span {
+    color: rgba(255,255,255,0.35);
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RED FLAGS
+   ========================================================= */
+
+.red-flag-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 45px;
+}
+
+.red-flag {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    padding: 22px;
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,0.018);
+}
+
+.red-flag > span {
+    color: #fbbf24;
+
+    font-size: 16px;
+}
+
+.red-flag strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 13px;
+}
+
+.red-flag p {
+    color: rgba(255,255,255,0.38);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CHECKLIST
+   ========================================================= */
+
+.checklist-section {
+    margin: 20px 0 100px;
+
+    padding: 45px;
+
+    border:
+        1px solid rgba(139,92,246,0.14);
+
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,92,246,0.07),
+            rgba(255,255,255,0.015)
+        );
+}
+
+.checklist-section h2 {
+    margin-bottom: 30px;
+
+    font-size: clamp(30px,4vw,44px);
+
+    letter-spacing: -1.5px;
+}
+
+.checklist {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 12px;
+}
+
+.check-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 18px;
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,0.018);
+}
+
+.check-item > span {
+    color: #a78bfa;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.check-item p {
+    color: rgba(255,255,255,0.52);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   KEY IDEA
+   ========================================================= */
+
+.key-idea {
+    display: flex;
+
+    gap: 25px;
+
+    align-items: flex-start;
+
+    padding: 38px;
+
+    margin: 30px 0 100px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,92,246,0.1),
+            rgba(139,92,246,0.025)
+        );
+
+    border:
+        1px solid rgba(139,92,246,0.18);
+
+    border-radius: 24px;
+}
+
+.key-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(139,92,246,0.14);
+
+    color: #a78bfa;
+
+    font-size: 21px;
+}
+
+.key-idea h3 {
+    max-width: 760px;
+
+    margin-bottom: 12px;
+
+    font-size: 25px;
+
+    line-height: 1.35;
+
+    letter-spacing: -0.6px;
+}
+
+.key-idea p {
+    color: rgba(255,255,255,0.4);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+.quiz-section {
+    margin-bottom: 100px;
+
+    padding: 50px;
+
+    background:
+        rgba(255,255,255,0.018);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 26px;
+}
+
+.quiz-section h2 {
+    max-width: 780px;
+
+    font-size: clamp(28px,4vw,42px);
+
+    line-height: 1.15;
+
+    letter-spacing: -1.4px;
+}
+
+.quiz-subtitle {
+    margin-top: 12px;
+
+    color: rgba(255,255,255,0.38);
+
+    font-size: 13px;
+}
+
+.quiz-options {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.quiz-options button {
+    padding: 18px 20px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    color: rgba(255,255,255,0.7);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+}
+
+.quiz-options button:hover:not(:disabled) {
+    transform: translateX(4px);
+
+    border-color:
+        rgba(139,92,246,0.35);
+
+    background:
+        rgba(139,92,246,0.06);
+}
+
+.quiz-options button.correct {
+    border-color:
+        rgba(74,222,128,0.45);
+
+    background:
+        rgba(74,222,128,0.07);
+
+    color: #a7f3d0;
+}
+
+.quiz-options button.wrong {
+    border-color:
+        rgba(248,113,113,0.45);
+
+    background:
+        rgba(248,113,113,0.06);
+
+    color: #fecaca;
+}
+
+.quiz-result {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 15px 18px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.correct-result {
+    display: block;
+
+    color: #a7f3d0;
+
+    background:
+        rgba(74,222,128,0.06);
+
+    border:
+        1px solid rgba(74,222,128,0.15);
+}
+
+.wrong-result {
+    display: block;
+
+    color: #fecaca;
+
+    background:
+        rgba(248,113,113,0.06);
+
+    border:
+        1px solid rgba(248,113,113,0.15);
+}
+
+
+/* =========================================================
+   COMPLETION
+   ========================================================= */
+
+.complete-section {
+    position: relative;
+
+    min-height: 430px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(139,92,246,0.15);
+
+    border-radius: 30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(139,92,246,0.11),
+            rgba(139,92,246,0.025) 48%,
+            rgba(255,255,255,0.015)
+        );
+}
+
+.complete-glow {
+    position: absolute;
+
+    width: 500px;
+    height: 300px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(139,92,246,0.14),
+            transparent 70%
+        );
+
+    filter: blur(30px);
+
+    pointer-events: none;
+}
+
+.complete-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(680px,90%);
+
+    text-align: center;
+}
+
+.complete-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(139,92,246,0.12);
+
+    border:
+        1px solid rgba(139,92,246,0.25);
+
+    color: #b59cff;
+
+    font-size: 24px;
+
+    box-shadow:
+        0 0 30px rgba(139,92,246,0.1);
+}
+
+.complete-content h2 {
+    margin-bottom: 16px;
+
+    font-size: clamp(35px,5vw,55px);
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+}
+
+.complete-content p {
+    max-width: 550px;
+
+    margin: 0 auto;
+
+    color: rgba(255,255,255,0.45);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.complete-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+
+    padding: 14px 22px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #050507;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.complete-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(255,255,255,.1);
+}
+
+.next-stage {
+    margin-top: 18px;
+
+    color: rgba(255,255,255,.28);
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width:700px) {
+
+    .lesson-navbar {
+        padding: 0 5%;
+    }
+
+    .lesson-logo {
+        font-size: 21px;
+    }
+
+    .lesson-logo img {
+        width: 31px;
+        height: 31px;
+    }
+
+    .lesson-hero {
+        min-height: 540px;
+    }
+
+    .hero-grid {
+        background-size: 45px 45px;
+
+        opacity: .14;
+    }
+
+    .hero-glow {
+        width: 500px;
+        height: 320px;
+    }
+
+    .risk-orbit {
+        opacity: .6;
+    }
+
+    .orbit-one {
+        width: 220px;
+        height: 220px;
+    }
+
+    .orbit-two {
+        width: 350px;
+        height: 350px;
+    }
+
+    .orbit-three {
+        width: 500px;
+        height: 500px;
+    }
+
+    .risk-center {
+        width: 80px;
+        height: 80px;
+    }
+
+    .risk-symbol {
+        font-size: 20px;
+    }
+
+    .risk-particle {
+        width: 34px;
+        height: 34px;
+    }
+
+    .particle-one {
+        left: 7%;
+    }
+
+    .particle-two {
+        right: 7%;
+    }
+
+    .particle-three {
+        left: 8%;
+    }
+
+    .particle-four {
+        right: 8%;
+    }
+
+    .lesson-hero-eyebrow {
+        font-size: 9px;
+
+        letter-spacing: 1.5px;
+    }
+
+    .lesson-hero h1 {
+        font-size:
+            clamp(45px,13vw,68px);
+
+        letter-spacing: -3px;
+    }
+
+    .lesson-hero p {
+        width: 90%;
+
+        font-size: 14px;
+    }
+
+    .lesson-content {
+        width: 90%;
+
+        padding-top: 75px;
+    }
+
+    .lesson-block {
+        margin-bottom: 90px;
+    }
+
+    .risk-scale {
+        padding: 28px;
+    }
+
+    .loss-visual {
+        gap: 15px;
+
+        padding: 30px 15px;
+    }
+
+    .loss-price strong {
+        font-size: 30px;
+    }
+
+    .volatility-card {
+        padding: 20px;
+    }
+
+    .volatility-chart {
+        height: 230px;
+    }
+
+    .basket-visual {
+        grid-template-columns: 1fr;
+    }
+
+    .basket-arrow {
+        transform: rotate(90deg);
+    }
+
+    .position-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .leverage-visual {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+    .leverage-arrow {
+        transform: rotate(90deg);
+    }
+
+    .emotion-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .checklist-section {
+        padding: 30px;
+    }
+
+    .checklist {
+        grid-template-columns: 1fr;
+    }
+
+    .key-idea {
+        padding: 28px;
+
+        flex-direction: column;
+    }
+
+    .key-idea h3 {
+        font-size: 21px;
+    }
+
+    .quiz-section {
+        padding: 30px;
+    }
+
+    .complete-section {
+        min-height: 450px;
+    }
+
+}
+/* =========================================================
+   STAGE 06 — CLEAN PREMIUM HERO
+   ========================================================= */
+
+.lesson-hero {
+    min-height: 540px !important;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 55%,
+            rgba(139,92,246,0.10),
+            transparent 42%
+        ),
+        linear-gradient(
+            180deg,
+            #050507 0%,
+            #07060b 55%,
+            #050507 100%
+        ) !important;
+}
+
+
+/* REMOVE THE OLD RISK ORBIT VISUAL */
+
+.risk-orbit,
+.risk-ring,
+.risk-center,
+.risk-symbol,
+.risk-float,
+.risk-floating,
+.risk-visual-bg {
+    display: none !important;
+}
+
+
+/* CLEAN GRID */
+
+.lesson-hero .hero-grid {
+    opacity: 0.32 !important;
+
+    background-size: 90px 90px !important;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.75),
+            transparent 85%
+        ) !important;
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.75),
+            transparent 85%
+        ) !important;
+}
+
+
+/* SOFT CENTER GLOW */
+
+.lesson-hero .hero-glow {
+    width: 650px !important;
+    height: 360px !important;
+
+    left: 50% !important;
+    top: 54% !important;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(139,92,246,0.13),
+            transparent 68%
+        ) !important;
+
+    filter: blur(30px) !important;
+
+    opacity: 0.8 !important;
+}
+
+
+/* HERO CONTENT */
+
+.lesson-hero-content {
+    width: min(850px, 90%) !important;
+
+    padding: 80px 0 !important;
+}
+
+
+/* SMALLER HEADLINE */
+
+.lesson-hero h1 {
+    font-size: clamp(44px, 5vw, 60px) !important;
+
+    line-height: 1.04 !important;
+
+    letter-spacing: -2.5px !important;
+
+    max-width: 850px;
+
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+/* PURPLE TEXT */
+
+.lesson-hero h1 span {
+    text-shadow:
+        0 0 28px rgba(139,92,246,0.22) !important;
+}
+
+
+/* DESCRIPTION */
+
+.lesson-hero p {
+    max-width: 610px !important;
+
+    margin-top: 22px !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.75 !important;
+}
+
+
+/* META */
+
+.lesson-meta {
+    margin-top: 20px !important;
+}
+
+
+/* =========================================================
+   SUBTLE RISK LINE
+   ========================================================= */
+
+.lesson-hero::after {
+    content: "";
+
+    position: absolute;
+
+    left: 8%;
+    right: 8%;
+
+    bottom: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(139,92,246,0.20),
+            transparent
+        );
+
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .lesson-hero {
+        min-height: 500px !important;
+    }
+
+    .lesson-hero h1 {
+        font-size: 40px !important;
+        letter-spacing: -1.8px !important;
+    }
+
+    .lesson-hero p {
+        font-size: 13px !important;
+    }
+
+    .lesson-hero-content {
+        width: 90% !important;
+        padding: 65px 0 !important;
+    }
+}/* =========================================================
+   STAGE 06 — CLEAN FINANCIAL HERO
+   ========================================================= */
+
+.lesson-hero {
+    position: relative !important;
+
+    min-height: 530px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    overflow: hidden !important;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 48%,
+            rgba(139,92,246,0.09),
+            transparent 45%
+        ),
+        #050507 !important;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE OLD HERO DECORATIONS
+   --------------------------------------------------------- */
+
+.lesson-hero > div:not(.hero-grid):not(.hero-glow):not(.lesson-hero-content):not(.hero-market-line) {
+    display: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   VERY SUBTLE GRID
+   --------------------------------------------------------- */
+
+.lesson-hero .hero-grid {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    opacity: 0.18 !important;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        ) !important;
+
+    background-size: 100px 100px !important;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 78%
+        ) !important;
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 78%
+        ) !important;
+}
+
+
+/* ---------------------------------------------------------
+   SOFT PURPLE ATMOSPHERE
+   --------------------------------------------------------- */
+
+.lesson-hero .hero-glow {
+    position: absolute !important;
+
+    width: 650px !important;
+    height: 300px !important;
+
+    left: 50% !important;
+    top: 48% !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(139,92,246,0.12),
+            transparent 68%
+        ) !important;
+
+    filter: blur(35px) !important;
+
+    opacity: 0.8 !important;
+
+    pointer-events: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   MARKET LINE
+   --------------------------------------------------------- */
+
+.hero-market-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 25px;
+
+    height: 220px;
+
+    opacity: 0.55;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.hero-market-line svg {
+    width: 100%;
+    height: 100%;
+}
+
+.risk-line {
+    fill: none;
+
+    stroke: url(#riskLineGradient);
+
+    stroke-width: 2;
+
+    vector-effect: non-scaling-stroke;
+
+    stroke-linecap: round;
+
+    stroke-dasharray: 1600;
+
+    stroke-dashoffset: 1600;
+
+    animation:
+        riskLineDraw 4s ease-out forwards,
+        riskLinePulse 5s ease-in-out 4s infinite;
+}
+
+@keyframes riskLineDraw {
+
+    to {
+        stroke-dashoffset: 0;
+    }
+
+}
+
+@keyframes riskLinePulse {
+
+    0%,
+    100% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.75;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   HERO CONTENT
+   --------------------------------------------------------- */
+
+.lesson-hero-content {
+    position: relative !important;
+
+    z-index: 5 !important;
+
+    width: min(900px, 90%) !important;
+
+    padding: 70px 0 !important;
+
+    text-align: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   STAGE LABEL
+   --------------------------------------------------------- */
+
+.lesson-number {
+    margin-bottom: 22px !important;
+
+    color: #a78bfa !important;
+
+    font-size: 10px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: 2px !important;
+}
+
+
+/* ---------------------------------------------------------
+   HEADLINE
+   --------------------------------------------------------- */
+
+.lesson-hero h1 {
+    margin: 0 auto !important;
+
+    max-width: 850px !important;
+
+    font-size: clamp(42px, 4.5vw, 58px) !important;
+
+    line-height: 1.06 !important;
+
+    letter-spacing: -2.5px !important;
+
+    font-weight: 800 !important;
+}
+
+.lesson-hero h1 span {
+    color: #9b72ff !important;
+
+    text-shadow:
+        0 0 30px rgba(139,92,246,0.22) !important;
+}
+
+
+/* ---------------------------------------------------------
+   DESCRIPTION
+   --------------------------------------------------------- */
+
+.lesson-hero p {
+    max-width: 590px !important;
+
+    margin: 22px auto 0 !important;
+
+    color: rgba(255,255,255,0.46) !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.75 !important;
+}
+
+
+/* ---------------------------------------------------------
+   META
+   --------------------------------------------------------- */
+
+.lesson-meta {
+    display: flex !important;
+
+    justify-content: center !important;
+
+    gap: 14px !important;
+
+    margin-top: 20px !important;
+
+    color: rgba(255,255,255,0.27) !important;
+
+    font-size: 10px !important;
+}
+
+
+/* ---------------------------------------------------------
+   BOTTOM FADE
+   --------------------------------------------------------- */
+
+.lesson-hero::after {
+    content: "";
+
+    position: absolute;
+
+    left: 7%;
+    right: 7%;
+
+    bottom: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(139,92,246,0.18),
+            transparent
+        );
+
+    z-index: 6;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .lesson-hero {
+        min-height: 500px !important;
+    }
+
+    .lesson-hero-content {
+        width: 90% !important;
+
+        padding: 60px 0 !important;
+    }
+
+    .lesson-hero h1 {
+        font-size: 38px !important;
+
+        letter-spacing: -1.8px !important;
+    }
+
+    .lesson-hero p {
+        font-size: 13px !important;
+
+        max-width: 330px !important;
+    }
+
+    .hero-market-line {
+        bottom: 10px;
+
+        height: 150px;
+
+        opacity: 0.35;
+    }
+
+}
+/* IDEON LOGO — PURPLE O GLOW */
+
+.lesson-logo > span > span {
+    color: #8b5cf6 !important;
+
+    text-shadow:
+        0 0 8px rgba(139, 92, 246, 0.45),
+        0 0 18px rgba(139, 92, 246, 0.30),
+        0 0 30px rgba(139, 92, 246, 0.16);
+}

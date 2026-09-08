@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <title>IDEON — Stage 01: The Basics</title>
+
+    <link rel="stylesheet" href="lesson1.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="lesson-navbar">
+
+        <a href="Home.html" class="lesson-logo">
+            <img src="ideon-icon.png" alt="IDEON">
+
+            <span>
+                IDE<span>O</span>N
+            </span>
+        </a>
+
+        <a href="Trade.html" class="back-link">
+            ← Trading Journey
+        </a>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="lesson-hero">
+
+        <!-- Animated market graph -->
+        <canvas id="stockGraph"></canvas>
+
+        <!-- Existing background -->
+        <div class="lesson-grid"></div>
+        <div class="lesson-glow"></div>
+
+
+        <div class="lesson-hero-content">
+
+            <div class="lesson-number">
+                STAGE 01 · THE BASICS
+            </div>
+
+            <h1>
+                So... what exactly
+                <br>
+                <span>is the stock market?</span>
+            </h1>
+
+            <p>
+                Forget everything you think you know about trading.
+                We're starting from absolute zero.
+            </p>
+
+            <div class="lesson-meta">
+                <span>◷ ~5 min</span>
+                <span>•</span>
+                <span>Beginner level</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= LESSON CONTENT ================= -->
+
+    <main class="lesson-content">
+
+
+        <!-- 01 -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                01
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    THE SIMPLE VERSION
+                </div>
+
+                <h2>
+                    A stock is simply a tiny piece of a company.
+                </h2>
+
+                <p>
+                    Imagine a company is worth <strong>₹10 crore</strong>.
+                    Instead of one person owning the entire company,
+                    it can be divided into millions of tiny pieces.
+                </p>
+
+                <p>
+                    Those pieces are called <strong>shares</strong>.
+                    When you buy a share, you own a very small part
+                    of that company.
+                </p>
+
+            </div>
+
+
+            <div class="ownership-card">
+
+                <div class="company-value">
+
+                    <span>
+                        COMPANY
+                    </span>
+
+                    <strong>
+                        ₹10 CRORE
+                    </strong>
+
+                </div>
+
+                <div class="ownership-line"></div>
+
+                <div class="share-boxes">
+                    <span></span>
+                    <span></span>
+                    <span class="highlight"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <p>
+                    One tiny piece = <strong>one share</strong>
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- 02 -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                02
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    WHY DO PEOPLE BUY STOCKS?
+                </div>
+
+                <h2>
+                    Because companies can become more valuable.
+                </h2>
+
+                <p>
+                    Let's say you buy a share for <strong>₹100</strong>.
+                </p>
+
+                <p>
+                    The company performs well, more people want its
+                    shares, and the market price rises to <strong>₹130</strong>.
+                </p>
+
+            </div>
+
+
+            <div class="simple-example">
+
+                <div>
+                    <span>YOU BUY</span>
+                    <strong>₹100</strong>
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div>
+                    <span>PRICE BECOMES</span>
+                    <strong class="purple">₹130</strong>
+                </div>
+
+            </div>
+
+
+            <p class="small-note">
+                If you sell at ₹130, your gain before applicable
+                charges and taxes would be ₹30.
+            </p>
+
+        </section>
+
+
+        <!-- 03 -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                03
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    TRADING VS INVESTING
+                </div>
+
+                <h2>
+                    They sound similar. They're not exactly the same.
+                </h2>
+
+                <p>
+                    Both involve buying and selling investments,
+                    but the main difference is usually the
+                    <strong>time horizon</strong> and approach.
+                </p>
+
+            </div>
+
+
+            <div class="comparison-card">
+
+                <div class="comparison-column">
+
+                    <div class="comparison-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Trading
+                    </h3>
+
+                    <p>
+                        Usually focuses on shorter-term price movements.
+                    </p>
+
+                    <span class="comparison-tag">
+                        SHORTER TERM
+                    </span>
+
+                </div>
+
+
+                <div class="comparison-divider"></div>
+
+
+                <div class="comparison-column">
+
+                    <div class="comparison-icon">
+                        🌱
+                    </div>
+
+                    <h3>
+                        Investing
+                    </h3>
+
+                    <p>
+                        Usually focuses on owning assets for the longer term.
+                    </p>
+
+                    <span class="comparison-tag">
+                        LONGER TERM
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- 04 -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                04
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    THE IMPORTANT PART
+                </div>
+
+                <h2>
+                    Prices can go up.
+                    <span>They can also go down.</span>
+                </h2>
+
+                <p>
+                    The stock market does not guarantee profit.
+                    If the share you bought falls in price,
+                    your investment can lose value.
+                </p>
+
+                <p>
+                    That's why understanding risk is just as
+                    important as understanding profit.
+                </p>
+
+            </div>
+
+
+            <div class="risk-visual">
+
+                <div class="risk-price">
+
+                    <div>
+                        <span>YOUR STOCK</span>
+                        <strong>₹100</strong>
+                    </div>
+
+                    <div class="risk-arrow">
+                        ↓
+                    </div>
+
+                    <div>
+                        <strong class="loss">₹80</strong>
+                        <small>-20%</small>
+                    </div>
+
+                </div>
+
+                <div class="risk-message">
+                    Profit is never guaranteed.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= KEY IDEA ================= -->
+
+        <div class="key-idea">
+
+            <div class="key-icon">
+                💡
+            </div>
+
+            <div>
+
+                <div class="eyebrow">
+                    REMEMBER THIS
+                </div>
+
+                <h2>
+                    Buying a stock means owning a tiny piece of a company.
+                </h2>
+
+                <p>
+                    Its market price can change based on what investors
+                    think that company is worth.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= QUIZ ================= -->
+
+        <section class="quiz-section">
+
+            <div class="quiz-label">
+                QUICK CHECK
+            </div>
+
+            <h2>
+                Let's see if you've got it.
+            </h2>
+
+            <p>
+                You buy a stock for ₹100.
+                Its price rises to ₹120.
+                What happens if you sell it at ₹120?
+            </p>
+
+
+            <div class="quiz-options">
+
+                <button onclick="checkAnswer(this, false)">
+                    You lose ₹20
+                </button>
+
+                <button onclick="checkAnswer(this, true)">
+                    You gain ₹20
+                </button>
+
+                <button onclick="checkAnswer(this, false)">
+                    Nothing happens
+                </button>
+
+            </div>
+
+
+            <div id="quizResult" class="quiz-result"></div>
+
+        </section>
+
+
+        <!-- ================= COMPLETE ================= -->
+
+        <section class="complete-section">
+
+            <div class="complete-glow"></div>
+
+            <div class="complete-icon">
+                ✓
+            </div>
+
+            <div class="eyebrow">
+                STAGE 01 COMPLETE
+            </div>
+
+            <h2>
+                You now understand the basics.
+            </h2>
+
+            <p>
+                Next, we'll answer the question every beginner asks:
+                <strong>"How do I actually start?"</strong>
+            </p>
+
+            <a href="Trade.html" class="next-button">
+                BACK TO YOUR JOURNEY
+                <span>→</span>
+            </a>
+
+            <div class="completion-note">
+                Stage 02: Setting up your accounts
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* =====================================================
+           LIVE MARKET GRAPH
+           
+           IMPORTANT:
+           The graph DOES NOT MOVE SIDEWAYS.
+           Its X positions stay fixed.
+           Only the price movement changes.
+           ===================================================== */
+
+        const graph =
+            document.getElementById("stockGraph");
+
+        const ctx =
+            graph.getContext("2d");
+
+        let width = 0;
+        let height = 0;
+
+        let lastTime = 0;
+
+
+        function resizeGraph() {
+
+            const rect =
+                graph.getBoundingClientRect();
+
+            const dpr =
+                window.devicePixelRatio || 1;
+
+            graph.width =
+                rect.width * dpr;
+
+            graph.height =
+                rect.height * dpr;
+
+            ctx.setTransform(
+                dpr,
+                0,
+                0,
+                dpr,
+                0,
+                0
+            );
+
+            width =
+                rect.width;
+
+            height =
+                rect.height;
+        }
+
+
+        /* -----------------------------------------------------
+           DRAW LIVE GRAPH
+           ----------------------------------------------------- */
+
+        function drawGraph(time) {
+
+            if (!lastTime) {
+                lastTime = time;
+            }
+
+            const elapsed =
+                time * 0.00035;
+
+
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            const totalPoints = 100;
+
+            const step =
+                width /
+                (totalPoints - 1);
+
+
+            /*
+             * -------------------------------------------------
+             * GRAPH LINE
+             *
+             * X NEVER CHANGES.
+             *
+             * Y continuously changes using smooth sine waves.
+             * -------------------------------------------------
+             */
+
+            const values = [];
+
+
+            for (
+                let i = 0;
+                i < totalPoints;
+                i++
+            ) {
+
+                const progress =
+                    i / (totalPoints - 1);
+
+
+                /*
+                 * Overall market shape
+                 */
+
+                const trend =
+                    Math.sin(
+                        progress * Math.PI * 1.6
+                        - 0.8
+                    ) * 35;
+
+
+                /*
+                 * Slow market movement
+                 */
+
+                const movement =
+                    Math.sin(
+                        progress * 5.5
+                        + elapsed
+                    ) * 18;
+
+
+                /*
+                 * Smaller fluctuations
+                 */
+
+                const smallMovement =
+                    Math.sin(
+                        progress * 17
+                        - elapsed * 1.4
+                    ) * 7;
+
+
+                /*
+                 * A subtle upward bias
+                 */
+
+                const rise =
+                    -progress * 35;
+
+
+                const y =
+                    height * 0.58
+                    + trend
+                    + movement
+                    + smallMovement
+                    + rise;
+
+
+                values.push(y);
+
+            }
+
+
+            /* -------------------------------------------------
+               AREA UNDER GRAPH
+               ------------------------------------------------- */
+
+            const areaGradient =
+                ctx.createLinearGradient(
+                    0,
+                    height * 0.2,
+                    0,
+                    height
+                );
+
+
+            areaGradient.addColorStop(
+                0,
+                "rgba(139,92,246,0.11)"
+            );
+
+
+            areaGradient.addColorStop(
+                0.55,
+                "rgba(139,92,246,0.035)"
+            );
+
+
+            areaGradient.addColorStop(
+                1,
+                "rgba(139,92,246,0)"
+            );
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                0,
+                height
+            );
+
+
+            for (
+                let i = 0;
+                i < values.length;
+                i++
+            ) {
+
+                const x =
+                    i * step;
+
+                const y =
+                    values[i];
+
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+
+            ctx.lineTo(
+                width,
+                height
+            );
+
+            ctx.closePath();
+
+            ctx.fillStyle =
+                areaGradient;
+
+            ctx.fill();
+
+
+            /* -------------------------------------------------
+               GRAPH LINE
+               ------------------------------------------------- */
+
+            ctx.beginPath();
+
+
+            for (
+                let i = 0;
+                i < values.length;
+                i++
+            ) {
+
+                const x =
+                    i * step;
+
+                const y =
+                    values[i];
+
+
+                if (i === 0) {
+
+                    ctx.moveTo(
+                        x,
+                        y
+                    );
+
+                } else {
+
+                    const previousX =
+                        (i - 1) * step;
+
+                    const previousY =
+                        values[i - 1];
+
+
+                    const controlX =
+                        (previousX + x) / 2;
+
+
+                    ctx.quadraticCurveTo(
+                        controlX,
+                        previousY,
+                        x,
+                        y
+                    );
+
+                }
+
+            }
+
+
+            ctx.strokeStyle =
+                "rgba(155,114,255,0.52)";
+
+            ctx.lineWidth =
+                1.5;
+
+            ctx.lineCap =
+                "round";
+
+            ctx.lineJoin =
+                "round";
+
+
+            ctx.shadowColor =
+                "rgba(139,92,246,0.65)";
+
+            ctx.shadowBlur =
+                13;
+
+            ctx.stroke();
+
+            ctx.shadowBlur = 0;
+
+
+            lastTime =
+                time;
+
+
+            requestAnimationFrame(
+                drawGraph
+            );
+
+        }
+
+
+        window.addEventListener(
+            "resize",
+            resizeGraph
+        );
+
+
+        resizeGraph();
+
+        requestAnimationFrame(
+            drawGraph
+        );
+
+
+        /* =====================================================
+           QUIZ
+           ===================================================== */
+
+        function checkAnswer(
+            button,
+            correct
+        ) {
+
+            const result =
+                document.getElementById(
+                    "quizResult"
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".quiz-options button"
+                )
+                .forEach(
+                    btn => {
+
+                        btn.classList.remove(
+                            "correct",
+                            "wrong"
+                        );
+
+                    }
+                );
+
+
+            if (correct) {
+
+                button.classList.add(
+                    "correct"
+                );
+
+                result.className =
+                    "quiz-result show correct-result";
+
+                result.textContent =
+                    "Correct! You gain ₹20 before applicable charges and taxes.";
+
+            } else {
+
+                button.classList.add(
+                    "wrong"
+                );
+
+                result.className =
+                    "quiz-result show wrong-result";
+
+                result.textContent =
+                    "Not quite. Think about the difference between the buying price and selling price.";
+
+            }
+
+        }
+
+    </script>
+<script src="progress.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>IDEON — Stage 08</title>
+
+    <link
+        rel="stylesheet"
+        href="lesson8.css"
+    >
+
+
+<style id="ideon-chat-scroll-fix">
+/* IDEON chat: keep history inside the chat panel */
+.chat-window {
+    height: 430px;
+    max-height: 430px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    padding-right: 8px;
+}
+
+/* Clean, subtle scrollbar */
+.chat-window::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-window::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.35);
+    border-radius: 999px;
+}
+
+.chat-window::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.6);
+}
+
+/* Firefox */
+.chat-window {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.35) transparent;
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+     ===================================================== -->
+
+<header class="lesson-navbar">
+
+    <a
+        href="Trade.html"
+        class="lesson-logo"
+    >
+
+        <img
+            src="ideon-icon.png"
+            alt=""
+        >
+
+        <span>
+            IDE<span>O</span>N
+        </span>
+
+    </a>
+
+
+    <a
+        href="Trade.html"
+        class="back-link"
+    >
+        ← Trading Journey
+    </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="lesson-hero">
+
+    <div class="hero-grid"></div>
+
+    <div class="hero-glow"></div>
+
+
+    <!-- floating question cards -->
+
+    <div class="question-float question-left">
+        <span>?</span>
+        What is P/E?
+    </div>
+
+
+    <div class="question-float question-right">
+        <span>?</span>
+        Market order?
+    </div>
+
+
+    <div class="question-float question-bottom">
+        <span>?</span>
+        Why did it fall?
+    </div>
+
+
+    <!-- hero content -->
+
+    <div class="lesson-hero-content">
+
+        <div class="lesson-number">
+            STAGE 08 · ASK IDEON
+        </div>
+
+
+        <h1>
+
+            Still confused?
+
+            <br>
+
+            <span>Just ask.</span>
+
+        </h1>
+
+
+        <p>
+            You've learned the basics.
+            Now you have an AI tutor to help
+            you understand what comes next.
+        </p>
+
+
+        <div class="lesson-meta">
+
+            <span>✦ AI tutor</span>
+
+            <span>•</span>
+
+            <span>Beginner friendly</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<main class="lesson-content">
+
+
+    <!-- =================================================
+         INTRO
+         ================================================= -->
+
+    <section class="intro-section">
+
+        <div class="intro-number">
+            01
+        </div>
+
+
+        <div class="intro-content">
+
+            <div class="eyebrow">
+                YOUR AI MARKET TUTOR
+            </div>
+
+
+            <h2>
+                You don't need to know
+                everything before you start asking.
+            </h2>
+
+
+            <p>
+                Markets come with a lot of terminology,
+                charts, numbers and concepts.
+                IDEON can explain them in simple language
+                and help you build your understanding step by step.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUESTION EXAMPLES
+         ================================================= -->
+
+    <section class="questions-section">
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                TRY ASKING
+            </div>
+
+            <h2>
+                Ask it like you're talking to someone.
+            </h2>
+
+            <p>
+                No complicated wording required.
+            </p>
+
+        </div>
+
+
+        <div class="question-grid">
+
+
+            <button
+                class="question-card"
+                data-question="What is a market order?"
+            >
+
+                <span class="question-icon">
+                    ↗
+                </span>
+
+                <div>
+
+                    <strong>
+                        What is a market order?
+                    </strong>
+
+                    <small>
+                        Orders
+                    </small>
+
+                </div>
+
+                <span class="question-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+
+            <button
+                class="question-card"
+                data-question="Why do stock prices move?"
+            >
+
+                <span class="question-icon">
+                    ◈
+                </span>
+
+                <div>
+
+                    <strong>
+                        Why do stock prices move?
+                    </strong>
+
+                    <small>
+                        Stock basics
+                    </small>
+
+                </div>
+
+                <span class="question-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+
+            <button
+                class="question-card"
+                data-question="What does P/E mean?"
+            >
+
+                <span class="question-icon">
+                    %
+                </span>
+
+                <div>
+
+                    <strong>
+                        What does P/E mean?
+                    </strong>
+
+                    <small>
+                        Fundamentals
+                    </small>
+
+                </div>
+
+                <span class="question-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+
+            <button
+                class="question-card"
+                data-question="What is the difference between NSE and BSE?"
+            >
+
+                <span class="question-icon">
+                    ≋
+                </span>
+
+                <div>
+
+                    <strong>
+                        NSE vs BSE?
+                    </strong>
+
+                    <small>
+                        Markets
+                    </small>
+
+                </div>
+
+                <span class="question-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         AI TUTOR
+         ================================================= -->
+
+    <section class="ai-section">
+
+        <div class="ai-glow"></div>
+
+
+        <div class="ai-header">
+
+            <div class="ai-status">
+
+                <span class="ai-dot"></span>
+
+                IDEON AI TUTOR
+
+            </div>
+
+
+            <span class="ai-mode">
+                EDUCATIONAL MODE
+            </span>
+
+        </div>
+
+
+        <div class="chat-window">
+
+
+            <!-- AI message -->
+
+            <div class="chat-message ai-message">
+
+                <div class="message-avatar">
+                    ✦
+                </div>
+
+
+                <div class="message-body">
+
+                    <span class="message-name">
+                        IDEON
+                    </span>
+
+                    <p>
+                        Hey 👋 Ask me anything about
+                        stocks, charts, orders or the
+                        market. I'll explain it in
+                        beginner-friendly language.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- question -->
+
+            <div class="chat-message user-message">
+
+                <div class="message-body">
+
+                    <span class="message-name">
+                        YOU
+                    </span>
+
+                    <p id="userQuestion">
+                        What is a market order?
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- answer -->
+
+            <div class="chat-message ai-message answer-message">
+
+                <div class="message-avatar">
+                    ✦
+                </div>
+
+
+                <div class="message-body">
+
+                    <span class="message-name">
+                        IDEON
+                    </span>
+
+                    <p id="aiAnswer">
+
+                        A market order is an instruction
+                        to buy or sell a stock at the best
+                        available price in the market.
+
+                        <br><br>
+
+                        Think of it like saying:
+                        <strong>
+                            "I want to make this trade now
+                            at the available market price."
+                        </strong>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- input -->
+
+        <div class="ai-input">
+
+            <input
+                type="text"
+                id="aiQuestion"
+                placeholder="Ask IDEON anything..."
+                autocomplete="off"
+            >
+
+
+            <button
+                id="askButton"
+                type="button"
+            >
+                ASK
+                <span>→</span>
+            </button>
+
+        </div>
+
+
+        <div class="ai-note">
+
+            ✦ Educational explanations only ·
+            Not personalised financial advice
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         WHAT IDEON CAN HELP WITH
+         ================================================= -->
+
+    <section class="help-section">
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                WHAT CAN YOU ASK?
+            </div>
+
+            <h2>
+                From simple questions to deeper concepts.
+            </h2>
+
+        </div>
+
+
+        <div class="help-grid">
+
+
+            <div class="help-card">
+
+                <span>01</span>
+
+                <h3>
+                    Market Basics
+                </h3>
+
+                <p>
+                    Exchanges, indices, stocks,
+                    sectors and market terminology.
+                </p>
+
+            </div>
+
+
+
+            <div class="help-card">
+
+                <span>02</span>
+
+                <h3>
+                    Charts
+                </h3>
+
+                <p>
+                    Candlesticks, trends, volume,
+                    support and resistance.
+                </p>
+
+            </div>
+
+
+
+            <div class="help-card">
+
+                <span>03</span>
+
+                <h3>
+                    Orders
+                </h3>
+
+                <p>
+                    Market orders, limit orders,
+                    stop-loss and order status.
+                </p>
+
+            </div>
+
+
+
+            <div class="help-card">
+
+                <span>04</span>
+
+                <h3>
+                    Risk
+                </h3>
+
+                <p>
+                    Volatility, diversification,
+                    exposure and common mistakes.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         IMPORTANT
+         ================================================= -->
+
+    <section class="important-section">
+
+        <div class="important-icon">
+            !
+        </div>
+
+
+        <div>
+
+            <div class="eyebrow">
+                IMPORTANT
+            </div>
+
+
+            <h2>
+                IDEON teaches.
+                You decide.
+            </h2>
+
+
+            <p>
+                IDEON is designed to help you understand
+                financial concepts. It should not be used
+                as a substitute for professional financial
+                advice or as a guarantee of future returns.
+            </p>
+
+
+            <div class="important-points">
+
+                <span>
+                    ✓ Learn
+                </span>
+
+                <span>
+                    ✓ Research
+                </span>
+
+                <span>
+                    ✓ Practise virtually
+                </span>
+
+                <span>
+                    ✓ Make informed decisions
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         COMPLETION
+         ================================================= -->
+
+    <section class="complete-section">
+
+        <div class="complete-glow"></div>
+
+
+        <div class="complete-icon">
+            ✓
+        </div>
+
+
+        <div class="eyebrow">
+            STAGE 08 COMPLETE
+        </div>
+
+
+        <h2>
+            You've completed
+            the journey.
+        </h2>
+
+
+        <p>
+            You started from zero.
+            You now understand the market,
+            accounts, stocks, charts, orders,
+            risk and virtual trading.
+
+            <br><br>
+
+            <strong>
+                Now it's time to practise.
+            </strong>
+        </p>
+
+
+        <a
+            href="Home.html#market-lab"
+            class="next-button"
+        >
+
+            ENTER MARKET LAB
+
+            <span>
+                →
+            </span>
+
+        </a>
+
+
+        <div class="completion-note">
+            Virtual trading only · No real money involved
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+/* =========================================================
+   IDEON MARKET AI — CONVERSATIONAL TUTOR
+   ========================================================= */
+
+const IDEON_SUPABASE_URL = "https://ceedwhwnpthqdzhtkemy.supabase.co";
+const IDEON_SUPABASE_KEY = "sb_publishable_bGc_PDepTuhmmvVG1WMPUQ_-MlnP8hO";
+
+const questionButtons = document.querySelectorAll(".question-card");
+const questionInput = document.getElementById("aiQuestion");
+const askButton = document.getElementById("askButton");
+const chatWindow = document.querySelector(".chat-window");
+
+const ideonConversation = [];
+
+/* =========================================================
+   MARKDOWN → SAFE, SIMPLE HTML
+   ========================================================= */
+
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatIDEONText(text) {
+    let safe = escapeHTML(text);
+
+    // Basic markdown formatting for a clean AI-tutor appearance.
+    safe = safe.replace(/^###\s+(.+)$/gm, "<strong>$1</strong>");
+    safe = safe.replace(/^##\s+(.+)$/gm, "<strong>$1</strong>");
+    safe = safe.replace(/^#\s+(.+)$/gm, "<strong>$1</strong>");
+    safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    safe = safe.replace(/\*([^*]+?)\*/g, "<em>$1</em>");
+
+    // Simple bullets.
+    safe = safe.replace(/^[-•]\s+(.+)$/gm, "• $1");
+
+    // Preserve paragraphs and line breaks.
+    safe = safe.replace(/\n{2,}/g, "<br><br>");
+    safe = safe.replace(/\n/g, "<br>");
+
+    return safe;
+}
+
+/* =========================================================
+   CHAT MESSAGE UI
+   ========================================================= */
+
+function addUserMessage(text) {
+    if (!chatWindow) return;
+
+    const message = document.createElement("div");
+    message.className = "chat-message user-message";
+
+    message.innerHTML = `
+        <div class="message-body">
+            <span class="message-name">YOU</span>
+            <p>${escapeHTML(text)}</p>
+        </div>
+    `;
+
+    chatWindow.appendChild(message);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    return message;
+}
+
+function addAIMessage(text, extraClass = "") {
+    if (!chatWindow) return null;
+
+    const message = document.createElement("div");
+    message.className = `chat-message ai-message ${extraClass}`;
+
+    message.innerHTML = `
+        <div class="message-avatar">✦</div>
+        <div class="message-body">
+            <span class="message-name">IDEON</span>
+            <p>${formatIDEONText(text)}</p>
+        </div>
+    `;
+
+    chatWindow.appendChild(message);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    return message;
+}
+
+function removeMessage(message) {
+    if (message && message.parentNode) {
+        message.remove();
+    }
+}
+
+/* =========================================================
+   SEND TO IDEON
+   ========================================================= */
+
+async function askIDEON(question) {
+    question = question.trim();
+
+    if (!question || !chatWindow) return;
+
+    ideonConversation.push({
+        role: "user",
+        content: question
+    });
+
+    // Add the new user message instead of replacing the old one.
+    addUserMessage(question);
+
+    // Remove the original static demo question/answer once the user
+    // starts a real conversation.
+    const staticUser = document.getElementById("userQuestion")?.closest(".chat-message");
+    const staticAnswer = document.getElementById("aiAnswer")?.closest(".chat-message");
+
+    if (staticUser) staticUser.remove();
+    if (staticAnswer) staticAnswer.remove();
+
+    const thinkingMessage = addAIMessage("IDEON is thinking...", "thinking-message");
+
+    if (askButton) {
+        askButton.disabled = true;
+        askButton.innerHTML = "THINKING...";
+    }
+
+    if (questionInput) {
+        questionInput.value = "";
+    }
+
+    try {
+        console.log("🧠 Asking IDEON Market AI...");
+
+        const response = await fetch(
+            `${IDEON_SUPABASE_URL}/functions/v1/ask-ideon`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": IDEON_SUPABASE_KEY
+                },
+                body: JSON.stringify({
+                    messages: ideonConversation
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("🤖 IDEON response:", data);
+
+        if (!response.ok) {
+            throw new Error(
+                data?.error || "IDEON could not answer."
+            );
+        }
+
+        const answer = data?.answer;
+
+        if (!answer) {
+            throw new Error("IDEON returned an empty answer.");
+        }
+
+        ideonConversation.push({
+            role: "assistant",
+            content: answer
+        });
+
+        removeMessage(thinkingMessage);
+        addAIMessage(answer);
+
+    } catch (error) {
+        console.error("❌ IDEON Market AI Error:", error);
+
+        ideonConversation.pop();
+        removeMessage(thinkingMessage);
+
+        addAIMessage(
+            "I couldn't connect right now. Please try again."
+        );
+    } finally {
+        if (askButton) {
+            askButton.disabled = false;
+            askButton.innerHTML = `
+                ASK
+                <span>→</span>
+            `;
+        }
+
+        if (questionInput) {
+            questionInput.focus();
+        }
+    }
+}
+
+/* =========================================================
+   SUGGESTED QUESTIONS
+   ========================================================= */
+
+questionButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const question = button.dataset.question;
+
+        if (questionInput) {
+            questionInput.value = question;
+        }
+
+        askIDEON(question);
+    });
+});
+
+/* =========================================================
+   ASK BUTTON
+   ========================================================= */
+
+if (askButton) {
+    askButton.addEventListener("click", () => {
+        const question = questionInput
+            ? questionInput.value.trim()
+            : "";
+
+        if (!question) {
+            if (questionInput) questionInput.focus();
+            return;
+        }
+
+        askIDEON(question);
+    });
+}
+
+/* =========================================================
+   ENTER KEY
+   ========================================================= */
+
+if (questionInput) {
+    questionInput.addEventListener("keydown", event => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+
+            if (askButton) {
+                askButton.click();
+            }
+        }
+    });
+}
+
+console.log("🔥 IDEON Market AI connected.");
+</script>
+
+<script src="progress.js"></script>
+</body>
+</html>

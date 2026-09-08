@@ -1,0 +1,1752 @@
+/* =========================================================
+   IDEON TRADE — LESSON 04
+   READING THE CHARTS
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #050507;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.lesson-navbar {
+    height: 74px;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(5, 5, 7, 0.94);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    backdrop-filter: blur(16px);
+}
+
+.lesson-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.lesson-logo img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.lesson-logo span span {
+    color: #8b5cf6;
+}
+
+.back-link {
+    color: rgba(255,255,255,0.48);
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.lesson-hero {
+    position: relative;
+    min-height: 560px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    background:
+        radial-gradient(
+            circle at 50% 48%,
+            rgba(124, 58, 237, 0.12),
+            rgba(124, 58, 237, 0.035) 30%,
+            transparent 65%
+        ),
+        #050507;
+}
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -6;
+
+    opacity: 0.2;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 25%,
+            black 70%,
+            transparent
+        );
+}
+
+.hero-glow {
+    position: absolute;
+
+    width: 720px;
+    height: 420px;
+
+    left: 50%;
+    top: 48%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: -5;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(139, 92, 246, 0.14),
+            rgba(124, 58, 237, 0.04) 42%,
+            transparent 72%
+        );
+
+    filter: blur(35px);
+}
+
+
+/* =========================================================
+   HERO CHART
+   ========================================================= */
+
+.chart-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.chart-hero-bg svg {
+    position: absolute;
+
+    width: 125%;
+    height: 100%;
+
+    left: -12.5%;
+    bottom: -20px;
+
+    opacity: 0.75;
+}
+
+.hero-chart-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.hero-chart-main {
+    stroke: url(#heroChartGradient);
+    stroke-width: 2;
+
+    stroke-dasharray: 1800;
+    stroke-dashoffset: 1800;
+
+    animation:
+        heroChartDraw 7s ease-out forwards,
+        heroChartPulse 5s ease-in-out 7s infinite;
+}
+
+.hero-chart-glow {
+    stroke: rgba(139,92,246,0.14);
+    stroke-width: 10;
+
+    filter: blur(8px);
+
+    animation:
+        heroChartGlow 4s ease-in-out infinite;
+}
+
+@keyframes heroChartDraw {
+
+    to {
+        stroke-dashoffset: 0;
+    }
+
+}
+
+@keyframes heroChartPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.85;
+    }
+
+}
+
+@keyframes heroChartGlow {
+
+    0%,
+    100% {
+        opacity: 0.15;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.lesson-hero-content {
+    position: relative;
+    z-index: 5;
+
+    width: min(1100px, 92%);
+
+    text-align: center;
+    margin: 0 auto;
+}
+
+.lesson-hero-eyebrow {
+    margin-bottom: 26px;
+
+    color: #a78bfa;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.lesson-hero h1 {
+    margin: 0;
+
+    font-size: clamp(58px, 7vw, 94px);
+
+    line-height: 0.98;
+
+    font-weight: 800;
+
+    letter-spacing: -4px;
+
+    color: #ffffff;
+}
+
+.lesson-hero h1 span {
+    color: #9b6cff;
+
+    text-shadow:
+        0 0 35px rgba(139,92,246,0.18);
+}
+
+.lesson-hero p {
+    max-width: 700px;
+
+    margin: 28px auto 0;
+
+    color: rgba(255,255,255,0.52);
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.lesson-meta {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-top: 25px;
+
+    color: rgba(255,255,255,0.38);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.lesson-content {
+    width: min(1050px, 90%);
+
+    margin: 0 auto;
+
+    padding: 100px 0 130px;
+}
+
+.lesson-block {
+    position: relative;
+
+    margin-bottom: 120px;
+}
+
+.lesson-step {
+    margin-bottom: 18px;
+
+    color: rgba(139,92,246,0.65);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.eyebrow {
+    margin-bottom: 14px;
+
+    color: #a78bfa;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.lesson-text {
+    max-width: 760px;
+}
+
+.lesson-text h2 {
+    font-size: clamp(32px, 4vw, 48px);
+
+    line-height: 1.08;
+
+    letter-spacing: -1.8px;
+
+    margin-bottom: 20px;
+}
+
+.lesson-text p {
+    max-width: 700px;
+
+    color: rgba(255,255,255,0.52);
+
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   SIMPLE CHART
+   ========================================================= */
+
+.chart-explainer {
+    display: flex;
+
+    margin-top: 45px;
+
+    height: 320px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.025),
+            rgba(255,255,255,0.008)
+        );
+
+    border: 1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+
+    overflow: hidden;
+}
+
+.chart-axis-y {
+    width: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(255,255,255,0.3);
+
+    font-size: 13px;
+}
+
+.simple-chart {
+    position: relative;
+
+    flex: 1;
+
+    height: 100%;
+}
+
+.simple-chart svg {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-grid-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.line-a {
+    top: 25%;
+}
+
+.line-b {
+    top: 50%;
+}
+
+.line-c {
+    top: 75%;
+}
+
+.simple-line {
+    fill: none;
+
+    stroke: #9b6cff;
+    stroke-width: 3;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    filter:
+        drop-shadow(
+            0 0 10px rgba(139,92,246,0.3)
+        );
+}
+
+.chart-label {
+    position: absolute;
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 11px;
+}
+
+.label-low {
+    left: 15px;
+    bottom: 28%;
+}
+
+.label-high {
+    left: 15px;
+    top: 18%;
+}
+
+.time-label {
+    position: absolute;
+
+    right: 20px;
+    bottom: 15px;
+
+    color: rgba(255,255,255,0.25);
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   TIMEFRAMES
+   ========================================================= */
+
+.timeframe-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-top: 40px;
+}
+
+.timeframe-card {
+    padding: 28px 20px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.timeframe-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(139,92,246,0.35);
+}
+
+.timeframe-card.active {
+    background:
+        rgba(139,92,246,0.08);
+
+    border-color:
+        rgba(139,92,246,0.35);
+}
+
+.timeframe-card strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #ffffff;
+
+    font-size: 25px;
+}
+
+.timeframe-card span {
+    color: rgba(255,255,255,0.4);
+
+    font-size: 11px;
+}
+
+.tip-box {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 22px;
+    padding: 20px 22px;
+
+    background:
+        rgba(139,92,246,0.055);
+
+    border:
+        1px solid rgba(139,92,246,0.13);
+
+    border-radius: 16px;
+}
+
+.tip-box span {
+    font-size: 17px;
+}
+
+.tip-box p {
+    color: rgba(255,255,255,0.48);
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CANDLESTICK
+   ========================================================= */
+
+.candlestick-visual {
+    display: flex;
+
+    align-items: center;
+
+    gap: 90px;
+
+    margin-top: 50px;
+
+    padding: 55px;
+
+    background:
+        radial-gradient(
+            circle at 30% 50%,
+            rgba(139,92,246,0.08),
+            transparent 45%
+        ),
+        rgba(255,255,255,0.02);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+}
+
+.candle-column {
+    position: relative;
+
+    width: 150px;
+    height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wick {
+    position: absolute;
+
+    width: 2px;
+
+    background:
+        rgba(255,255,255,0.55);
+}
+
+.wick-top {
+    height: 65px;
+
+    top: 20px;
+}
+
+.wick-bottom {
+    height: 65px;
+
+    bottom: 20px;
+}
+
+.candle-body {
+    width: 54px;
+    height: 125px;
+
+    border-radius: 6px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.green-candle {
+    background:
+        linear-gradient(
+            180deg,
+            #7ee7b5,
+            #3bc98c
+        );
+
+    box-shadow:
+        0 0 35px rgba(59,201,140,0.16);
+}
+
+.price-marker {
+    position: absolute;
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.marker-high {
+    top: 0;
+}
+
+.marker-low {
+    bottom: 0;
+}
+
+.candle-explanation {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 30px;
+}
+
+.candle-explanation > div {
+    position: relative;
+
+    padding-left: 22px;
+}
+
+.candle-explanation strong {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 17px;
+}
+
+.candle-explanation p {
+    color: rgba(255,255,255,0.45);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.dot {
+    position: absolute;
+
+    left: 0;
+    top: 5px;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.dot.green {
+    background: #55d99a;
+}
+
+.dot.purple {
+    background: #9b6cff;
+}
+
+
+/* =========================================================
+   OHLC
+   ========================================================= */
+
+.ohlc-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-top: 45px;
+}
+
+.ohlc-card {
+    padding: 30px 20px;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+.ohlc-card span {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(139,92,246,0.1);
+
+    color: #a78bfa;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.ohlc-card strong {
+    display: block;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+}
+
+.ohlc-card small {
+    display: block;
+
+    margin-top: 8px;
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.example-candle-card {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 80px;
+
+    margin-top: 20px;
+    padding: 40px;
+
+    background:
+        rgba(255,255,255,0.018);
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+
+    border-radius: 20px;
+}
+
+.example-candle {
+    position: relative;
+
+    width: 100px;
+    height: 210px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-wick {
+    position: absolute;
+
+    width: 2px;
+    height: 50px;
+
+    top: 5px;
+
+    background:
+        rgba(255,255,255,0.5);
+}
+
+.example-wick.bottom {
+    top: auto;
+    bottom: 5px;
+}
+
+.example-body {
+    width: 45px;
+    height: 110px;
+
+    border-radius: 5px;
+
+    background:
+        #6fe0a8;
+
+    box-shadow:
+        0 0 25px rgba(75,220,150,0.12);
+}
+
+.example-values {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px 50px;
+}
+
+.example-values span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: rgba(255,255,255,0.32);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.example-values strong {
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   WICKS
+   ========================================================= */
+
+.wick-story {
+    display: flex;
+
+    align-items: center;
+
+    gap: 80px;
+
+    margin-top: 50px;
+
+    padding: 50px;
+
+    background:
+        rgba(255,255,255,0.02);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+}
+
+.story-candle {
+    position: relative;
+
+    width: 160px;
+    height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.story-wick {
+    position: absolute;
+
+    width: 2px;
+
+    background:
+        rgba(255,255,255,0.55);
+}
+
+.story-wick.top {
+    height: 95px;
+    top: 5px;
+}
+
+.story-wick.bottom {
+    height: 75px;
+    bottom: 10px;
+}
+
+.story-body {
+    width: 60px;
+    height: 115px;
+
+    border-radius: 6px;
+
+    background:
+        #9b6cff;
+
+    box-shadow:
+        0 0 35px rgba(139,92,246,0.18);
+}
+
+.story-points {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 30px;
+}
+
+.story-points strong {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 16px;
+}
+
+.story-points span {
+    color: rgba(255,255,255,0.42);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   VOLUME
+   ========================================================= */
+
+.volume-visual {
+    position: relative;
+
+    height: 280px;
+
+    margin-top: 45px;
+
+    padding: 30px 40px;
+
+    background:
+        rgba(255,255,255,0.02);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+
+    overflow: hidden;
+}
+
+.volume-bars {
+    height: 210px;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    gap: 14px;
+}
+
+.volume-bars span {
+    width: 8%;
+
+    max-width: 45px;
+
+    border-radius: 6px 6px 0 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(139,92,246,0.2),
+            rgba(155,108,255,0.7)
+        );
+
+    box-shadow:
+        0 0 20px rgba(139,92,246,0.06);
+}
+
+.volume-caption {
+    position: absolute;
+
+    right: 25px;
+    top: 20px;
+
+    color: rgba(255,255,255,0.3);
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   TRENDS
+   ========================================================= */
+
+.trend-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 45px;
+}
+
+.trend-card {
+    padding: 28px;
+
+    background:
+        rgba(255,255,255,0.02);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 20px;
+}
+
+.trend-chart {
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    color: #a78bfa;
+
+    font-size: 35px;
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 20px rgba(139,92,246,0.25);
+}
+
+.trend-card strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 16px;
+}
+
+.trend-card span {
+    color: rgba(255,255,255,0.4);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.uptrend {
+    transform: rotate(-12deg);
+}
+
+.downtrend {
+    transform: rotate(12deg);
+}
+
+.sideways {
+    font-size: 26px;
+}
+
+
+/* =========================================================
+   SUPPORT & RESISTANCE
+   ========================================================= */
+
+.levels-visual {
+    margin-top: 45px;
+}
+
+.level-chart {
+    position: relative;
+
+    height: 340px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.025),
+            rgba(255,255,255,0.008)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 24px;
+}
+
+.level-chart svg {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+.level-line {
+    fill: none;
+
+    stroke: #9b6cff;
+    stroke-width: 3;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    filter:
+        drop-shadow(
+            0 0 10px rgba(139,92,246,0.25)
+        );
+}
+
+.resistance-line,
+.support-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    border-top:
+        1px dashed rgba(167,139,250,0.3);
+
+    z-index: 3;
+}
+
+.resistance-line {
+    top: 22%;
+}
+
+.support-line {
+    bottom: 24%;
+}
+
+.resistance-line span,
+.support-line span {
+    position: absolute;
+
+    right: 18px;
+    top: -18px;
+
+    padding: 6px 9px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(5,5,7,0.85);
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   KEY IDEA
+   ========================================================= */
+
+.key-idea {
+    display: flex;
+
+    gap: 25px;
+
+    align-items: flex-start;
+
+    padding: 38px;
+
+    margin: 30px 0 100px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,92,246,0.1),
+            rgba(139,92,246,0.025)
+        );
+
+    border:
+        1px solid rgba(139,92,246,0.18);
+
+    border-radius: 24px;
+}
+
+.key-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(139,92,246,0.14);
+
+    color: #a78bfa;
+
+    font-size: 21px;
+}
+
+.key-idea h3 {
+    max-width: 720px;
+
+    margin-bottom: 12px;
+
+    font-size: 25px;
+
+    line-height: 1.35;
+
+    letter-spacing: -0.6px;
+}
+
+.key-idea p {
+    color: rgba(255,255,255,0.4);
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+.quiz-section {
+    margin-bottom: 100px;
+
+    padding: 50px;
+
+    background:
+        rgba(255,255,255,0.018);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    border-radius: 26px;
+}
+
+.quiz-section h2 {
+    max-width: 760px;
+
+    font-size: clamp(28px, 4vw, 42px);
+
+    line-height: 1.15;
+
+    letter-spacing: -1.4px;
+}
+
+.quiz-subtitle {
+    margin-top: 12px;
+
+    color: rgba(255,255,255,0.38);
+
+    font-size: 13px;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.quiz-options button {
+    padding: 18px 20px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    color: rgba(255,255,255,0.7);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.quiz-options button:hover:not(:disabled) {
+    transform: translateX(4px);
+
+    border-color:
+        rgba(139,92,246,0.35);
+
+    background:
+        rgba(139,92,246,0.06);
+}
+
+.quiz-options button.correct {
+    border-color:
+        rgba(74,222,128,0.45);
+
+    background:
+        rgba(74,222,128,0.07);
+
+    color: #a7f3d0;
+}
+
+.quiz-options button.wrong {
+    border-color:
+        rgba(248,113,113,0.45);
+
+    background:
+        rgba(248,113,113,0.06);
+
+    color: #fecaca;
+}
+
+.quiz-result {
+    margin-top: 20px;
+
+    padding: 15px 18px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    display: none;
+}
+
+.correct-result {
+    display: block;
+
+    color: #a7f3d0;
+
+    background:
+        rgba(74,222,128,0.06);
+
+    border:
+        1px solid rgba(74,222,128,0.15);
+}
+
+.wrong-result {
+    display: block;
+
+    color: #fecaca;
+
+    background:
+        rgba(248,113,113,0.06);
+
+    border:
+        1px solid rgba(248,113,113,0.15);
+}
+
+
+/* =========================================================
+   COMPLETION
+   ========================================================= */
+
+.complete-section {
+    position: relative;
+
+    min-height: 430px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(139,92,246,0.15);
+
+    border-radius: 30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(139,92,246,0.11),
+            rgba(139,92,246,0.025) 48%,
+            rgba(255,255,255,0.015)
+        );
+}
+
+.complete-glow {
+    position: absolute;
+
+    width: 500px;
+    height: 300px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(139,92,246,0.14),
+            transparent 70%
+        );
+
+    filter: blur(30px);
+
+    pointer-events: none;
+}
+
+.complete-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(650px, 90%);
+
+    text-align: center;
+}
+
+.complete-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(139,92,246,0.12);
+
+    border:
+        1px solid rgba(139,92,246,0.25);
+
+    color: #b59cff;
+
+    font-size: 24px;
+
+    box-shadow:
+        0 0 30px rgba(139,92,246,0.1);
+}
+
+.complete-content h2 {
+    margin-bottom: 16px;
+
+    font-size: clamp(35px, 5vw, 55px);
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+}
+
+.complete-content p {
+    max-width: 500px;
+
+    margin: 0 auto;
+
+    color: rgba(255,255,255,0.45);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.complete-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+
+    padding: 14px 22px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #050507;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.complete-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(255,255,255,0.1);
+}
+
+.next-stage {
+    margin-top: 18px;
+
+    color: rgba(255,255,255,0.28);
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .lesson-navbar {
+        padding: 0 5%;
+    }
+
+    .lesson-logo {
+        font-size: 21px;
+    }
+
+    .lesson-logo img {
+        width: 31px;
+        height: 31px;
+    }
+
+    .lesson-hero {
+        min-height: 540px;
+    }
+
+    .hero-grid {
+        background-size: 45px 45px;
+
+        opacity: 0.14;
+    }
+
+    .hero-glow {
+        width: 500px;
+        height: 320px;
+    }
+
+    .chart-hero-bg svg {
+        width: 170%;
+        left: -35%;
+
+        opacity: 0.65;
+    }
+
+    .lesson-hero-eyebrow {
+        font-size: 9px;
+        letter-spacing: 1.5px;
+    }
+
+    .lesson-hero h1 {
+        font-size: clamp(46px, 13vw, 68px);
+
+        letter-spacing: -3px;
+    }
+
+    .lesson-hero p {
+        width: 90%;
+
+        font-size: 14px;
+    }
+
+    .lesson-content {
+        width: 90%;
+
+        padding-top: 75px;
+    }
+
+    .lesson-block {
+        margin-bottom: 90px;
+    }
+
+    .chart-explainer {
+        height: 260px;
+    }
+
+    .timeframe-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .candlestick-visual {
+        flex-direction: column;
+
+        gap: 40px;
+
+        padding: 35px;
+    }
+
+    .candle-column {
+        height: 250px;
+    }
+
+    .ohlc-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .example-candle-card {
+        flex-direction: column;
+
+        gap: 30px;
+    }
+
+    .wick-story {
+        flex-direction: column;
+
+        gap: 30px;
+
+        padding: 35px;
+    }
+
+    .trend-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .volume-visual {
+        height: 240px;
+
+        padding: 25px 20px;
+    }
+
+    .volume-bars {
+        gap: 7px;
+    }
+
+    .key-idea {
+        padding: 28px;
+
+        flex-direction: column;
+    }
+
+    .key-idea h3 {
+        font-size: 21px;
+    }
+
+    .quiz-section {
+        padding: 30px;
+    }
+
+    .complete-section {
+        min-height: 450px;
+    }
+
+}
+/* IDEON LOGO — PURPLE O GLOW */
+
+.lesson-logo > span > span {
+    color: #8b5cf6 !important;
+
+    text-shadow:
+        0 0 8px rgba(139, 92, 246, 0.45),
+        0 0 18px rgba(139, 92, 246, 0.30),
+        0 0 30px rgba(139, 92, 246, 0.16);
+}

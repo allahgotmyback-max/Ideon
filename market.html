@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>IDEON — Market Lab</title>
+
+    <link
+        rel="icon"
+        href="favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="market.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         NAVBAR
+         ========================================= -->
+
+    <header class="ideon-navbar">
+
+        <a
+            href="Home.html"
+            class="ideon-brand"
+        >
+
+            <img
+                src="ideon-icon.png"
+                alt="IDEON"
+            >
+
+            <span>IDEON</span>
+
+        </a>
+
+
+        <nav class="ideon-nav-links">
+
+            <a href="Home.html">
+                Home
+            </a>
+
+            <a href="Home.html#idea-lab">
+                Idea Lab
+            </a>
+
+            <a
+                href="Market.html"
+                class="active"
+            >
+                Market Lab
+            </a>
+
+            <a href="Trade.html">
+                Learn
+            </a>
+
+        </nav>
+
+
+        <a
+            href="Home.html"
+            class="ideon-nav-back"
+        >
+            ← Back
+        </a>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MARKET LAB
+         ========================================= -->
+
+    <main class="market-page">
+
+
+        <!-- =====================================
+             HERO
+             ===================================== -->
+
+        <section class="market-hero">
+
+            <div>
+
+                <div class="market-eyebrow">
+                    IDEON MARKET LAB
+                </div>
+
+                <h1>
+                    Understand the market.
+                    <span>Practice without risk.</span>
+                </h1>
+
+                <p>
+                    Explore stocks, study real market movements,
+                    and practise trading with virtual money.
+                </p>
+
+            </div>
+
+
+            <div class="market-balance-card">
+
+                <span>
+                    VIRTUAL BALANCE
+                </span>
+
+                <strong id="heroPortfolioValue">
+                    ₹1,00,000.00
+                </strong>
+
+                <small>
+                    No real money involved
+                </small>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             MARKET TERMINAL
+             ===================================== -->
+
+        <section class="market-terminal">
+
+
+            <!-- TOP BAR -->
+
+            <div class="market-terminal-header">
+
+                <div>
+
+                    <span class="terminal-label">
+                        MARKET LAB
+                    </span>
+
+                    <h2>
+                        Virtual Trading Terminal
+                    </h2>
+
+                </div>
+
+
+                <div class="market-status">
+
+                    <span class="market-status-dot"></span>
+
+                    MARKET DATA
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================
+                 SEARCH
+                 ================================= -->
+
+            <div class="market-search-section">
+
+                <div class="market-search">
+
+                    <span class="market-search-icon">
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="stockSearch"
+                        placeholder="Search a stock or company..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="searchStockBtn"
+                    >
+                        SEARCH
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="marketSearchMessage"
+                    class="market-search-message"
+                ></div>
+
+            </div>
+
+
+
+            <!-- =================================
+                 WATCHLIST
+                 ================================= -->
+
+            <div
+                class="ideon-watchlist"
+                id="watchlist"
+            >
+
+                <button
+                    type="button"
+                    class="ideon-watchlist-toggle"
+                    id="watchlistToggle"
+                    aria-expanded="true"
+                >
+
+                    <span>
+
+                        <span class="ideon-watchlist-label">
+                            WATCHLIST
+                        </span>
+
+                        <strong>
+                            Market favourites
+                        </strong>
+
+                    </span>
+
+
+                    <span class="ideon-watchlist-toggle-right">
+
+                        <span
+                            class="ideon-watchlist-count"
+                            id="watchlistCount"
+                        >
+                            6
+                        </span>
+
+                        <span
+                            class="ideon-watchlist-arrow"
+                        >
+                            ⌃
+                        </span>
+
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="ideon-watchlist-content"
+                    id="watchlistContent"
+                >
+
+                    <div
+                        class="ideon-watchlist-items"
+                        id="watchlistItems"
+                    >
+
+                        <!-- JavaScript fills this -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================
+                 MAIN GRID
+                 ================================= -->
+
+            <div class="market-main-grid">
+
+
+                <!-- =================================
+                     STOCK CARD
+                     ================================= -->
+
+                <section class="stock-card">
+
+
+                    <div class="stock-card-top">
+
+                        <div>
+
+                            <div class="stock-symbol">
+                                RELIANCE
+                            </div>
+
+                            <div class="stock-name">
+                                Reliance Industries
+                            </div>
+
+                        </div>
+
+
+                        <div class="stock-badge">
+                            <span class="market-badge">
+                                NSE
+                            </span>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PRICE -->
+
+                    <div class="stock-price">
+
+                        <strong>
+                            ₹1,428.50
+                        </strong>
+
+                        <span class="stock-change positive">
+                            +1.84%
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         CHART
+                         ================================= -->
+
+                    <div class="stock-chart">
+
+                        <svg
+                            viewBox="0 0 800 300"
+                            preserveAspectRatio="none"
+                            id="stockChart"
+                        >
+
+                            <defs>
+
+                                <linearGradient
+                                    id="chartFill"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+
+                                    <stop
+                                        offset="0%"
+                                        stop-opacity=".25"
+                                    >
+
+                                    </stop>
+
+                                    <stop
+                                        offset="100%"
+                                        stop-opacity="0"
+                                    >
+
+                                    </stop>
+
+                                </linearGradient>
+
+                            </defs>
+
+
+                            <!--
+                                JavaScript creates
+                                the live candlesticks here.
+                            -->
+
+                            <g id="chartGrid"></g>
+
+                            <g id="ideonCandleLayer"></g>
+
+                        </svg>
+
+
+                        <!-- CHART CONTROLS -->
+
+                        <div
+                            class="ideon-chart-zoom"
+                            id="chartControls"
+                        >
+
+                            <button
+                                type="button"
+                                data-chart-action="back"
+                                title="Older data"
+                            >
+                                ←
+                            </button>
+
+                            <button
+                                type="button"
+                                data-chart-action="out"
+                                title="Zoom out"
+                            >
+                                −
+                            </button>
+
+                            <button
+                                type="button"
+                                data-chart-action="reset"
+                                title="Reset chart"
+                            >
+                                ⟳
+                            </button>
+
+                            <button
+                                type="button"
+                                data-chart-action="in"
+                                title="Zoom in"
+                            >
+                                +
+                            </button>
+
+                            <button
+                                type="button"
+                                data-chart-action="forward"
+                                title="Newer data"
+                            >
+                                →
+                            </button>
+
+                        </div>
+
+
+                        <!-- LIVE BADGE -->
+
+                        <div class="ideon-live-badge">
+
+                            <span class="ideon-live-dot"></span>
+
+                            DEMO DATA
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         CHART RANGE
+                         ================================= -->
+
+                    <div class="chart-range">
+
+                        <button class="active">
+                            1D
+                        </button>
+
+                        <button>
+                            1W
+                        </button>
+
+                        <button>
+                            1M
+                        </button>
+
+                        <button>
+                            1Y
+                        </button>
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================
+                     PORTFOLIO CARD
+                     ================================= -->
+
+                <section class="portfolio-card">
+
+
+                    <div class="portfolio-header">
+
+                        <div>
+
+                            <span class="portfolio-label">
+                                YOUR PORTFOLIO
+                            </span>
+
+                            <h3
+                                class="portfolio-total-value"
+                            >
+                                ₹1,00,000.00
+                            </h3>
+
+                        </div>
+
+
+                        <span
+                            class="portfolio-return"
+                        >
+                            ₹0.00
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- PORTFOLIO STATS -->
+
+                    <div class="portfolio-stats">
+
+
+                        <div class="portfolio-stat">
+
+                            <span>
+                                Available Cash
+                            </span>
+
+                            <strong>
+                                ₹1,00,000.00
+                            </strong>
+
+                        </div>
+
+
+                        <div class="portfolio-stat">
+
+                            <span>
+                                Invested
+                            </span>
+
+                            <strong>
+                                ₹0.00
+                            </strong>
+
+                        </div>
+
+
+                        <div class="portfolio-stat">
+
+                            <span>
+                                Total Return
+                            </span>
+
+                            <strong>
+                                0.00%
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- HOLDINGS -->
+
+                    <div class="portfolio-holdings">
+
+                        <div class="portfolio-section-title">
+                            HOLDINGS
+                        </div>
+
+
+                        <div
+                            class="portfolio-empty"
+                        >
+
+                            <div class="portfolio-empty-icon">
+                                ◆
+                            </div>
+
+                            <strong>
+                                Your portfolio is empty
+                            </strong>
+
+                            <p>
+                                Search for a stock and make
+                                your first virtual investment.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+            </div>
+
+
+
+            <!-- =================================
+                 TRADING TERMINAL
+                 ================================= -->
+
+            <section class="order-terminal">
+
+
+                <div class="order-terminal-header">
+
+                    <div>
+
+                        <span class="terminal-label">
+                            ORDER TERMINAL
+                        </span>
+
+                        <h3>
+                            Virtual Trade
+                        </h3>
+
+                    </div>
+
+
+                    <span class="virtual-badge">
+                        VIRTUAL ONLY
+                    </span>
+
+                </div>
+
+
+
+                <!-- STOCK INFO -->
+
+                <div class="trade-info">
+
+                    <div>
+
+                        <strong>
+                            Reliance Industries
+                        </strong>
+
+                        <small>
+                            RELIANCE.NSE · Virtual trading only
+                        </small>
+
+                    </div>
+
+
+                    <div class="trade-live-price">
+
+                        <span>
+                            Current Price
+                        </span>
+
+                        <strong class="trade-current-price">
+                            ₹1,428.50
+                        </strong>
+
+                        <small class="trade-current-change">
+                            +1.84%
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BUY / SELL -->
+
+                <div class="order-side-selector">
+
+                    <button
+                        type="button"
+                        id="buySideBtn"
+                        class="active"
+                    >
+                        BUY
+                    </button>
+
+                    <button
+                        type="button"
+                        id="sellSideBtn"
+                    >
+                        SELL
+                    </button>
+
+                </div>
+
+
+
+                <!-- ORDER TYPE -->
+
+                <div class="order-type-selector">
+
+                    <button
+                        type="button"
+                        id="marketOrderBtn"
+                        class="active"
+                    >
+                        MARKET
+                    </button>
+
+                    <button
+                        type="button"
+                        id="limitOrderBtn"
+                    >
+                        LIMIT
+                    </button>
+
+                </div>
+
+
+
+                <!-- ORDER FORM -->
+
+                <div class="order-form">
+
+
+                    <div class="order-field">
+
+                        <label for="tradeQuantity">
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="tradeQuantity"
+                            value="1"
+                            min="1"
+                            step="1"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="order-field"
+                        id="limitPriceGroup"
+                        style="display:none;"
+                    >
+
+                        <label for="limitPrice">
+                            Limit Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="limitPrice"
+                            value="1428.50"
+                            min="0"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <div class="order-summary">
+
+                        <div>
+
+                            <span>
+                                Estimated Value
+                            </span>
+
+                            <strong
+                                id="estimatedOrderValue"
+                            >
+                                ₹1,428.50
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Available Cash
+                            </span>
+
+                            <strong
+                                id="availableOrderCash"
+                            >
+                                ₹1,00,000.00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ORDER BUTTONS -->
+
+                <div class="order-actions">
+
+                    <button
+                        type="button"
+                        id="buyStockBtn"
+                        class="buy-button"
+                    >
+                        BUY RELIANCE →
+                    </button>
+
+                    <button
+                        type="button"
+                        id="sellStockBtn"
+                        class="sell-button"
+                        style="display:none;"
+                    >
+                        SELL RELIANCE →
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 EDUCATION CTA
+                 ================================= -->
+
+            <section class="market-learning-card">
+
+                <div>
+
+                    <span class="terminal-label">
+                        NEW TO TRADING?
+                    </span>
+
+                    <h3>
+                        Start from zero.
+                    </h3>
+
+                    <p>
+                        Learn how stocks, charts, orders,
+                        risk and virtual trading work before
+                        putting your knowledge into practice.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="Trade.html"
+                    class="market-learning-button"
+                >
+                    START LEARNING →
+                </a>
+
+            </section>
+
+
+
+            <!-- =================================
+                 DISCLAIMER
+                 ================================= -->
+
+            <div class="market-disclaimer">
+
+                <strong>
+                    ⚠ Educational Simulation
+                </strong>
+
+                <span>
+                    IDEON Market Lab uses virtual money
+                    for educational purposes only. No real
+                    trades or investments are made.
+                    Market data may be delayed.
+                </span>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+         ========================================= -->
+
+    <footer class="market-footer">
+
+        <div>
+            © 2026 IDEON — Where Ideas Take Shape.
+        </div>
+
+        <div>
+            Educational market simulation.
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+         ========================================= -->
+
+    <script
+        src="market.js"
+    ></script>
+
+</body>
+
+</html>

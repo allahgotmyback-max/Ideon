@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IDEON Trade — Lesson 04</title>
+
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="lesson4.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <header class="lesson-navbar">
+
+        <a href="Home.html" class="lesson-logo">
+            <img src="ideon-icon.png" alt="">
+            <span>IDE<span>O</span>N</span>
+        </a>
+
+        <a href="Trade.html" class="back-link">
+            ← Trading Journey
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="lesson-hero">
+
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+
+        <!-- Animated chart background -->
+
+        <div class="chart-hero-bg">
+
+            <svg viewBox="0 0 1400 520"
+                 preserveAspectRatio="none">
+
+                <defs>
+
+                    <linearGradient
+                        id="heroChartGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="0%">
+
+                        <stop
+                            offset="0%"
+                            stop-color="#7c3aed"
+                            stop-opacity="0">
+                        </stop>
+
+                        <stop
+                            offset="25%"
+                            stop-color="#9b6cff"
+                            stop-opacity="0.2">
+                        </stop>
+
+                        <stop
+                            offset="55%"
+                            stop-color="#a875ff"
+                            stop-opacity="0.65">
+                        </stop>
+
+                        <stop
+                            offset="80%"
+                            stop-color="#9b6cff"
+                            stop-opacity="0.2">
+                        </stop>
+
+                        <stop
+                            offset="100%"
+                            stop-color="#7c3aed"
+                            stop-opacity="0">
+                        </stop>
+
+                    </linearGradient>
+
+                </defs>
+
+                <path
+                    class="hero-chart-line hero-chart-glow"
+                    d="M0 390
+                       L90 375
+                       L150 395
+                       L215 340
+                       L280 360
+                       L345 315
+                       L410 330
+                       L470 275
+                       L535 295
+                       L600 250
+                       L665 270
+                       L730 210
+                       L795 235
+                       L860 185
+                       L925 215
+                       L990 160
+                       L1055 180
+                       L1120 130
+                       L1185 155
+                       L1250 110
+                       L1320 130
+                       L1400 75">
+                </path>
+
+                <path
+                    class="hero-chart-line hero-chart-main"
+                    d="M0 390
+                       L90 375
+                       L150 395
+                       L215 340
+                       L280 360
+                       L345 315
+                       L410 330
+                       L470 275
+                       L535 295
+                       L600 250
+                       L665 270
+                       L730 210
+                       L795 235
+                       L860 185
+                       L925 215
+                       L990 160
+                       L1055 180
+                       L1120 130
+                       L1185 155
+                       L1250 110
+                       L1320 130
+                       L1400 75">
+                </path>
+
+            </svg>
+
+        </div>
+
+
+        <!-- Hero content -->
+
+        <div class="lesson-hero-content">
+
+            <div class="lesson-hero-eyebrow">
+                STAGE 04 · READING THE CHARTS
+            </div>
+
+            <h1>
+                Okay... but<br>
+                <span>how do I read this chart?</span>
+            </h1>
+
+            <p>
+                Those red and green boxes aren't random.
+                Let's break down what a stock chart is actually telling you.
+            </p>
+
+            <div class="lesson-meta">
+                <span>◷ ~8 min</span>
+                <span>•</span>
+                <span>Beginner level</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LESSON CONTENT
+         ===================================================== -->
+
+    <main class="lesson-content">
+
+
+        <!-- =================================================
+             01 — WHAT IS A CHART?
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                01
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    START HERE
+                </div>
+
+                <h2>
+                    A chart is simply a picture of price over time.
+                </h2>
+
+                <p>
+                    Instead of looking at thousands of individual prices,
+                    a chart puts them on a timeline so you can see how
+                    a stock's price has moved.
+                </p>
+
+            </div>
+
+            <div class="chart-explainer">
+
+                <div class="chart-axis-y">
+                    ₹
+                </div>
+
+                <div class="simple-chart">
+
+                    <div class="chart-grid-line line-a"></div>
+                    <div class="chart-grid-line line-b"></div>
+                    <div class="chart-grid-line line-c"></div>
+
+                    <svg viewBox="0 0 700 280"
+                         preserveAspectRatio="none">
+
+                        <path
+                            d="M0 215
+                               L65 190
+                               L120 205
+                               L180 155
+                               L235 175
+                               L295 120
+                               L350 135
+                               L410 95
+                               L465 115
+                               L520 70
+                               L575 90
+                               L640 45
+                               L700 65"
+                            class="simple-line">
+                        </path>
+
+                    </svg>
+
+                    <span class="chart-label label-low">
+                        ₹80
+                    </span>
+
+                    <span class="chart-label label-high">
+                        ₹120
+                    </span>
+
+                    <span class="time-label">
+                        TIME →
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             02 — TIMEFRAMES
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                02
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    TIME
+                </div>
+
+                <h2>
+                    The same stock can look completely different depending on the timeframe.
+                </h2>
+
+                <p>
+                    A chart might show one day, one week, one month,
+                    one year or much longer. Each timeframe tells you
+                    a different part of the story.
+                </p>
+
+            </div>
+
+            <div class="timeframe-cards">
+
+                <div class="timeframe-card active">
+                    <strong>1D</strong>
+                    <span>One day</span>
+                </div>
+
+                <div class="timeframe-card">
+                    <strong>1W</strong>
+                    <span>One week</span>
+                </div>
+
+                <div class="timeframe-card">
+                    <strong>1M</strong>
+                    <span>One month</span>
+                </div>
+
+                <div class="timeframe-card">
+                    <strong>1Y</strong>
+                    <span>One year</span>
+                </div>
+
+            </div>
+
+            <div class="tip-box">
+                <span>💡</span>
+                <p>
+                    A price move that looks huge on a 1-day chart
+                    may look tiny when you zoom out to a 1-year chart.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             03 — CANDLESTICKS
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                03
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    CANDLESTICKS
+                </div>
+
+                <h2>
+                    This little box can tell you a lot.
+                </h2>
+
+                <p>
+                    One candlestick represents price movement during
+                    a specific period of time. It shows four important
+                    prices: open, high, low and close.
+                </p>
+
+            </div>
+
+            <div class="candlestick-visual">
+
+                <div class="candle-column">
+
+                    <span class="price-marker marker-high">
+                        HIGH
+                    </span>
+
+                    <div class="wick wick-top"></div>
+
+                    <div class="candle-body green-candle">
+                    </div>
+
+                    <div class="wick wick-bottom"></div>
+
+                    <span class="price-marker marker-low">
+                        LOW
+                    </span>
+
+                </div>
+
+                <div class="candle-explanation">
+
+                    <div>
+                        <span class="dot green"></span>
+                        <strong>Green candle</strong>
+                        <p>
+                            The close was higher than the open.
+                        </p>
+                    </div>
+
+                    <div>
+                        <span class="dot purple"></span>
+                        <strong>Red candle</strong>
+                        <p>
+                            The close was lower than the open.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             04 — OHLC
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                04
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    OHLC
+                </div>
+
+                <h2>
+                    Four numbers explain one candle.
+                </h2>
+
+                <p>
+                    Every candlestick is built from four key prices.
+                    Together, they show what happened during that period.
+                </p>
+
+            </div>
+
+            <div class="ohlc-grid">
+
+                <div class="ohlc-card">
+                    <span>O</span>
+                    <strong>OPEN</strong>
+                    <small>Where the period started</small>
+                </div>
+
+                <div class="ohlc-card">
+                    <span>H</span>
+                    <strong>HIGH</strong>
+                    <small>Highest price reached</small>
+                </div>
+
+                <div class="ohlc-card">
+                    <span>L</span>
+                    <strong>LOW</strong>
+                    <small>Lowest price reached</small>
+                </div>
+
+                <div class="ohlc-card">
+                    <span>C</span>
+                    <strong>CLOSE</strong>
+                    <small>Where the period ended</small>
+                </div>
+
+            </div>
+
+            <div class="example-candle-card">
+
+                <div class="example-candle">
+
+                    <div class="example-wick"></div>
+
+                    <div class="example-body">
+                    </div>
+
+                    <div class="example-wick bottom">
+                    </div>
+
+                </div>
+
+                <div class="example-values">
+
+                    <div>
+                        <span>OPEN</span>
+                        <strong>₹100</strong>
+                    </div>
+
+                    <div>
+                        <span>HIGH</span>
+                        <strong>₹115</strong>
+                    </div>
+
+                    <div>
+                        <span>LOW</span>
+                        <strong>₹96</strong>
+                    </div>
+
+                    <div>
+                        <span>CLOSE</span>
+                        <strong>₹110</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             05 — WICKS
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                05
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    THE WICKS
+                </div>
+
+                <h2>
+                    The thin lines tell you where price travelled.
+                </h2>
+
+                <p>
+                    The candle body shows the open and close.
+                    The thin lines, called wicks or shadows,
+                    show the higher and lower prices reached.
+                </p>
+
+            </div>
+
+            <div class="wick-story">
+
+                <div class="story-candle">
+
+                    <div class="story-wick top"></div>
+
+                    <div class="story-body"></div>
+
+                    <div class="story-wick bottom"></div>
+
+                </div>
+
+                <div class="story-points">
+
+                    <div>
+                        <strong>Long upper wick</strong>
+                        <span>
+                            Price reached higher levels but moved back down.
+                        </span>
+                    </div>
+
+                    <div>
+                        <strong>Long lower wick</strong>
+                        <span>
+                            Price dropped lower but recovered before the period ended.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             06 — VOLUME
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                06
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    VOLUME
+                </div>
+
+                <h2>
+                    Price tells you what happened. Volume tells you how much activity happened.
+                </h2>
+
+                <p>
+                    Trading volume shows how many shares were traded
+                    during a period. It can help you understand how active
+                    the market was around a price move.
+                </p>
+
+            </div>
+
+            <div class="volume-visual">
+
+                <div class="volume-bars">
+
+                    <span style="height: 25%"></span>
+                    <span style="height: 42%"></span>
+                    <span style="height: 32%"></span>
+                    <span style="height: 58%"></span>
+                    <span style="height: 46%"></span>
+                    <span style="height: 75%"></span>
+                    <span style="height: 55%"></span>
+                    <span style="height: 90%"></span>
+                    <span style="height: 68%"></span>
+                    <span style="height: 82%"></span>
+
+                </div>
+
+                <div class="volume-caption">
+                    MORE ACTIVITY ↑
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             07 — TRENDS
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                07
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    TRENDS
+                </div>
+
+                <h2>
+                    Before looking for complicated patterns, look at the direction.
+                </h2>
+
+                <p>
+                    A stock can generally move upward, downward,
+                    or sideways for a period of time. This is the basic
+                    idea behind identifying a trend.
+                </p>
+
+            </div>
+
+            <div class="trend-grid">
+
+                <div class="trend-card">
+
+                    <div class="trend-chart uptrend">
+                        ╱╲
+                        ╱
+                        ╱╲
+                        ╱
+                        ╱╲
+                    </div>
+
+                    <strong>Uptrend</strong>
+                    <span>
+                        Price is generally moving higher.
+                    </span>
+
+                </div>
+
+                <div class="trend-card">
+
+                    <div class="trend-chart downtrend">
+                        ╲
+                        ╲╱
+                        ╲
+                        ╲╱
+                        ╲
+                    </div>
+
+                    <strong>Downtrend</strong>
+                    <span>
+                        Price is generally moving lower.
+                    </span>
+
+                </div>
+
+                <div class="trend-card">
+
+                    <div class="trend-chart sideways">
+                        ─╲╱─╲╱─
+                    </div>
+
+                    <strong>Sideways</strong>
+                    <span>
+                        Price is moving within a range.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             08 — SUPPORT & RESISTANCE
+             ================================================= -->
+
+        <section class="lesson-block">
+
+            <div class="lesson-step">
+                08
+            </div>
+
+            <div class="lesson-text">
+
+                <div class="eyebrow">
+                    KEY LEVELS
+                </div>
+
+                <h2>
+                    Support and resistance are areas where price may react.
+                </h2>
+
+                <p>
+                    Think of support as an area where buying interest
+                    has previously helped price stop falling, and resistance
+                    as an area where selling pressure has previously
+                    helped stop price rising.
+                </p>
+
+            </div>
+
+            <div class="levels-visual">
+
+                <div class="level-chart">
+
+                    <div class="resistance-line">
+                        <span>RESISTANCE</span>
+                    </div>
+
+                    <div class="support-line">
+                        <span>SUPPORT</span>
+                    </div>
+
+                    <svg viewBox="0 0 700 300"
+                         preserveAspectRatio="none">
+
+                        <path
+                            d="M0 190
+                               L55 135
+                               L110 175
+                               L165 120
+                               L220 170
+                               L275 125
+                               L330 175
+                               L385 115
+                               L440 165
+                               L495 120
+                               L550 170
+                               L610 125
+                               L700 155"
+                            class="level-line">
+                        </path>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+            <div class="tip-box">
+
+                <span>💡</span>
+
+                <p>
+                    These are not guaranteed barriers. Price can break
+                    through support or resistance at any time.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             KEY IDEA
+             ================================================= -->
+
+        <section class="key-idea">
+
+            <div class="key-icon">
+                ✦
+            </div>
+
+            <div>
+
+                <div class="eyebrow">
+                    KEY IDEA
+                </div>
+
+                <h3>
+                    A chart helps you understand what price has done —
+                    not what it is guaranteed to do next.
+                </h3>
+
+                <p>
+                    Charts are tools for understanding market behaviour.
+                    They are not crystal balls.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             QUICK CHECK
+             ================================================= -->
+
+        <section class="quiz-section">
+
+            <div class="eyebrow">
+                QUICK CHECK
+            </div>
+
+            <h2>
+                You see a green candle. What does it generally mean?
+            </h2>
+
+            <p class="quiz-subtitle">
+                Assume we're looking at a standard candlestick chart.
+            </p>
+
+            <div class="quiz-options">
+
+                <button onclick="checkAnswer(this, false)">
+                    The price only went up
+                </button>
+
+                <button onclick="checkAnswer(this, true)">
+                    The closing price was higher than the opening price
+                </button>
+
+                <button onclick="checkAnswer(this, false)">
+                    The stock will definitely rise next
+                </button>
+
+            </div>
+
+            <div class="quiz-result" id="quizResult"></div>
+
+        </section>
+
+
+        <!-- =================================================
+             COMPLETION
+             ================================================= -->
+
+        <section class="complete-section">
+
+            <div class="complete-glow"></div>
+
+            <div class="complete-content">
+
+                <div class="complete-icon">
+                    ✓
+                </div>
+
+                <div class="eyebrow">
+                    STAGE 04 COMPLETE
+                </div>
+
+                <h2>
+                    Now charts don't look so scary.
+                </h2>
+
+                <p>
+                    You understand the basics of price charts,
+                    candlesticks, volume, trends and key levels.
+                </p>
+
+                <a href="Trade.html" class="complete-button">
+                    BACK TO JOURNEY
+                    <span>→</span>
+                </a>
+
+                <div class="next-stage">
+                    Stage 05: How Orders Work
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         QUIZ SCRIPT
+         ===================================================== -->
+
+    <script>
+
+        function checkAnswer(button, correct) {
+
+            const buttons =
+                document.querySelectorAll(".quiz-options button");
+
+            const result =
+                document.getElementById("quizResult");
+
+            buttons.forEach(btn => {
+                btn.classList.remove("correct", "wrong");
+                btn.disabled = true;
+            });
+
+            if (correct) {
+
+                button.classList.add("correct");
+
+                result.textContent =
+                    "✓ Correct. A green candle means the closing price was higher than the opening price.";
+
+                result.className =
+                    "quiz-result correct-result";
+
+            } else {
+
+                button.classList.add("wrong");
+
+                result.textContent =
+                    "Not quite. A green candle tells you the close was above the open — it does not guarantee what happens next.";
+
+                result.className =
+                    "quiz-result wrong-result";
+
+            }
+
+        }
+
+    </script>
+<script src="progress.js"></script>
+</body>
+</html>

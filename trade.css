@@ -1,0 +1,1450 @@
+/* =========================================================
+   IDEON TRADE
+   COMPLETE STYLESHEET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #050507;
+    color: #ffffff;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   NAVBAR
+   MATCHES IDEON HOME
+   ========================================================= */
+
+.trade-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    height: 74px;
+
+    padding: 0 7.5%;
+
+    display: flex;
+    align-items: center;
+
+    background: rgba(5, 5, 8, 0.86);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* LOGO */
+
+.trade-logo {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    flex-shrink: 0;
+}
+
+.trade-logo img {
+    width: 36px;
+    height: 36px;
+
+    object-fit: contain;
+}
+
+.trade-logo > span {
+    font-size: 25px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.trade-logo > span > span {
+    color: #8b5cf6;
+
+    text-shadow:
+        0 0 18px rgba(139, 92, 246, 0.35);
+}
+
+
+/* NAV LINKS */
+
+.trade-nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+    margin-left: auto;
+    margin-right: 38px;
+}
+
+.trade-nav-links a {
+    position: relative;
+
+    color: rgba(255, 255, 255, 0.56);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+.trade-nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -9px;
+
+    width: 0;
+    height: 1px;
+
+    transform: translateX(-50%);
+
+    background: #8b5cf6;
+
+    transition: width 0.25s ease;
+}
+
+.trade-nav-links a:hover {
+    color: #ffffff;
+}
+
+.trade-nav-links a:hover::after {
+    width: 18px;
+}
+
+
+/* GET STARTED */
+
+.trade-nav-button {
+    height: 40px;
+    min-width: 120px;
+
+    padding: 0 16px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.trade-nav-button:hover {
+    border-color: rgba(139, 92, 246, 0.35);
+
+    background: rgba(139, 92, 246, 0.08);
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.trade-hero {
+    position: relative;
+
+    min-height: 590px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(139, 92, 246, 0.20),
+            transparent 34%
+        ),
+        #050507;
+}
+
+
+/* GRID */
+
+.hero-grid {
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 92%
+        );
+
+    pointer-events: none;
+}
+
+
+/* GLOW */
+
+.hero-glow {
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    left: 50%;
+    top: 44%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(139, 92, 246, 0.10);
+
+    filter: blur(120px);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* HERO CONTENT */
+
+.trade-hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(850px, 90%);
+
+    padding: 100px 0 85px;
+
+    text-align: center;
+}
+
+
+/* BADGE */
+
+.trade-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 15px;
+
+    margin-bottom: 25px;
+
+    border: 1px solid rgba(139, 92, 246, 0.32);
+
+    border-radius: 999px;
+
+    background: rgba(139, 92, 246, 0.08);
+
+    color: #a78bfa;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+/* HERO TITLE */
+
+.trade-hero h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(56px, 7vw, 90px);
+
+    line-height: 0.98;
+
+    letter-spacing: -4px;
+
+    font-weight: 800;
+}
+
+.trade-hero h1 span {
+    color: #9b72ff;
+
+    text-shadow:
+        0 0 35px rgba(139, 92, 246, 0.32);
+}
+
+
+/* HERO DESCRIPTION */
+
+.trade-hero p {
+    max-width: 650px;
+
+    margin: 28px auto 0;
+
+    color: rgba(255, 255, 255, 0.53);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* HERO BUTTON */
+
+.hero-button {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 32px;
+
+    min-height: 52px;
+
+    padding: 0 24px;
+
+    border-radius: 10px;
+
+    background: #8b5cf6;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+
+    box-shadow:
+        0 12px 40px rgba(139, 92, 246, 0.24);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.hero-button span {
+    font-size: 17px;
+}
+
+.hero-button:hover {
+    transform: translateY(-3px);
+
+    background: #986cff;
+
+    box-shadow:
+        0 18px 50px rgba(139, 92, 246, 0.34);
+}
+
+
+/* HERO META */
+
+.hero-meta {
+    display: flex;
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-top: 22px;
+
+    color: rgba(255, 255, 255, 0.29);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.progress-section {
+    position: relative;
+
+    padding: 0 7.5%;
+
+    background: #050507;
+}
+
+.progress-card {
+    position: relative;
+
+    z-index: 5;
+
+    max-width: 1120px;
+
+    margin: -35px auto 0;
+
+    padding: 28px 32px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35);
+}
+
+.progress-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.progress-label {
+    margin-bottom: 7px;
+
+    color: #9b72ff;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.8px;
+}
+
+.progress-card h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+.progress-count {
+    display: flex;
+    align-items: baseline;
+
+    gap: 3px;
+}
+
+.progress-count strong {
+    color: #ffffff;
+
+    font-size: 30px;
+}
+
+.progress-count span {
+    color: rgba(255, 255, 255, 0.30);
+
+    font-size: 13px;
+}
+
+
+/* PROGRESS BAR */
+
+.progress-track {
+    width: 100%;
+
+    height: 5px;
+
+    margin-top: 24px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.progress-fill {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: #8b5cf6;
+
+    box-shadow:
+        0 0 18px rgba(139, 92, 246, 0.55);
+}
+
+.progress-bottom {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 10px;
+
+    color: rgba(255, 255, 255, 0.30);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   JOURNEY
+   ========================================================= */
+
+.journey-section {
+    position: relative;
+
+    padding: 120px 7.5% 150px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #050507 0%,
+            #08070d 100%
+        );
+}
+
+.journey-heading {
+    max-width: 720px;
+
+    margin: 0 auto 75px;
+
+    text-align: center;
+}
+
+.section-label {
+    margin-bottom: 14px;
+
+    color: #9b72ff;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.journey-heading h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(35px, 4vw, 52px);
+
+    line-height: 1.1;
+
+    letter-spacing: -2px;
+}
+
+.journey-heading h2 span {
+    color: #9b72ff;
+}
+
+.journey-heading p {
+    max-width: 600px;
+
+    margin: 18px auto 0;
+
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ROADMAP
+   ========================================================= */
+
+.journey-roadmap {
+    position: relative;
+
+    max-width: 1050px;
+
+    margin: 0 auto;
+}
+
+.journey-item {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 90px 1fr;
+
+    margin-bottom: 28px;
+}
+
+
+/* CONNECTING LINE */
+
+.road-line {
+    position: absolute;
+
+    left: 44px;
+
+    top: 75px;
+
+    bottom: -28px;
+
+    width: 1px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(139, 92, 246, 0.35),
+            rgba(255, 255, 255, 0.06)
+        );
+}
+
+.journey-item:last-child .road-line {
+    display: none;
+}
+
+
+/* =========================================================
+   STAGE MARKER
+   ========================================================= */
+
+.stage-marker {
+    position: relative;
+
+    z-index: 3;
+
+    width: 50px;
+    height: 50px;
+
+    margin-top: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+
+    border-radius: 50%;
+
+    background: #0b0a11;
+
+    color: rgba(255, 255, 255, 0.35);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 0 0 7px #08070d;
+}
+
+.journey-item.active .stage-marker {
+    border-color: rgba(139, 92, 246, 0.65);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.25),
+            #0b0a11 70%
+        );
+
+    color: #b59cff;
+
+    box-shadow:
+        0 0 0 7px #08070d,
+        0 0 25px rgba(139, 92, 246, 0.22);
+}
+
+.special-stage .stage-marker {
+    border-color: rgba(139, 92, 246, 0.45);
+
+    color: #a78bfa;
+}
+
+.ai-stage .stage-marker {
+    border-color: rgba(139, 92, 246, 0.30);
+
+    color: #a78bfa;
+}
+
+
+/* =========================================================
+   JOURNEY CARD
+   ========================================================= */
+
+.journey-card {
+    position: relative;
+
+    padding: 29px 31px;
+
+    border: 1px solid rgba(255, 255, 255, 0.075);
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.012)
+        );
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+.journey-card:hover {
+    transform: translateX(4px);
+
+    border-color: rgba(139, 92, 246, 0.25);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(139, 92, 246, 0.055),
+            rgba(255, 255, 255, 0.015)
+        );
+}
+
+.journey-item.active .journey-card {
+    border-color: rgba(139, 92, 246, 0.30);
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(139, 92, 246, 0.11),
+            transparent 35%
+        ),
+        rgba(255, 255, 255, 0.025);
+}
+
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.journey-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stage-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(139, 92, 246, 0.20);
+
+    border-radius: 12px;
+
+    background: rgba(139, 92, 246, 0.08);
+
+    font-size: 20px;
+}
+
+.stage-status {
+    color: rgba(255, 255, 255, 0.24);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.active-status {
+    color: #a78bfa;
+}
+
+.special-status,
+.ai-status {
+    color: #a78bfa;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.stage-content {
+    margin-top: 24px;
+}
+
+.stage-kicker {
+    margin-bottom: 9px;
+
+    color: rgba(167, 139, 250, 0.65);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.6px;
+}
+
+.stage-content h3 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 22px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
+}
+
+.stage-content p {
+    max-width: 720px;
+
+    margin: 10px 0 0;
+
+    color: rgba(255, 255, 255, 0.43);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   LEARNING TAGS
+   ========================================================= */
+
+.learn-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 19px;
+}
+
+.learn-list span {
+    padding: 7px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.065);
+
+    border-radius: 7px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: rgba(255, 255, 255, 0.39);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.stage-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 25px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lesson-time {
+    color: rgba(255, 255, 255, 0.28);
+
+    font-size: 9px;
+
+    font-weight: 600;
+}
+
+
+/* BUTTON */
+
+.stage-button {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px 14px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: #8b5cf6;
+
+    color: #ffffff;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.stage-button:hover {
+    transform: translateY(-2px);
+
+    background: #986cff;
+}
+
+.stage-button span {
+    font-size: 14px;
+}
+
+.stage-status-inline {
+    color: rgba(255, 255, 255, 0.22);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.4px;
+}
+
+
+/* =========================================================
+   VIRTUAL TRADE
+   ========================================================= */
+
+.special-stage .journey-card {
+    border-color: rgba(139, 92, 246, 0.30);
+
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(139, 92, 246, 0.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(139, 92, 246, 0.065),
+            rgba(255, 255, 255, 0.012)
+        );
+}
+
+.virtual-balance-preview {
+    display: inline-flex;
+
+    flex-direction: column;
+
+    margin-top: 20px;
+
+    padding: 13px 17px;
+
+    border: 1px solid rgba(139, 92, 246, 0.18);
+
+    border-radius: 10px;
+
+    background: rgba(139, 92, 246, 0.06);
+}
+
+.virtual-balance-preview span {
+    color: rgba(255, 255, 255, 0.30);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+.virtual-balance-preview strong {
+    margin-top: 4px;
+
+    color: #ffffff;
+
+    font-size: 19px;
+}
+
+
+/* =========================================================
+   AI STAGE
+   ========================================================= */
+
+.ai-stage .journey-card {
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(139, 92, 246, 0.10),
+            transparent 35%
+        ),
+        rgba(255, 255, 255, 0.02);
+}
+
+.question-chips {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+.question-chips span {
+    padding: 8px 11px;
+
+    border: 1px solid rgba(139, 92, 246, 0.14);
+
+    border-radius: 8px;
+
+    background: rgba(139, 92, 246, 0.045);
+
+    color: rgba(255, 255, 255, 0.40);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+.trade-finish {
+    position: relative;
+
+    padding: 120px 7.5% 140px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(139, 92, 246, 0.16),
+            transparent 34%
+        ),
+        #050507;
+}
+
+.finish-glow {
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    left: 50%;
+    top: 40%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(139, 92, 246, 0.08);
+
+    filter: blur(110px);
+
+    border-radius: 50%;
+}
+
+.finish-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.finish-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 25px;
+
+    border: 1px solid rgba(139, 92, 246, 0.25);
+
+    border-radius: 14px;
+
+    background: rgba(139, 92, 246, 0.09);
+
+    color: #a78bfa;
+
+    font-size: 20px;
+}
+
+.finish-content h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(36px, 5vw, 58px);
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+}
+
+.finish-content h2 span {
+    color: #9b72ff;
+}
+
+.finish-content p {
+    max-width: 540px;
+
+    margin: 20px auto 0;
+
+    color: rgba(255, 255, 255, 0.40);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.finish-button {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 30px;
+
+    min-height: 51px;
+
+    padding: 0 22px;
+
+    border-radius: 9px;
+
+    background: #8b5cf6;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    box-shadow:
+        0 12px 35px rgba(139, 92, 246, 0.22);
+
+    transition: 0.25s ease;
+}
+
+.finish-button:hover {
+    transform: translateY(-3px);
+
+    background: #986cff;
+}
+
+.finish-button span {
+    font-size: 16px;
+}
+
+.finish-note {
+    margin-top: 14px;
+
+    color: rgba(255, 255, 255, 0.24);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .trade-navbar {
+        padding: 0 5%;
+    }
+
+    .trade-nav-links {
+        gap: 18px;
+
+        margin-right: 20px;
+    }
+
+    .trade-nav-links a {
+        font-size: 10px;
+    }
+
+    .trade-nav-button {
+        min-width: 105px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .trade-navbar {
+        height: 68px;
+
+        padding: 0 5%;
+    }
+
+    .trade-logo {
+        gap: 8px;
+    }
+
+    .trade-logo img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .trade-logo > span {
+        font-size: 21px;
+    }
+
+    .trade-nav-links {
+        display: none;
+    }
+
+    .trade-nav-button {
+        min-width: 105px;
+
+        height: 37px;
+
+        padding: 0 12px;
+
+        font-size: 9px;
+    }
+
+
+    /* HERO */
+
+    .trade-hero {
+        min-height: 550px;
+    }
+
+    .trade-hero-content {
+        width: 90%;
+
+        padding: 75px 0;
+    }
+
+    .trade-hero h1 {
+        font-size: 54px;
+
+        letter-spacing: -2.5px;
+    }
+
+    .trade-hero p {
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+    .hero-meta {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    /* PROGRESS */
+
+    .progress-section {
+        padding: 0 5%;
+    }
+
+    .progress-card {
+        padding: 24px;
+    }
+
+    .progress-card h2 {
+        font-size: 17px;
+    }
+
+    .progress-count strong {
+        font-size: 25px;
+    }
+
+
+    /* JOURNEY */
+
+    .journey-section {
+        padding: 90px 5% 110px;
+    }
+
+    .journey-heading {
+        margin-bottom: 55px;
+    }
+
+    .journey-item {
+        grid-template-columns: 58px 1fr;
+    }
+
+    .stage-marker {
+        width: 42px;
+        height: 42px;
+
+        margin-top: 25px;
+    }
+
+    .road-line {
+        left: 36px;
+
+        top: 67px;
+    }
+
+    .journey-card {
+        padding: 25px;
+    }
+
+    .stage-content h3 {
+        font-size: 19px;
+    }
+
+
+    /* FINAL */
+
+    .trade-finish {
+        padding: 90px 5% 110px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .trade-logo > span {
+        font-size: 20px;
+    }
+
+    .trade-nav-button {
+        min-width: 95px;
+
+        font-size: 8px;
+    }
+
+    .trade-hero h1 {
+        font-size: 45px;
+    }
+
+    .trade-hero p {
+        font-size: 13px;
+    }
+
+    .progress-top {
+        align-items: flex-start;
+    }
+
+    .journey-item {
+        display: block;
+    }
+
+    .stage-marker {
+        margin: 0 0 8px 10px;
+    }
+
+    .road-line {
+        display: none;
+    }
+
+    .journey-card {
+        margin-top: 0;
+    }
+
+    .journey-card-top {
+        align-items: flex-start;
+    }
+
+    .stage-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .stage-button {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .finish-content h2 {
+        font-size: 38px;
+    }
+}
+/* IDEON LOGO — PURPLE O GLOW */
+
+.lesson-logo > span > span {
+    color: #8b5cf6 !important;
+
+    text-shadow:
+        0 0 8px rgba(139, 92, 246, 0.45),
+        0 0 18px rgba(139, 92, 246, 0.30),
+        0 0 30px rgba(139, 92, 246, 0.16);
+}
