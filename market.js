@@ -2144,15 +2144,30 @@
             }
         );
 
-
-   const empty =
+const empty =
     holdingsSection.querySelector(
         ".portfolio-empty"
     );
 
 if (empty) {
 
-    empty.hidden = hasHoldings;
+    if (hasHoldings) {
+
+        empty.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
+    } else {
+
+        empty.style.setProperty(
+            "display",
+            "flex",
+            "important"
+        );
+
+    }
 
 }
     }
