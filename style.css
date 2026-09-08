@@ -3876,3 +3876,805 @@ textarea {
         gap: 7px;
     }
 }
+/* =========================================================
+   IDEON AI RESULT — PREMIUM RESULT UI
+========================================================= */
+
+.ai-result-shell {
+    width: 100%;
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,17,25,.97),
+            rgba(7,7,10,.98)
+        );
+
+    box-shadow:
+        0 45px 120px rgba(0,0,0,.45),
+        0 0 80px rgba(139,92,246,.045);
+}
+
+
+/* =========================================================
+   RESULT HEADER
+========================================================= */
+
+.ai-result-header {
+    padding: 38px 36px 34px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+}
+
+
+.ai-result-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+    color: #a98cff;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 1.7px;
+}
+
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #35d07f;
+
+    box-shadow:
+        0 0 10px rgba(53,208,127,.8);
+}
+
+
+.ai-result-header h2 {
+    margin: 0 0 18px;
+
+    color: #fff;
+
+    font-size:
+        clamp(35px,5vw,52px);
+
+    line-height: .95;
+
+    letter-spacing: -2.5px;
+
+    font-weight: 900;
+}
+
+
+.ai-result-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+.business-badge,
+.feasibility-normal,
+.feasibility-high,
+.feasibility-low {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 11px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+.business-badge {
+    color: rgba(255,255,255,.50);
+
+    background:
+        rgba(255,255,255,.055);
+}
+
+
+.feasibility-normal,
+.feasibility-high {
+    color: #35d07f;
+
+    background:
+        rgba(53,208,127,.075);
+}
+
+
+.feasibility-low {
+    color: #ff6875;
+
+    background:
+        rgba(255,95,109,.08);
+}
+
+
+.status-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+/* =========================================================
+   CONCEPT
+========================================================= */
+
+.ai-feature-card {
+    margin:
+        26px 36px;
+
+    padding: 26px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+.feature-top {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 17px;
+}
+
+
+.feature-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border:
+        1px solid rgba(139,92,246,.22);
+
+    border-radius: 9px;
+
+    background:
+        rgba(139,92,246,.10);
+
+    color:
+        #a98cff;
+}
+
+
+.feature-label {
+    margin-bottom: 3px;
+
+    color:
+        rgba(255,255,255,.28);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+.ai-feature-card h3 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.ai-feature-card p {
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.52);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.ai-section-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin:
+        34px 36px 16px;
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size: 14px;
+
+    font-weight: 800;
+}
+
+
+.ai-section-heading > span {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 29px;
+    height: 23px;
+
+    border:
+        1px solid rgba(139,92,246,.22);
+
+    border-radius: 6px;
+
+    background:
+        rgba(139,92,246,.08);
+
+    color:
+        #9b79ff;
+
+    font-size: 9px;
+
+    letter-spacing: .5px;
+}
+
+
+/* =========================================================
+   BUSINESS SNAPSHOT
+========================================================= */
+
+.ai-snapshot-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 12px;
+
+    margin:
+        0 36px;
+}
+
+
+.ai-info-card {
+    min-height: 145px;
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.018);
+
+    transition:
+        border-color .25s ease,
+        transform .25s ease,
+        background .25s ease;
+}
+
+
+.ai-info-card:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(139,92,246,.22);
+
+    background:
+        rgba(139,92,246,.025);
+}
+
+
+.info-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 13px;
+}
+
+
+.info-icon {
+    width: 29px;
+    height: 29px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(139,92,246,.08);
+
+    color:
+        #9b79ff;
+
+    font-size: 12px;
+}
+
+
+.info-label {
+    color:
+        rgba(255,255,255,.37);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: .3px;
+}
+
+
+.ai-info-card p {
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.53);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+.big-cost {
+    color:
+        #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 850;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BUILD THE BUSINESS
+========================================================= */
+
+.ai-build-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin:
+        0 36px;
+}
+
+
+.ai-panel {
+    padding: 23px;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.018);
+}
+
+
+.panel-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    margin-bottom: 17px;
+}
+
+
+.panel-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background:
+        rgba(139,92,246,.09);
+
+    color:
+        #9b79ff;
+}
+
+
+.panel-label {
+    margin-bottom: 3px;
+
+    color:
+        rgba(255,255,255,.25);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+.ai-panel h3 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   LIST ITEMS
+========================================================= */
+
+.resource-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 12px;
+
+    color:
+        rgba(255,255,255,.46);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+.resource-dot {
+    width: 5px;
+    height: 5px;
+
+    flex-shrink: 0;
+
+    margin-top: 6px;
+
+    border-radius: 50%;
+
+    background:
+        #8b5cf6;
+
+    box-shadow:
+        0 0 7px rgba(139,92,246,.5);
+}
+
+
+.launch-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-top: 13px;
+}
+
+
+.launch-number {
+    width: 26px;
+
+    flex-shrink: 0;
+
+    color:
+        #9b79ff;
+
+    font-size: 9px;
+
+    font-weight: 900;
+}
+
+
+.launch-content {
+    color:
+        rgba(255,255,255,.47);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   REALITY CHECK
+========================================================= */
+
+.ai-reality-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin:
+        0 36px;
+}
+
+
+/* =========================================================
+   RISK
+========================================================= */
+
+.risk-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-top: 12px;
+
+    color:
+        rgba(255,255,255,.47);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+.risk-icon {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+
+    background:
+        rgba(255,95,109,.10);
+
+    color:
+        #ff5f6d;
+
+    font-size: 9px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   VERDICT
+========================================================= */
+
+.ai-verdict {
+    margin:
+        25px 36px;
+
+    padding:
+        25px;
+
+    border:
+        1px solid rgba(139,92,246,.18);
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,92,246,.08),
+            rgba(139,92,246,.025)
+        );
+}
+
+
+.ai-verdict-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color:
+        #a98cff;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.3px;
+
+    margin-bottom: 10px;
+}
+
+
+.ai-verdict h3 {
+    margin:
+        0 0 8px;
+
+    color:
+        white;
+
+    font-size: 16px;
+}
+
+
+.ai-verdict p {
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.54);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+.ai-next-move {
+    margin-top:
+        17px;
+
+    padding-top:
+        17px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
+    color:
+        rgba(255,255,255,.38);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+.ai-next-move strong {
+    color:
+        #ffffff;
+}
+
+
+/* =========================================================
+   RESULT FOOTER
+========================================================= */
+
+.ai-result-footer {
+    padding:
+        20px 36px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
+    color:
+        rgba(255,255,255,.20);
+
+    font-size: 9px;
+
+    text-align: center;
+
+    letter-spacing: .3px;
+}
+
+
+/* =========================================================
+   MOBILE RESULT
+========================================================= */
+
+@media (max-width:760px) {
+
+    .ai-result-header {
+        padding:
+            28px 20px;
+    }
+
+    .ai-result-header h2 {
+        font-size:
+            38px;
+    }
+
+    .ai-feature-card {
+        margin:
+            20px;
+
+        padding:
+            20px;
+    }
+
+    .ai-section-heading {
+        margin:
+            28px 20px 14px;
+    }
+
+    .ai-snapshot-grid,
+    .ai-build-grid,
+    .ai-reality-grid {
+        grid-template-columns:
+            1fr;
+
+        margin:
+            0 20px;
+    }
+
+    .ai-info-card {
+        min-height:
+            auto;
+    }
+
+    .ai-panel {
+        padding:
+            20px;
+    }
+
+    .ai-verdict {
+        margin:
+            20px;
+
+        padding:
+            20px;
+    }
+
+    .ai-result-footer {
+        padding:
+            18px 20px;
+    }
+
+}
