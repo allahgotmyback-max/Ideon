@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | IDEON</title>
+
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a href="Home.html" class="brand">
+            <img src="ideon-icon.png" alt="IDEON">
+            <span>IDEON</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="Home.html">Home</a>
+            <a href="pricing.html">Pricing</a>
+        </div>
+
+    </nav>
+
+
+    <!-- SIGNUP SECTION -->
+    <main class="signup-section">
+
+        <div class="signup-container">
+
+            <!-- LEFT SIDE -->
+            <div class="signup-info">
+
+                <div class="eyebrow">
+                    <span></span>
+                    JOIN IDEON
+                </div>
+
+                <h1>
+                    Turn your ideas<br>
+                    <span>into possibilities.</span>
+                </h1>
+
+                <p>
+                    Create your IDEON account and start exploring
+                    business ideas, market learning and virtual trading.
+                </p>
+
+                <div class="benefits">
+
+                    <div class="benefit">
+                        <div class="benefit-icon">✦</div>
+                        <div>
+                            <strong>Start for free</strong>
+                            <p>No payment or card required.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit">
+                        <div class="benefit-icon">↗</div>
+                        <div>
+                            <strong>Upgrade anytime</strong>
+                            <p>Choose a paid plan whenever you need more.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit">
+                        <div class="benefit-icon">◈</div>
+                        <div>
+                            <strong>One IDEON account</strong>
+                            <p>Access Idea Lab, Market Lab and Learn.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORM CARD -->
+            <div class="signup-card">
+
+                <div class="card-header">
+
+                    <div class="mobile-logo">
+                        <img src="ideon-icon.png" alt="IDEON">
+                    </div>
+
+                    <h2>Create your account</h2>
+
+                    <p>
+                        It's free to get started.
+                    </p>
+
+                </div>
+
+
+                <!-- PLAN -->
+                <div class="selected-plan">
+
+                    <div class="plan-left">
+
+                        <div class="plan-check">✓</div>
+
+                        <div>
+                            <span class="plan-label">YOUR STARTING PLAN</span>
+                            <strong id="planName">FREE</strong>
+                        </div>
+
+                    </div>
+
+                    <span class="plan-price" id="planPrice">
+                        ₹0
+                    </span>
+
+                </div>
+
+
+                <!-- FORM -->
+                <form id="signupForm">
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="togglePassword"
+                            >
+                                SHOW
+                            </button>
+
+                        </div>
+
+                        <div class="password-hint">
+                            At least 6 characters
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Re-enter your password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="toggleConfirmPassword"
+                            >
+                                SHOW
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="form-message"
+                        id="formMessage"
+                    ></div>
+
+
+                    <button
+                        type="submit"
+                        class="create-btn"
+                    >
+                        <span>Create Free Account</span>
+                        <span class="arrow">→</span>
+                    </button>
+
+                </form>
+
+
+                <div class="terms">
+
+                    By creating an account, you agree to use IDEON
+                    responsibly for educational and informational purposes.
+
+                </div>
+
+
+                <div class="login-note">
+
+                    Already have an account?
+
+                    <a href="#" id="loginLink">
+                        Sign in
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <span>© 2026 IDEON</span>
+
+        <span>Where Ideas Take Shape.</span>
+
+    </footer>
+
+
+    <script>
+
+        /* --------------------------------
+           PLAN SELECTION
+        -------------------------------- */
+
+        const params = new URLSearchParams(window.location.search);
+
+        const selectedPlan =
+            (params.get("plan") || "free").toLowerCase();
+
+
+        const plans = {
+
+            free: {
+                name: "FREE",
+                price: "₹0"
+            },
+
+            starter: {
+                name: "STARTER",
+                price: "₹199"
+            },
+
+            pro: {
+                name: "PRO",
+                price: "₹499"
+            },
+
+            premium: {
+                name: "PREMIUM",
+                price: "₹999"
+            }
+
+        };
+
+
+        const plan =
+            plans[selectedPlan] || plans.free;
+
+
+        document.getElementById("planName").textContent =
+            plan.name;
+
+        document.getElementById("planPrice").textContent =
+            plan.price;
+
+
+        /* --------------------------------
+           PASSWORD TOGGLE
+        -------------------------------- */
+
+        function setupPasswordToggle(buttonId, inputId) {
+
+            const button =
+                document.getElementById(buttonId);
+
+            const input =
+                document.getElementById(inputId);
+
+
+            button.addEventListener("click", () => {
+
+                if (input.type === "password") {
+
+                    input.type = "text";
+                    button.textContent = "HIDE";
+
+                } else {
+
+                    input.type = "password";
+                    button.textContent = "SHOW";
+
+                }
+
+            });
+
+        }
+
+
+        setupPasswordToggle(
+            "togglePassword",
+            "password"
+        );
+
+        setupPasswordToggle(
+            "toggleConfirmPassword",
+            "confirmPassword"
+        );
+
+
+        /* --------------------------------
+           SIGNUP
+        -------------------------------- */
+
+        const signupForm =
+            document.getElementById("signupForm");
+
+        const formMessage =
+            document.getElementById("formMessage");
+
+
+        signupForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById("fullName").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+
+            /* PASSWORD CHECK */
+
+            if (password.length < 6) {
+
+                showMessage(
+                    "Password must contain at least 6 characters.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* MATCH CHECK */
+
+            if (password !== confirmPassword) {
+
+                showMessage(
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* DEMO ACCOUNT */
+
+            const user = {
+
+                name: name,
+
+                email: email,
+
+                plan: "free",
+
+                createdAt: new Date().toISOString()
+
+            };
+
+
+            localStorage.setItem(
+                "ideonUser",
+                JSON.stringify(user)
+            );
+
+
+            /*
+                IMPORTANT:
+                Password is NOT stored in localStorage.
+                This page currently acts as a front-end
+                demo account system.
+            */
+
+
+            showMessage(
+                "Account created successfully! Welcome to IDEON.",
+                "success"
+            );
+
+
+            const button =
+                document.querySelector(".create-btn");
+
+            button.innerHTML =
+                "<span>Account Created ✓</span>";
+
+
+            button.disabled = true;
+
+
+            setTimeout(() => {
+
+                window.location.href = "Home.html";
+
+            }, 1200);
+
+        });
+
+
+        function showMessage(message, type) {
+
+            formMessage.textContent = message;
+
+            formMessage.className =
+                "form-message " + type;
+
+        }
+
+
+        /* --------------------------------
+           SIGN IN
+        -------------------------------- */
+
+        document
+            .getElementById("loginLink")
+            .addEventListener("click", function(event) {
+
+                event.preventDefault();
+
+                showMessage(
+                    "Sign in will be available when full authentication is connected.",
+                    "info"
+                );
+
+            });
+
+    </script>
+
+</body>
+</html>
