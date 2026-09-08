@@ -181,3 +181,120 @@
 
     object-fit: contain;
 }
+/* =========================================================
+   CHAT MESSAGE ALIGNMENT
+   ========================================================= */
+
+/* AI → LEFT */
+.ideon-message.ai {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+/* USER → RIGHT */
+.ideon-message.user {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   IDEON AI LOGO
+   ========================================================= */
+
+.ideon-message.ai .message-avatar {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 2px;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.ideon-message.ai .chat-avatar {
+    width: 32px;
+    height: 32px;
+
+    object-fit: contain;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+
+/* =========================================================
+   USER "YOU" BADGE
+   ========================================================= */
+
+.ideon-message.user .message-avatar {
+    width: auto;
+    min-width: auto;
+    height: 26px;
+
+    padding: 0 7px;
+
+    margin-top: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(128, 72, 255, 0.16);
+
+    color: #a879ff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   MESSAGE WIDTH
+   ========================================================= */
+
+.ideon-message .message-bubble {
+    max-width: 76%;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .ideon-message.ai,
+    .ideon-message.user {
+        gap: 8px;
+    }
+
+    .ideon-message.ai .message-avatar,
+    .ideon-message.ai .chat-avatar {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+    }
+
+    .ideon-message .message-bubble {
+        max-width: 82%;
+    }
+}
