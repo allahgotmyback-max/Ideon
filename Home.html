@@ -1,6 +1,8 @@
-<!-- IDEON Production Launch --><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -8,96 +10,56 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>IDEON — Where Ideas Take Shape</title>
+    <title>
+        IDEON — Where Ideas Take Shape
+    </title>
 
     <link
         rel="icon"
-        type="image/png"
         href="favicon.png"
     >
-<link rel="stylesheet" href="style.css?v=2">
-<style>
-/* =========================================
-   IDEON MOBILE NAVBAR — FINAL FIX
-   ========================================= */
 
-@media (max-width: 700px) {
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-    header.navbar {
-        height: 64px !important;
-        padding: 0 18px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        gap: 12px !important;
-        overflow: hidden !important;
-    }
-
-    header.navbar .logo {
-        flex-shrink: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    header.navbar .logo-icon {
-        width: 30px !important;
-        height: 34px !important;
-    }
-
-    header.navbar .logo-text {
-        font-size: 21px !important;
-    }
-
-    /* Hide ALL desktop navigation */
-    header.navbar .nav-links,
-    header.navbar nav {
-        display: none !important;
-    }
-
-    /* Keep Get Started */
-    header.navbar .nav-button,
-    header.navbar .nav-btn {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-
-        margin-left: auto !important;
-        flex-shrink: 0 !important;
-
-        height: 36px !important;
-        padding: 0 13px !important;
-
-        font-size: 10px !important;
-        white-space: nowrap !important;
-    }
-}
-</style>
 </head>
+
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
 
-    <header class="navbar">
+<!-- =====================================================
+     NAVBAR
+     ===================================================== -->
 
-        <a href="#" class="logo">
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a
+            href="Home.html"
+            class="logo"
+        >
 
             <img
                 src="ideon-icon.png"
-                class="logo-icon"
-                alt=""
+                alt="IDEON"
             >
 
-            <span class="logo-text">
-                IDE<span>O</span>N
+            <span>
+                IDE<span class="logo-purple">O</span>N
             </span>
 
         </a>
 
 
-        <nav class="nav-links">
+        <div class="nav-links">
 
-            <a href="#">Home</a>
+            <a href="#home">
+                Home
+            </a>
 
             <a href="#how-it-works">
                 How It Works
@@ -108,508 +70,785 @@
             </a>
 
             <a href="market.html">
-    Market Lab
-</a>
-            <a href="Trade.html">Trade</a>
+                Market Lab
+            </a>
+
+            <a href="Trade.html">
+                Trade
+            </a>
 
             <a href="#about">
                 About
             </a>
 
-        </nav>
+        </div>
 
 
         <a
             href="#idea-lab"
-            class="nav-button"
+            class="nav-cta"
         >
             Get Started →
         </a>
 
-    </header>
+    </div>
+
+</nav>
 
 
-    <!-- ================= HERO ================= -->
 
-    <main>
+<!-- =====================================================
+     HERO
+     ===================================================== -->
 
-        <section class="hero">
+<section
+    class="hero"
+    id="home"
+>
 
-            <!-- VIDEO BACKGROUND -->
+    <div class="hero-content">
 
-            <video
-                class="hero-video"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="auto"
-            >
+        <div class="hero-eyebrow">
 
-                <source
-                    src="particles.mp4"
-                    type="video/mp4"
-                >
+            <span></span>
 
-            </video>
+            IDEON
 
-
-            <!-- DARK OVERLAY -->
-
-            <div class="hero-overlay"></div>
-
-
-            <!-- HERO CONTENT -->
-
-            <div class="hero-content">
-
-                <div class="hero-badge">
-                    ✦ FROM IMAGINATION TO IMPLEMENTATION
-                </div>
-
-
-                <h1>
-
-                    <span>Your idea.</span>
-
-                    <span>
-                        Made
-                        <strong>practical.</strong>
-                    </span>
-
-                </h1>
-
-
-                <p class="hero-description">
-
-                    Everyone has an idea. IDEON helps you
-                    understand how that idea could actually work
-
-                    <br>
-
-                    — turning a raw thought into a practical concept.
-
-                </p>
-
-
-                <div class="hero-actions">
-
-                    <a
-                        href="#idea-lab"
-                        class="primary-button"
-                    >
-                        Turn My Idea Into Reality
-                        <span>→</span>
-                    </a>
-
-
-                    <a
-                        href="#how-it-works"
-                        class="secondary-button"
-                    >
-                        How does it work?
-                    </a>
-
-                </div>
-
-
-                <div class="hero-note">
-                    No technical knowledge required.
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= IDEA LAB ================= -->
-
-        <section
-            class="idea-lab"
-            id="idea-lab"
-        >
-
-            <div class="section-heading">
-
-                <div class="step-label">
-                    STEP 01
-                </div>
-
-                <h2>
-                    Start with your
-                    <span>idea.</span>
-                </h2>
-
-                <p>
-                    Don't worry about whether your idea sounds crazy.
-                    Just tell IDEON what you're thinking.
-                </p>
-
-            </div>
-
-
-            <!-- IDEA INPUT -->
-
-            <!-- ================= IDEA INPUT ================= -->
-
-<div class="idea-card">
-
-    <!-- CARD TOP -->
-
-    <div class="idea-card-top">
-
-        <div class="idea-card-label">
-            <span class="idea-pulse"></span>
-            IDEON AI
         </div>
 
-        <div
-            class="char-count"
-            id="charCount"
-        >
-            0/500
+
+        <h1>
+
+            Where Ideas
+
+            <span>
+                Take Shape.
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Turn your raw ideas into practical,
+            understandable and actionable concepts.
+
+            Then learn how markets work and practise
+            trading without risking real money.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#idea-lab"
+                class="primary-button"
+            >
+                Explore Your Idea →
+            </a>
+
+
+            <a
+                href="market.html"
+                class="secondary-button"
+            >
+                Explore Market Lab
+            </a>
+
         </div>
 
     </div>
 
 
-    <!-- HEADING -->
+    <div class="hero-visual">
 
-    <div class="idea-input-heading">
+        <div class="hero-glow"></div>
 
-        <h3>
-            What are you thinking?
-        </h3>
+        <div class="hero-card">
+
+            <div class="hero-card-top">
+
+                <span>
+                    IDEON AI
+                </span>
+
+                <span>
+                    ● READY
+                </span>
+
+            </div>
+
+
+            <div class="hero-card-content">
+
+                <div class="hero-card-line"></div>
+
+                <div class="hero-card-line short"></div>
+
+                <div class="hero-card-line"></div>
+
+                <div class="hero-card-line medium"></div>
+
+            </div>
+
+
+            <div class="hero-card-footer">
+
+                <span>
+                    IDEA
+                </span>
+
+                <strong>
+                    → PRACTICAL
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW IT WORKS
+     ===================================================== -->
+
+<section
+    class="how-it-works"
+    id="how-it-works"
+>
+
+    <div class="section-heading">
+
+        <div class="section-eyebrow">
+            HOW IT WORKS
+        </div>
+
+
+        <h2>
+            From thought to
+            <span>
+                possibility.
+            </span>
+        </h2>
+
 
         <p>
-            Don't overthink it. Just describe your idea.
+            IDEON helps you understand whether an
+            idea can actually work.
         </p>
 
     </div>
 
 
-    <!-- TEXT AREA -->
+    <div class="steps-grid">
 
-    <div class="idea-input-wrapper">
 
-        <div class="idea-input-icon">
-            ✦
+        <div class="step-card">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h3>
+                Describe
+            </h3>
+
+            <p>
+                Start with your idea. It can be a
+                product, service, app, business,
+                brand or anything you imagine.
+            </p>
+
         </div>
 
-        <textarea
-            id="ideaInput"
-            maxlength="500"
-            placeholder="Describe your idea..."
-        ></textarea>
 
-        <div class="idea-input-footer">
+        <div class="step-card">
 
+            <div class="step-number">
+                02
+            </div>
+
+            <h3>
+                Analyse
+            </h3>
+
+            <p>
+                IDEON AI breaks your idea down into
+                customers, resources, revenue,
+                costs and practical requirements.
+            </p>
+
+        </div>
+
+
+        <div class="step-card">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <h3>
+                Take Shape
+            </h3>
+
+            <p>
+                Get a practical direction for turning
+                your idea into something you can
+                actually build.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     IDEA LAB
+     ===================================================== -->
+
+<section
+    class="idea-lab"
+    id="idea-lab"
+>
+
+    <div class="section-heading">
+
+        <div class="section-eyebrow">
+            IDEA LAB
+        </div>
+
+
+        <h2>
+            Let's make your idea
             <span>
-                IDEON AI will turn your thought into a practical concept.
+                practical.
             </span>
+        </h2>
 
-            <span
-                class="idea-counter"
-                id="ideaCounter"
-            >
-                0 / 500
-            </span>
 
-        </div>
+        <p>
+            You bring the idea.
+            IDEON helps you understand it.
+        </p>
 
     </div>
 
 
-    <!-- EXAMPLES -->
 
-    <div class="idea-examples">
+    <!-- =================================================
+         IDEA INPUT CARD
+         ================================================= -->
 
-        <div class="examples-title">
-            <span>Try an example</span>
+    <div class="idea-card">
+
+
+        <!-- TOP -->
+
+        <div class="idea-card-top">
+
+            <div class="idea-card-label">
+
+                <span class="idea-pulse"></span>
+
+                IDEON AI
+
+            </div>
+
+
+            <!-- KEEPING ORIGINAL ID FOR EXISTING JS -->
+
+            <div
+                class="char-count"
+                id="charCount"
+            >
+                0/500
+            </div>
+
         </div>
 
 
-        <div class="example-chips">
 
-            <button
-                type="button"
-                class="example-chip"
-                onclick="document.getElementById('ideaInput').value='A smart dustbin that separates wet and dry waste'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
-            >
-                <span>♻</span>
-                Smart dustbin
-            </button>
+        <!-- HEADING -->
+
+        <div class="idea-input-heading">
+
+            <h3>
+                What are you thinking?
+            </h3>
 
 
-            <button
-                type="button"
-                class="example-chip"
-                onclick="document.getElementById('ideaInput').value='A water-saving device for home showers'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
-            >
-                <span>💧</span>
-                Water-saving device
-            </button>
-
-
-            <button
-                type="button"
-                class="example-chip"
-                onclick="document.getElementById('ideaInput').value='A backpack that charges your phone while walking'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
-            >
-                <span>⚡</span>
-                Charging backpack
-            </button>
+            <p>
+                Don't overthink it.
+                Just describe your idea.
+            </p>
 
         </div>
 
-    </div>
 
 
-    <!-- ACTION -->
+        <!-- TEXT AREA -->
 
-    <button
-        type="button"
-        id="analyzeBtn"
-        class="analyze-button"
-        onclick="makePractical()"
-    >
-
-        <span class="analyze-button-icon">
-            ✦
-        </span>
-
-        <span>
-            MAKE IT PRACTICAL
-        </span>
-
-        <span class="analyze-arrow">
-            →
-        </span>
-
-    </button>
+        <div class="idea-input-wrapper">
 
 
-    <!-- BOTTOM NOTE -->
-
-    <div class="idea-ai-note">
-
-        <span>✦</span>
-
-        <span>
-            From imagination to implementation.
-        </span>
-
-    </div>
-
-</div>
-
-                    <div
-                        class="char-count"
-                        id="charCount"
-                    >
-                        0/500
-                    </div>
-
-                </div>
+            <div class="idea-input-icon">
+                ✦
+            </div>
 
 
-                <textarea
-                    id="ideaInput"
-                    maxlength="500"
-                    placeholder="Describe your idea..."
-                ></textarea>
+            <textarea
+                id="ideaInput"
+                maxlength="500"
+                placeholder="Describe your idea..."
+            ></textarea>
 
 
-                <div class="examples">
+            <div class="idea-input-footer">
 
-                    <span>Try:</span>
+                <span>
+                    IDEON AI will turn your thought
+                    into a practical concept.
+                </span>
 
-                    <button
-                        type="button"
-                        onclick="document.getElementById('ideaInput').value='A smart dustbin that separates wet and dry waste'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
-                    >
-                        Smart dustbin
-                    </button>
 
-                    <button
-                        type="button"
-                        onclick="document.getElementById('ideaInput').value='A water-saving device for home showers'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
-                    >
-                        Water-saving device
-                    </button>
+                <span
+                    class="idea-counter"
+                    id="ideaCounter"
+                >
+                    0 / 500
+                </span>
 
-                    <button
-                        type="button"
-                        onclick="document.getElementById('ideaInput').value='A backpack that charges your phone while walking'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
-                    >
-                        Charging backpack
-                    </button>
+            </div>
 
-                </div>
+        </div>
+
+
+
+        <!-- EXAMPLES -->
+
+        <div class="idea-examples">
+
+            <div class="examples-title">
+                Try an example
+            </div>
+
+
+            <div class="example-chips">
 
 
                 <button
                     type="button"
-                    id="analyzeBtn"     
-                    class="analyze-button"
-                    onclick="makePractical()"
+                    class="example-chip"
+                    onclick="
+                        document.getElementById('ideaInput').value='A smart dustbin that separates wet and dry waste';
+                        document.getElementById('ideaInput').dispatchEvent(new Event('input'));
+                    "
                 >
-                    MAKE IT PRACTICAL
-                    <span>✦</span>
+
+                    <span>
+                        ♻
+                    </span>
+
+                    Smart dustbin
+
                 </button>
 
-            </div>
 
 
-            <!-- AI RESULT -->
+                <button
+                    type="button"
+                    class="example-chip"
+                    onclick="
+                        document.getElementById('ideaInput').value='A water-saving device for home showers';
+                        document.getElementById('ideaInput').dispatchEvent(new Event('input'));
+                    "
+                >
 
-            <section
-                id="result"
-                class="result-section"
-            ></section>
+                    <span>
+                        💧
+                    </span>
 
-        </section>
+                    Water-saving device
 
-
-        <!-- ================= HOW IT WORKS ================= -->
-
-        <section
-            class="how-it-works"
-            id="how-it-works"
-        >
-
-            <div class="section-heading centered">
-
-                <div class="step-label">
-                    HOW IT WORKS
-                </div>
-
-                <h2>
-                    From thought to
-                    <span>reality.</span>
-                </h2>
-
-                <p>
-                    IDEON takes your raw idea and turns it
-                    into something you can actually understand.
-                </p>
-
-            </div>
+                </button>
 
 
-            <div class="steps-grid">
 
-                <div class="step-card">
+                <button
+                    type="button"
+                    class="example-chip"
+                    onclick="
+                        document.getElementById('ideaInput').value='A backpack that charges your phone while walking';
+                        document.getElementById('ideaInput').dispatchEvent(new Event('input'));
+                    "
+                >
 
-                    <div class="step-number">
-                        01
-                    </div>
+                    <span>
+                        ⚡
+                    </span>
 
-                    <h3>
-                        Share your idea
-                    </h3>
+                    Charging backpack
 
-                    <p>
-                        Tell IDEON what you're thinking
-                        in your own words.
-                    </p>
+                </button>
 
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        02
-                    </div>
-
-                    <h3>
-                        AI analyzes it
-                    </h3>
-
-                    <p>
-                        IDEON identifies the business type,
-                        customers, costs and opportunities.
-                    </p>
-
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        03
-                    </div>
-
-                    <h3>
-                        Make it practical
-                    </h3>
-
-                    <p>
-                        Get a realistic concept,
-                        launch plan and risk analysis.
-                    </p>
-
-                </div>
 
             </div>
 
-        </section>
-
-
-
-        <!-- ================= ABOUT ================= -->
-
-        <section
-            class="about"
-            id="about"
-        >
-
-            <div class="about-inner">
-
-                <div class="step-label">
-                    ABOUT IDEON
-                </div>
-
-                <h2>
-                    Where
-                    <span>ideas</span>
-                    take shape.
-                </h2>
-
-                <p>
-                    IDEON is designed to help students,
-                    creators and aspiring entrepreneurs
-                    understand whether an idea can become
-                    a practical business.
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer class="footer">
-
-        <div>
-            © 2026 IDEON
         </div>
 
-        <div>
+
+
+        <!-- ANALYZE BUTTON -->
+
+        <button
+            type="button"
+            id="analyzeBtn"
+            class="analyze-button"
+            onclick="makePractical()"
+        >
+
+            <span class="analyze-button-icon">
+                ✦
+            </span>
+
+
+            <span>
+                MAKE IT PRACTICAL
+            </span>
+
+
+            <span class="analyze-arrow">
+                →
+            </span>
+
+        </button>
+
+
+
+        <!-- BOTTOM NOTE -->
+
+        <div class="idea-ai-note">
+
+            <span>
+                ✦
+            </span>
+
+            <span>
+                From imagination to implementation.
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ABOUT
+     ===================================================== -->
+
+<section
+    class="about"
+    id="about"
+>
+
+    <div class="section-heading">
+
+        <div class="section-eyebrow">
+            ABOUT IDEON
+        </div>
+
+
+        <h2>
+            Ideas deserve
+            <span>
+                direction.
+            </span>
+        </h2>
+
+
+        <p>
+            IDEON is built to help students,
+            creators and future entrepreneurs
+            understand what it takes to turn
+            an idea into something practical.
+        </p>
+
+    </div>
+
+
+    <div class="about-grid">
+
+
+        <div class="about-card">
+
+            <div class="about-icon">
+                ✦
+            </div>
+
+            <h3>
+                Think
+            </h3>
+
+            <p>
+                Every useful business starts
+                with a thought.
+            </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+            <div class="about-icon">
+                ◇
+            </div>
+
+            <h3>
+                Understand
+            </h3>
+
+            <p>
+                Learn about customers, costs,
+                resources and opportunities.
+            </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+            <div class="about-icon">
+                →
+            </div>
+
+            <h3>
+                Build
+            </h3>
+
+            <p>
+                Move from an idea toward a
+                practical direction.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL CTA
+     ===================================================== -->
+
+<section class="final-cta">
+
+    <div class="final-cta-content">
+
+        <div class="section-eyebrow">
+            YOUR NEXT IDEA
+        </div>
+
+
+        <h2>
+            Stop wondering.
+            <span>
+                Start building.
+            </span>
+        </h2>
+
+
+        <p>
+            Give your idea a direction with IDEON.
+        </p>
+
+
+        <a
+            href="#idea-lab"
+            class="primary-button"
+        >
+            Make It Practical →
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <a
+                href="Home.html"
+                class="logo"
+            >
+
+                <img
+                    src="ideon-icon.png"
+                    alt="IDEON"
+                >
+
+                <span>
+                    IDE<span class="logo-purple">O</span>N
+                </span>
+
+            </a>
+
+
+            <p>
+                Where Ideas Take Shape.
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#how-it-works">
+                How It Works
+            </a>
+
+            <a href="#idea-lab">
+                Idea Lab
+            </a>
+
+            <a href="market.html">
+                Market Lab
+            </a>
+
+            <a href="Trade.html">
+                Learn
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 IDEON. All rights reserved.
+        </span>
+
+
+        <span>
             Where Ideas Take Shape.
-        </div>
+        </span>
 
-    </footer>
+    </div>
+
+</footer>
 
 
-    <!-- YOUR WORKING AI SCRIPT -->
 
-    <script src="script.js"></script>
-    <script src="market.js"></script>
+<!-- =====================================================
+     IDEA COUNTER
+     ===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const input =
+            document.getElementById(
+                "ideaInput"
+            );
+
+
+        const counter =
+            document.getElementById(
+                "ideaCounter"
+            );
+
+
+        const oldCounter =
+            document.getElementById(
+                "charCount"
+            );
+
+
+        if (!input) return;
+
+
+        function updateCounter() {
+
+            const length =
+                input.value.length;
+
+
+            if (counter) {
+
+                counter.textContent =
+                    `${length} / 500`;
+
+            }
+
+
+            if (oldCounter) {
+
+                oldCounter.textContent =
+                    `${length}/500`;
+
+            }
+
+        }
+
+
+        input.addEventListener(
+            "input",
+            updateCounter
+        );
+
+
+        updateCounter();
+
+    }
+);
+
+</script>
+
+
+
+<!-- =====================================================
+     MAIN IDEON JAVASCRIPT
+     ===================================================== -->
+
+<script src="script.js"></script>
+
 
 </body>
+
 </html>
