@@ -2611,3 +2611,352 @@ body {
     }
 
 }
+/* =========================================================
+   IDEON PORTFOLIO — CLEAN TRADING TERMINAL STYLE
+========================================================= */
+
+.portfolio-card {
+    position: relative;
+
+    padding: 22px !important;
+
+    border: 1px solid rgba(255,255,255,.075) !important;
+
+    border-radius: 16px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.018)
+        ) !important;
+
+    overflow: hidden;
+}
+
+
+/* subtle top glow */
+
+.portfolio-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(139,92,246,.45),
+            transparent
+        );
+
+    opacity: .7;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.portfolio-header {
+    align-items: flex-start !important;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.055);
+}
+
+
+.portfolio-label {
+    color: #747b8d !important;
+
+    font-size: 8px !important;
+
+    letter-spacing: .17em !important;
+}
+
+
+.portfolio-total-value {
+    margin-top: 7px !important;
+
+    color: #ffffff;
+
+    font-size: 30px !important;
+
+    line-height: 1 !important;
+
+    letter-spacing: -.045em !important;
+}
+
+
+.portfolio-return {
+    padding-top: 3px;
+
+    color: #35d07f !important;
+
+    font-size: 10px !important;
+
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   STAT BOXES
+========================================================= */
+
+.portfolio-stats {
+    grid-template-columns:
+        repeat(3, minmax(0,1fr)) !important;
+
+    gap: 7px !important;
+
+    margin-top: 16px !important;
+}
+
+
+.portfolio-stat {
+    min-height: 52px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 10px !important;
+
+    border:
+        1px solid rgba(255,255,255,.055) !important;
+
+    border-radius: 9px !important;
+
+    background:
+        rgba(0,0,0,.13) !important;
+}
+
+
+.portfolio-stat span {
+    color: #6f7587 !important;
+
+    font-size: 7px !important;
+
+    font-weight: 600 !important;
+}
+
+
+.portfolio-stat strong {
+    margin-top: 5px !important;
+
+    color: #ffffff !important;
+
+    font-size: 10px !important;
+
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   HOLDINGS
+========================================================= */
+
+.portfolio-holdings {
+    margin-top: 20px !important;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid rgba(255,255,255,.055);
+}
+
+
+.portfolio-section-title {
+    margin-bottom: 11px !important;
+
+    color: #747b8d !important;
+
+    font-size: 8px !important;
+
+    font-weight: 800 !important;
+
+    letter-spacing: .16em !important;
+}
+
+
+/* =========================================================
+   HOLDING CARD
+========================================================= */
+
+.ideon-holdings {
+    margin-top: 0 !important;
+
+    gap: 7px !important;
+}
+
+
+.ideon-holding-row {
+    min-height: 64px !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: space-between !important;
+
+    padding: 12px 13px !important;
+
+    border:
+        1px solid rgba(139,92,246,.12) !important;
+
+    border-radius: 10px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,92,246,.055),
+            rgba(255,255,255,.018)
+        ) !important;
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.025);
+}
+
+
+/* left side */
+
+.ideon-holding-row > div:first-child {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 4px;
+}
+
+
+.ideon-holding-row > div:first-child strong {
+    color: #ffffff !important;
+
+    font-size: 12px !important;
+
+    font-weight: 800 !important;
+
+    line-height: 1.2 !important;
+}
+
+
+.ideon-holding-row > div:first-child small {
+    margin-top: 0 !important;
+
+    color: #777d8f !important;
+
+    font-size: 8px !important;
+}
+
+
+/* right side */
+
+.ideon-holding-row > div:last-child {
+    text-align: right !important;
+}
+
+
+.ideon-holding-row > div:last-child strong {
+    color: #ffffff !important;
+
+    font-size: 12px !important;
+
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   EMPTY SPACE CONTROL
+========================================================= */
+
+.portfolio-card {
+    align-self: start !important;
+}
+
+
+/* Don't artificially stretch the card */
+
+.market-main-grid {
+    align-items: start !important;
+}
+
+
+/* =========================================================
+   EMPTY PORTFOLIO
+========================================================= */
+
+.portfolio-empty {
+    min-height: 110px !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    padding: 18px !important;
+
+    border:
+        1px dashed rgba(255,255,255,.07) !important;
+
+    border-radius: 10px !important;
+
+    background:
+        rgba(255,255,255,.012) !important;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:1050px) {
+
+    .portfolio-card {
+        align-self: stretch !important;
+    }
+
+}
+
+
+@media (max-width:760px) {
+
+    .portfolio-card {
+        padding: 18px !important;
+    }
+
+    .portfolio-total-value {
+        font-size: 27px !important;
+    }
+
+    .portfolio-stats {
+        grid-template-columns:
+            repeat(3,1fr) !important;
+    }
+
+}
+
+
+@media (max-width:480px) {
+
+    .portfolio-stats {
+        grid-template-columns:
+            1fr !important;
+    }
+
+}
