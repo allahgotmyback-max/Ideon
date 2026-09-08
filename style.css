@@ -5552,3 +5552,509 @@ textarea {
     }
 
 }
+
+/* =========================================================
+   IDEON AI CHATBOT
+   ========================================================= */
+
+.ideon-ai-launcher {
+
+    position: fixed;
+
+    right: 26px;
+    bottom: 26px;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 13px 18px;
+
+    border: 1px solid rgba(139,92,246,.45);
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9b5cff
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: .3px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 35px rgba(124,58,237,.35);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.ideon-ai-launcher:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 45px rgba(124,58,237,.48);
+
+}
+
+.ai-spark {
+
+    font-size: 17px;
+
+}
+
+
+.ideon-chat {
+
+    position: fixed;
+
+    right: 26px;
+    bottom: 86px;
+
+    z-index: 10000;
+
+    width: 370px;
+    max-width: calc(100vw - 32px);
+
+    height: 560px;
+    max-height: calc(100vh - 110px);
+
+    display: none;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.10);
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #111017,
+            #0b0a0f
+        );
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.65),
+        0 0 50px rgba(124,58,237,.12);
+
+    backdrop-filter: blur(20px);
+
+}
+
+.ideon-chat.open {
+
+    display: flex;
+
+    animation:
+        ideonChatIn .22s ease;
+
+}
+
+
+@keyframes ideonChatIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px)
+            scale(.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* HEADER */
+
+.ideon-chat-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 17px 18px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+}
+
+.ideon-chat-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+}
+
+.ideon-ai-icon {
+
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    color: #c4a5ff;
+
+    background:
+        rgba(124,58,237,.14);
+
+    border:
+        1px solid rgba(124,58,237,.30);
+
+}
+
+.ideon-chat-title strong {
+
+    display: block;
+
+    font-size: 14px;
+
+}
+
+.ideon-chat-title small {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #777384;
+
+    font-size: 10px;
+
+}
+
+.ideon-chat-close {
+
+    width: 30px;
+    height: 30px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #85808e;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+}
+
+.ideon-chat-close:hover {
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+}
+
+
+/* MESSAGES */
+
+.ideon-chat-messages {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+}
+
+.ideon-message {
+
+    display: flex;
+
+    gap: 9px;
+
+    max-width: 92%;
+
+}
+
+.ideon-message.user {
+
+    margin-left: auto;
+
+    flex-direction: row-reverse;
+
+}
+
+.message-avatar {
+
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 8px;
+
+    background:
+        rgba(124,58,237,.14);
+
+    color: #b995ff;
+
+    font-size: 11px;
+
+}
+
+.message-bubble {
+
+    padding: 11px 13px;
+
+    border-radius: 13px;
+
+    background:
+        #17161d;
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    color: #c9c5d0;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+.ideon-message.user .message-bubble {
+
+    background:
+        linear-gradient(
+            135deg,
+            #6635d9,
+            #7c3aed
+        );
+
+    border-color:
+        rgba(255,255,255,.08);
+
+    color: white;
+
+}
+
+
+/* SUGGESTIONS */
+
+.ideon-suggestions {
+
+    display: flex;
+
+    gap: 7px;
+
+    padding:
+        0 15px 12px;
+
+    overflow-x: auto;
+
+}
+
+.ideon-suggestions button {
+
+    flex-shrink: 0;
+
+    padding: 7px 10px;
+
+    border:
+        1px solid rgba(139,92,246,.22);
+
+    border-radius: 999px;
+
+    background:
+        rgba(124,58,237,.07);
+
+    color: #a996c8;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+}
+
+.ideon-suggestions button:hover {
+
+    background:
+        rgba(124,58,237,.16);
+
+    color: white;
+
+}
+
+
+/* INPUT */
+
+.ideon-chat-input {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin: 0 13px;
+
+    padding: 8px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 13px;
+
+    background:
+        #131219;
+
+}
+
+.ideon-chat-input textarea {
+
+    flex: 1;
+
+    resize: none;
+
+    border: 0;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    padding: 7px;
+
+}
+
+.ideon-chat-input textarea::placeholder {
+
+    color: #676270;
+
+}
+
+.ideon-chat-input button {
+
+    width: 34px;
+    height: 34px;
+
+    align-self: flex-end;
+
+    border: 0;
+
+    border-radius: 9px;
+
+    background:
+        #8b5cf6;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+}
+
+.ideon-chat-input button:hover {
+
+    background:
+        #9b6cff;
+
+}
+
+
+/* FOOTER */
+
+.ideon-chat-footer {
+
+    padding:
+        9px 15px 12px;
+
+    text-align: center;
+
+    color: #55515e;
+
+    font-size: 9px;
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .ideon-ai-launcher {
+
+        right: 15px;
+        bottom: 15px;
+
+        padding: 12px 15px;
+
+    }
+
+    .ideon-chat {
+
+        right: 10px;
+        bottom: 72px;
+
+        width:
+            calc(100vw - 20px);
+
+        height:
+            calc(100vh - 95px);
+
+    }
+
+}
