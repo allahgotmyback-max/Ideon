@@ -184,43 +184,46 @@ function addMessage(text, type) {
 
 }
 
-    /* =====================================================
-       TYPING INDICATOR
-       ===================================================== */
+/* =====================================================
+   TYPING INDICATOR
+   ===================================================== */
 
-    function showTyping() {
+function showTyping() {
 
-        const wrapper =
-            document.createElement("div");
+    const wrapper =
+        document.createElement("div");
 
-        wrapper.className =
-            "ideon-message ai";
+    wrapper.className =
+        "ideon-message ai";
 
-        wrapper.id =
-            "ideonTyping";
-
-
-        wrapper.innerHTML = `
-
-            <div class="message-avatar">
-                ✦
-            </div>
-
-            <div class="message-bubble">
-                IDEON AI is thinking...
-            </div>
-
-        `;
+    wrapper.id =
+        "ideonTyping";
 
 
-        messagesBox.appendChild(wrapper);
+    wrapper.innerHTML = `
+
+        <div class="message-avatar">
+            <img
+                src="ideon-icon.png"
+                alt="IDEON"
+                class="chat-avatar"
+            >
+        </div>
+
+        <div class="message-bubble">
+            IDEON AI is thinking...
+        </div>
+
+    `;
 
 
-        messagesBox.scrollTop =
-            messagesBox.scrollHeight;
+    messagesBox.appendChild(wrapper);
 
-    }
 
+    messagesBox.scrollTop =
+        messagesBox.scrollHeight;
+
+}
 
     function hideTyping() {
 
