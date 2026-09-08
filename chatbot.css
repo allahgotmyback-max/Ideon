@@ -35,9 +35,9 @@
    ========================================================= */
 
 .message-avatar {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
 
     display: flex;
     align-items: center;
@@ -59,11 +59,9 @@
    ========================================================= */
 
 .message-avatar .chat-avatar {
-    width: 28px;
-    height: 28px;
-
-    min-width: 28px;
-
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
     display: block;
 
     object-fit: contain;
@@ -162,4 +160,24 @@
         max-width: 82%;
     }
 
+}
+.ideon-message.ai .message-avatar {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+
+    border-radius: 9px;
+
+    background: rgba(125, 70, 255, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ideon-message.ai .chat-avatar {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
 }
