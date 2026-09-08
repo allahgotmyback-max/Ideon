@@ -1,0 +1,83 @@
+/* =========================================================
+   IDEON AI CHATBOT
+   ========================================================= */
+
+.ideon-chatbot,
+.chatbot-container {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================================
+   CHAT MESSAGE LAYOUT
+   ========================================================= */
+
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+/* AI messages stay on the LEFT */
+.ai-message {
+    justify-content: flex-start;
+}
+
+/* User messages stay on the RIGHT */
+.user-message {
+    justify-content: flex-end;
+}
+
+/* =========================================================
+   IDEON LOGO / AI AVATAR
+   ========================================================= */
+
+.chat-avatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   MESSAGE BUBBLES
+   ========================================================= */
+
+.ai-message .message-bubble {
+    max-width: 78%;
+}
+
+.user-message .message-bubble {
+    max-width: 78%;
+}
+
+/* =========================================================
+   REMOVE OLD SPARKLE AVATAR LOOK
+   ========================================================= */
+
+.ai-message > .chat-icon,
+.ai-message > .ai-icon,
+.ai-message > .bot-icon {
+    display: none;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .chat-avatar {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+    }
+
+    .ai-message .message-bubble,
+    .user-message .message-bubble {
+        max-width: 82%;
+    }
+}
