@@ -32,14 +32,13 @@
 /* =========================================================
    IDEON LOGO / AI AVATAR
    ========================================================= */
-
 .chat-avatar {
     width: 28px;
     height: 28px;
     min-width: 28px;
     border-radius: 8px;
     object-fit: contain;
-    margin-top: 2px;
+    display: block;
 }
 
 /* =========================================================
