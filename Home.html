@@ -250,22 +250,158 @@
 
             <!-- IDEA INPUT -->
 
-            <div class="idea-card">
+            <!-- ================= IDEA INPUT ================= -->
 
-                <div class="input-header">
+<div class="idea-card">
 
-                    <div>
+    <!-- CARD TOP -->
 
-                        <h3>
-                            💭 What's your idea?
-                        </h3>
+    <div class="idea-card-top">
 
-                        <p>
-                            Describe it in your own words.
-                        </p>
+        <div class="idea-card-label">
+            <span class="idea-pulse"></span>
+            IDEON AI
+        </div>
 
-                    </div>
+        <div
+            class="char-count"
+            id="charCount"
+        >
+            0/500
+        </div>
 
+    </div>
+
+
+    <!-- HEADING -->
+
+    <div class="idea-input-heading">
+
+        <h3>
+            What are you thinking?
+        </h3>
+
+        <p>
+            Don't overthink it. Just describe your idea.
+        </p>
+
+    </div>
+
+
+    <!-- TEXT AREA -->
+
+    <div class="idea-input-wrapper">
+
+        <div class="idea-input-icon">
+            ✦
+        </div>
+
+        <textarea
+            id="ideaInput"
+            maxlength="500"
+            placeholder="Describe your idea..."
+        ></textarea>
+
+        <div class="idea-input-footer">
+
+            <span>
+                IDEON AI will turn your thought into a practical concept.
+            </span>
+
+            <span
+                class="idea-counter"
+                id="ideaCounter"
+            >
+                0 / 500
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXAMPLES -->
+
+    <div class="idea-examples">
+
+        <div class="examples-title">
+            <span>Try an example</span>
+        </div>
+
+
+        <div class="example-chips">
+
+            <button
+                type="button"
+                class="example-chip"
+                onclick="document.getElementById('ideaInput').value='A smart dustbin that separates wet and dry waste'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
+            >
+                <span>♻</span>
+                Smart dustbin
+            </button>
+
+
+            <button
+                type="button"
+                class="example-chip"
+                onclick="document.getElementById('ideaInput').value='A water-saving device for home showers'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
+            >
+                <span>💧</span>
+                Water-saving device
+            </button>
+
+
+            <button
+                type="button"
+                class="example-chip"
+                onclick="document.getElementById('ideaInput').value='A backpack that charges your phone while walking'; document.getElementById('ideaInput').dispatchEvent(new Event('input'))"
+            >
+                <span>⚡</span>
+                Charging backpack
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTION -->
+
+    <button
+        type="button"
+        id="analyzeBtn"
+        class="analyze-button"
+        onclick="makePractical()"
+    >
+
+        <span class="analyze-button-icon">
+            ✦
+        </span>
+
+        <span>
+            MAKE IT PRACTICAL
+        </span>
+
+        <span class="analyze-arrow">
+            →
+        </span>
+
+    </button>
+
+
+    <!-- BOTTOM NOTE -->
+
+    <div class="idea-ai-note">
+
+        <span>✦</span>
+
+        <span>
+            From imagination to implementation.
+        </span>
+
+    </div>
+
+</div>
 
                     <div
                         class="char-count"
