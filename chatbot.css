@@ -2,66 +2,129 @@
    IDEON AI CHATBOT
    ========================================================= */
 
-.ideon-chatbot,
-.chatbot-container {
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* MESSAGE ROW */
 
-/* =========================================================
-   CHAT MESSAGE LAYOUT
-   ========================================================= */
-
-.chat-message {
+.ideon-message {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
+    gap: 9px;
     width: 100%;
     margin-bottom: 16px;
 }
 
-/* AI messages stay on the LEFT */
-.ai-message {
+/* AI stays LEFT */
+
+.ideon-message.ai {
     justify-content: flex-start;
 }
 
-/* User messages stay on the RIGHT */
-.user-message {
+/* USER stays RIGHT */
+
+.ideon-message.user {
     justify-content: flex-end;
 }
 
+
 /* =========================================================
-   IDEON LOGO / AI AVATAR
+   AVATAR CONTAINER
    ========================================================= */
-.chat-avatar {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    border-radius: 8px;
-    object-fit: contain;
+
+.message-avatar {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 2px;
+
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+
+/* =========================================================
+   IDEON LOGO
+   ========================================================= */
+
+.message-avatar .chat-avatar {
+    width: 25px;
+    height: 25px;
+
     display: block;
+
+    object-fit: contain;
+
+    border-radius: 0;
+
+    background: transparent;
 }
+
 
 /* =========================================================
-   MESSAGE BUBBLES
+   USER "YOU" BADGE
    ========================================================= */
 
-.ai-message .message-bubble {
-    max-width: 78%;
+.ideon-message.user .message-avatar {
+    width: auto;
+    min-width: auto;
+    height: 25px;
+
+    padding: 0 6px;
+
+    border-radius: 7px;
+
+    background: rgba(128, 72, 255, 0.14);
+
+    color: #a879ff;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
 }
 
-.user-message .message-bubble {
-    max-width: 78%;
-}
 
 /* =========================================================
-   REMOVE OLD SPARKLE AVATAR LOOK
+   MESSAGE BUBBLE
    ========================================================= */
 
-.ai-message > .chat-icon,
-.ai-message > .ai-icon,
-.ai-message > .bot-icon {
-    display: none;
+.ideon-message .message-bubble {
+    max-width: 78%;
+
+    box-sizing: border-box;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
+
+
+/* AI bubble */
+
+.ideon-message.ai .message-bubble {
+    margin-left: 0;
+}
+
+
+/* USER bubble */
+
+.ideon-message.user .message-bubble {
+    margin-right: 0;
+}
+
+
+/* =========================================================
+   TYPING INDICATOR
+   ========================================================= */
+
+#ideonTyping .message-avatar {
+    background: transparent;
+    border: none;
+}
+
 
 /* =========================================================
    MOBILE
@@ -69,14 +132,15 @@
 
 @media (max-width: 600px) {
 
-    .chat-avatar {
-        width: 26px;
-        height: 26px;
-        min-width: 26px;
-    }
-
-    .ai-message .message-bubble,
-    .user-message .message-bubble {
+    .ideon-message .message-bubble {
         max-width: 82%;
     }
+
+    .message-avatar,
+    .message-avatar .chat-avatar {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+    }
+
 }
