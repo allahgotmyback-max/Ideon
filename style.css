@@ -4877,3 +4877,38 @@ textarea {
     }
 
 }
+/* =========================================================
+   IDEON IDEA LAB — SECOND CHARACTER COUNTER
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const ideaInput =
+        document.getElementById("ideaInput");
+
+    const ideaCounter =
+        document.getElementById("ideaCounter");
+
+    if (!ideaInput || !ideaCounter) return;
+
+
+    function updateIdeaCounter() {
+
+        const length =
+            ideaInput.value.length;
+
+        ideaCounter.textContent =
+            `${length} / 500`;
+
+    }
+
+
+    ideaInput.addEventListener(
+        "input",
+        updateIdeaCounter
+    );
+
+
+    updateIdeaCounter();
+
+});
