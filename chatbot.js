@@ -99,51 +99,90 @@
        ADD MESSAGE TO SCREEN
        ===================================================== */
 
-    function addMessage(text, type) {
+   /* =====================================================
+   ADD MESSAGE TO SCREEN
+   ===================================================== */
 
-        const wrapper =
-            document.createElement("div");
+function addMessage(text, type) {
 
-        wrapper.className =
-            `ideon-message ${type}`;
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        `ideon-message ${type}`;
 
 
-        const avatar =
-            document.createElement("div");
+    const avatar =
+        document.createElement("div");
 
-        avatar.className =
-            "message-avatar";
+    avatar.className =
+        "message-avatar";
+
+
+    if (type === "ai") {
+
+        const logo =
+            document.createElement("img");
+
+        logo.src =
+            "ideon-icon.png";
+
+        logo.alt =
+            "IDEON";
+
+        logo.className =
+            "chat-avatar";
+
+        avatar.appendChild(logo);
+
+    } else {
 
         avatar.textContent =
-            type === "ai"
-                ? "✦"
-                : "YOU";
-
-
-        const bubble =
-            document.createElement("div");
-
-        bubble.className =
-            "message-bubble";
-
-
-        bubble.innerHTML =
-            escapeHTML(text)
-                .replace(/\n/g, "<br>");
-
-
-        wrapper.appendChild(avatar);
-
-        wrapper.appendChild(bubble);
-
-        messagesBox.appendChild(wrapper);
-
-
-        messagesBox.scrollTop =
-            messagesBox.scrollHeight;
+            "YOU";
 
     }
 
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "message-bubble";
+
+
+    bubble.innerHTML =
+        escapeHTML(text)
+            .replace(/\n/g, "<br>");
+
+
+    /*
+     AI:
+     [IDEON LOGO] [MESSAGE]
+
+     USER:
+     [MESSAGE] [YOU]
+    */
+
+    if (type === "ai") {
+
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(bubble);
+
+    } else {
+
+        wrapper.appendChild(bubble);
+        wrapper.appendChild(avatar);
+
+    }
+
+
+    messagesBox.appendChild(wrapper);
+
+
+    messagesBox.scrollTop =
+        messagesBox.scrollHeight;
+
+}
 
     /* =====================================================
        TYPING INDICATOR
