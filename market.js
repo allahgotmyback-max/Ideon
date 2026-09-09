@@ -3006,56 +3006,68 @@ if (empty) {
             );
 
 
-        /* ================= TRADE BUTTONS ================= */
+        /* ================= BUY / SELL ================= */
 
-        const buyButton =
-            document.getElementById("buyStockBtn");
+        const buySideButton =
+            document.getElementById(
+                "buySideBtn"
+            );
 
-        const sellButton =
-            document.getElementById("sellStockBtn");
+
+        const sellSideButton =
+            document.getElementById(
+                "sellSideBtn"
+            );
 
 
-        /* BUY button */
+        if (buySideButton) {
 
-        if (buyButton) {
+            buySideButton.addEventListener(
 
-            buyButton.onclick = () => {
+                "click",
 
-                /* Safety check */
+                () => {
 
-                if (tradeSide !== "BUY") {
-                    return;
+                    tradeSide = "BUY";
+
+                    buySideButton.classList.add(
+                        "active"
+                    );
+
+                    sellSideButton?.classList.remove(
+                        "active"
+                    );
+
                 }
 
-                executeTrade("BUY");
-
-            };
+            );
 
         }
 
 
-        /* SELL button */
+        if (sellSideButton) {
 
-        if (sellButton) {
+            sellSideButton.addEventListener(
 
-            sellButton.onclick = () => {
+                "click",
 
-                /* Safety check */
+                () => {
 
-                if (tradeSide !== "SELL") {
-                    return;
+                    tradeSide = "SELL";
+
+                    sellSideButton.classList.add(
+                        "active"
+                    );
+
+                    buySideButton?.classList.remove(
+                        "active"
+                    );
+
                 }
 
-                executeTrade("SELL");
-
-            };
+            );
 
         }
-
-
-        /* Make sure correct button is visible */
-
-        updateTradeSideUI();
 
 
         /* ================= ORDER TYPE ================= */
