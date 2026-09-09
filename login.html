@@ -151,6 +151,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+        /* =====================================================
+           IDEON SUPABASE AUTH — LOGIN
+        ===================================================== */
+
         const SUPABASE_URL =
             "https://ceedwhwnpthqdzhtkemy.supabase.co";
 
@@ -161,6 +165,7 @@
             SUPABASE_URL,
             SUPABASE_PUBLISHABLE_KEY
         );
+
 
         const loginForm =
             document.getElementById("loginForm");
@@ -174,172 +179,277 @@
         const passwordInput =
             document.getElementById("password");
 
+
+        /* =====================================================
+           PASSWORD TOGGLE
+        ===================================================== */
+
         document
             .getElementById("togglePassword")
             .addEventListener("click", function () {
 
                 if (passwordInput.type === "password") {
+
                     passwordInput.type = "text";
                     this.textContent = "HIDE";
+
                 } else {
+
                     passwordInput.type = "password";
                     this.textContent = "SHOW";
                 }
+
             });
 
-        loginForm.addEventListener("submit", async function (event) {
 
-            event.preventDefault();
+        /* =====================================================
+           LOGIN
+        ===================================================== */
 
-            const email =
-                document.getElementById("email").value.trim();
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
 
-            const password =
-                passwordInput.value;
+                event.preventDefault();
 
-            if (!email || !password) {
-                showMessage(
-                    "Please enter your email and password.",
-                    "error"
-                );
-                return;
-            }
-
-            loginBtn.disabled = true;
-            loginBtn.innerHTML =
-                "<span>Signing in...</span>";
-
-            try {
-
-                const { data, error } =
-                    await supabaseClient.auth.signInWithPassword({
-                        email: email,
-                        password: password
-                    });
-
-                if (error) {
-                    throw error;
-                }
-
-                const user = data.user;
-
-                const metadata =
-                    user.user_metadata || {};
-
-                localStorage.setItem(
-                    "ideonUser",
-                    JSON.stringify({
-                        id: user.id,
-                        name: metadata.full_name || "IDEON User",
-                        email: user.email,
-                        plan: metadata.plan || "free",
-                        selectedPlan: metadata.selected_plan || "free"
-                    })
-                );
-
-                showMessage(
-                    "Signed in successfully! Welcome back.",
-                    "success"
-                );
-
-                loginBtn.innerHTML =
-                    "<span>Signed In ✓</span>";
-
-                setTimeout(function () {
-                    window.location.href = "Home.html";
-                }, 700);
-
-            } catch (error) {
-
-                console.error("IDEON login error:", error);
-
-                let message =
-                    "Unable to sign in. Please check your details.";
-
-                const errorText =
-                    (error.message || "").toLowerCase();
-
-                if (
-                    errorText.includes("invalid login credentials")
-                ) {
-                    message =
-                        "Incorrect email or password.";
-                } else if (
-                    errorText.includes("email not confirmed")
-                ) {
-                    message =
-                        "Please confirm your email before signing in.";
-                } else if (
-                    errorText.includes("too many requests")
-                ) {
-                    message =
-                        "Too many attempts. Please wait a moment and try again.";
-                }
-
-                showMessage(message, "error");
-
-                loginBtn.disabled = false;
-                loginBtn.innerHTML =
-                    "<span>Sign In</span><span class='arrow'>→</span>";
-            }
-        });
-
-        document
-            .getElementById("resetPassword")
-            .addEventListener("click", async function () {
 
                 const email =
-                    document.getElementById("email").value.trim();
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim()
+                        .toLowerCase();
 
-                if (!email) {
+                const password =
+                    passwordInput.value;
+
+
+                if (!email || !password) {
+
                     showMessage(
-                        "Enter your email address first, then click Reset it.",
-                        "info"
+                        "Please enter your email and password.",
+                        "error"
                     );
+
                     return;
                 }
 
+
+                loginBtn.disabled = true;
+
+                loginBtn.innerHTML =
+                    "<span>Signing in...</span>";
+
+
                 try {
 
-                    const { error } =
-                        await supabaseClient.auth.resetPasswordForEmail(
-                            email,
-                            {
-                                redirectTo:
-                                    window.location.origin + "/login.html"
-                            }
-                        );
+                    const { data, error } =
+                        await supabaseClient.auth.signInWithPassword({
+
+                            email: email,
+
+                            password: password
+                        });
+
 
                     if (error) {
                         throw error;
                     }
 
+
+                    const user =
+                        data.user;
+
+                    const metadata =
+                        user.user_metadata || {};
+
+
+                    /* Save safe account information locally.
+                       NEVER save the password. */
+
+                    localStorage.setItem(
+                        "ideonUser",
+                        JSON.stringify({
+
+                            id: user.id,
+
+                            name:
+                                metadata.full_name ||
+                                "IDEON User",
+
+                            email:
+                                user.email,
+
+                            plan:
+                                metadata.plan ||
+                                "free",
+
+                            selectedPlan:
+                                metadata.selected_plan ||
+                                metadata.plan ||
+                                "free"
+                        })
+                    );
+
+
                     showMessage(
-                        "Password reset email sent. Check your inbox.",
+                        "Signed in successfully! Welcome back.",
                         "success"
                     );
+
+
+                    loginBtn.innerHTML =
+                        "<span>Signed In ✓</span>";
+
+
+                    setTimeout(function () {
+
+                        window.location.href =
+                            "Home.html";
+
+                    }, 700);
+
 
                 } catch (error) {
 
                     console.error(
-                        "IDEON password reset error:",
+                        "❌ IDEON login error:",
                         error
                     );
 
+
+                    let message =
+                        "Unable to sign in. Please check your details.";
+
+
+                    const errorText =
+                        (error.message || "").toLowerCase();
+
+
+                    if (
+                        errorText.includes("invalid login credentials")
+                    ) {
+
+                        message =
+                            "Incorrect email or password.";
+
+                    } else if (
+                        errorText.includes("email not confirmed")
+                    ) {
+
+                        message =
+                            "Please confirm your email before signing in.";
+
+                    } else if (
+                        errorText.includes("too many requests") ||
+                        errorText.includes("rate limit")
+                    ) {
+
+                        message =
+                            "Too many attempts. Please wait a moment and try again.";
+                    }
+
+
                     showMessage(
-                        "We couldn't send the reset email. Please try again.",
+                        message,
                         "error"
                     );
+
+
+                    loginBtn.disabled = false;
+
+                    loginBtn.innerHTML =
+                        "<span>Sign In</span><span class='arrow'>→</span>";
                 }
-            });
+
+            }
+        );
+
+
+        /* =====================================================
+           PASSWORD RESET
+        ===================================================== */
+
+        document
+            .getElementById("resetPassword")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const email =
+                        document
+                            .getElementById("email")
+                            .value
+                            .trim()
+                            .toLowerCase();
+
+
+                    if (!email) {
+
+                        showMessage(
+                            "Enter your email address first, then click Reset it.",
+                            "info"
+                        );
+
+                        return;
+                    }
+
+
+                    try {
+
+                        const { error } =
+                            await supabaseClient.auth.resetPasswordForEmail(
+                                email,
+                                {
+                                    redirectTo:
+                                        window.location.origin +
+                                        "/login.html"
+                                }
+                            );
+
+
+                        if (error) {
+                            throw error;
+                        }
+
+
+                        showMessage(
+                            "Password reset email sent. Check your inbox.",
+                            "success"
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "❌ IDEON password reset error:",
+                            error
+                        );
+
+
+                        showMessage(
+                            "We couldn't send the reset email. Please try again.",
+                            "error"
+                        );
+                    }
+
+                }
+            );
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
 
         function showMessage(message, type) {
 
-            formMessage.textContent = message;
+            formMessage.textContent =
+                message;
 
             formMessage.className =
                 "form-message " + type;
         }
+
     </script>
 
 </body>
