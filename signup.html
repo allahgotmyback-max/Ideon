@@ -367,7 +367,23 @@
 
     <!-- ================= JAVASCRIPT ================= -->
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
+        /* =====================================================
+           IDEON SUPABASE AUTH — SIGN UP
+        ===================================================== */
+
+        const SUPABASE_URL =
+            "https://ceedwhwnpthqdzhtkemy.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_bGc_PDepTuhmmvVG1WMPUQ_-MlnP8hO";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
 
 
         /* =====================================================
@@ -377,13 +393,10 @@
         const params =
             new URLSearchParams(window.location.search);
 
-
         const selectedPlan =
             (params.get("plan") || "free").toLowerCase();
 
-
         const plans = {
-
             free: {
                 name: "FREE",
                 price: "₹0"
@@ -403,48 +416,29 @@
                 name: "PREMIUM",
                 price: "₹999"
             }
-
         };
-
 
         const plan =
             plans[selectedPlan] || plans.free;
 
 
-
-        /* =====================================================
-           DISPLAY PLAN
-        ===================================================== */
-
         document.getElementById("planName").textContent =
             plan.name;
-
 
         document.getElementById("planPrice").textContent =
             plan.price;
 
 
-
-        /* =====================================================
-           CHANGE BUTTON TEXT
-        ===================================================== */
-
         const createButtonText =
             document.getElementById("createButtonText");
 
-
         if (selectedPlan === "free") {
-
             createButtonText.textContent =
                 "Create Free Account";
-
         } else {
-
             createButtonText.textContent =
                 "Create Account & Continue";
-
         }
-
 
 
         /* =====================================================
@@ -459,33 +453,23 @@
             const input =
                 document.getElementById(inputId);
 
-
             button.addEventListener("click", function () {
 
                 if (input.type === "password") {
-
                     input.type = "text";
-
                     button.textContent = "HIDE";
-
                 } else {
-
                     input.type = "password";
-
                     button.textContent = "SHOW";
-
                 }
 
             });
-
         }
-
 
         setupPasswordToggle(
             "togglePassword",
             "password"
         );
-
 
         setupPasswordToggle(
             "toggleConfirmPassword",
@@ -493,14 +477,12 @@
         );
 
 
-
         /* =====================================================
-           SIGNUP
+           SIGN UP
         ===================================================== */
 
         const signupForm =
             document.getElementById("signupForm");
-
 
         const formMessage =
             document.getElementById("formMessage");
@@ -508,7 +490,7 @@
 
         signupForm.addEventListener(
             "submit",
-            function (event) {
+            async function (event) {
 
                 event.preventDefault();
 
@@ -519,25 +501,22 @@
                         .value
                         .trim();
 
-
                 const email =
                     document
                         .getElementById("email")
                         .value
-                        .trim();
-
+                        .trim()
+                        .toLowerCase();
 
                 const password =
                     document
                         .getElementById("password")
                         .value;
 
-
                 const confirmPassword =
                     document
                         .getElementById("confirmPassword")
                         .value;
-
 
 
                 /* PASSWORD CHECK */
@@ -550,9 +529,7 @@
                     );
 
                     return;
-
                 }
-
 
 
                 /* PASSWORD MATCH */
@@ -565,113 +542,207 @@
                     );
 
                     return;
-
                 }
 
-
-
-                /* =================================================
-                   CREATE DEMO ACCOUNT
-                ================================================= */
-
-                const user = {
-
-                    name: name,
-
-                    email: email,
-
-                    plan: "free",
-
-                    createdAt:
-                        new Date().toISOString()
-
-                };
-
-
-                localStorage.setItem(
-                    "ideonUser",
-                    JSON.stringify(user)
-                );
-
-
-
-                /* =================================================
-                   SAVE SELECTED PLAN
-                ================================================= */
-
-                localStorage.setItem(
-                    "ideonPendingPlan",
-                    selectedPlan
-                );
-
-
-
-                /* =================================================
-                   SUCCESS MESSAGE
-                ================================================= */
-
-                if (selectedPlan === "free") {
-
-                    showMessage(
-                        "Account created successfully! Welcome to IDEON.",
-                        "success"
-                    );
-
-                } else {
-
-                    showMessage(
-                        "Account created successfully! Taking you to checkout...",
-                        "success"
-                    );
-
-                }
-
-
-
-                /* =================================================
-                   DISABLE BUTTON
-                ================================================= */
 
                 const button =
                     document.querySelector(".create-btn");
 
-
-                button.innerHTML =
-                    "<span>Account Created ✓</span>";
-
-
                 button.disabled = true;
+                button.innerHTML =
+                    "<span>Creating Account...</span>";
 
 
+                try {
 
-                /* =================================================
-                   REDIRECT
-                ================================================= */
+                    /* =================================================
+                       CREATE REAL SUPABASE AUTH ACCOUNT
 
-                setTimeout(function () {
+                       IMPORTANT:
+                       The password is sent securely to Supabase Auth.
+                       We do NOT store the password ourselves.
+                    ================================================= */
 
-                    if (selectedPlan === "free") {
+                    const { data, error } =
+                        await supabaseClient.auth.signUp({
 
-                        window.location.href =
-                            "Home.html";
+                            email: email,
+
+                            password: password,
+
+                            options: {
+                                data: {
+                                    full_name: name,
+                                    plan: selectedPlan,
+                                    selected_plan: selectedPlan
+                                },
+
+                                emailRedirectTo:
+                                    window.location.origin +
+                                    "/Home.html"
+                            }
+                        });
+
+
+                    if (error) {
+                        throw error;
+                    }
+
+
+                    console.log(
+                        "✅ IDEON account created in Supabase:",
+                        data.user
+                    );
+
+
+                    /* Save only non-sensitive UI information locally. */
+                    localStorage.setItem(
+                        "ideonPendingPlan",
+                        selectedPlan
+                    );
+
+
+                    /*
+                       If email confirmation is enabled in Supabase,
+                       data.session will be null until the email is
+                       confirmed.
+                    */
+
+                    if (data.session) {
+
+                        localStorage.setItem(
+                            "ideonUser",
+                            JSON.stringify({
+                                id: data.user.id,
+                                name: name,
+                                email: data.user.email,
+                                plan: selectedPlan,
+                                selectedPlan: selectedPlan
+                            })
+                        );
+
+
+                        showMessage(
+                            "Account created successfully! Welcome to IDEON.",
+                            "success"
+                        );
+
+
+                        button.innerHTML =
+                            "<span>Account Created ✓</span>";
+
+
+                        setTimeout(function () {
+
+                            if (selectedPlan === "free") {
+
+                                window.location.href =
+                                    "Home.html";
+
+                            } else {
+
+                                window.location.href =
+                                    "checkout.html?plan=" +
+                                    encodeURIComponent(selectedPlan);
+
+                            }
+
+                        }, 900);
 
                     } else {
 
-                        window.location.href =
-                            "checkout.html?plan=" +
-                            encodeURIComponent(selectedPlan);
+                        /*
+                           Supabase created the account but is waiting
+                           for email confirmation.
+                        */
 
+                        showMessage(
+                            "Account created! Please confirm your email, then sign in.",
+                            "success"
+                        );
+
+                        button.innerHTML =
+                            "<span>Account Created ✓</span>";
+
+                        button.disabled = false;
                     }
 
-                }, 1200);
+
+                } catch (error) {
+
+                    console.error(
+                        "❌ IDEON signup error:",
+                        error
+                    );
+
+
+                    let message =
+                        "Unable to create your account. Please try again.";
+
+
+                    const errorText =
+                        (error.message || "").toLowerCase();
+
+
+                    if (
+                        errorText.includes("already registered") ||
+                        errorText.includes("user already registered")
+                    ) {
+
+                        message =
+                            "An account with this email already exists. Please sign in.";
+
+                    } else if (
+                        errorText.includes("invalid email")
+                    ) {
+
+                        message =
+                            "Please enter a valid email address.";
+
+                    } else if (
+                        errorText.includes("password")
+                    ) {
+
+                        message =
+                            "Please use a password with at least 6 characters.";
+
+                    } else if (
+                        errorText.includes("rate limit") ||
+                        errorText.includes("too many requests")
+                    ) {
+
+                        message =
+                            "Too many signup attempts. Please wait a moment and try again.";
+                    }
+
+
+                    showMessage(
+                        message,
+                        "error"
+                    );
+
+
+                    button.disabled = false;
+
+                    if (selectedPlan === "free") {
+
+                        button.innerHTML =
+                            "<span>Create Free Account</span><span class='arrow'>→</span>";
+
+                    } else {
+
+                        button.innerHTML =
+                            "<span>Create Account & Continue</span><span class='arrow'>→</span>";
+                    }
+
+                }
 
             }
         );
 
 
-
         /* =====================================================
-           MESSAGE FUNCTION
+           MESSAGE
         ===================================================== */
 
         function showMessage(message, type) {
@@ -681,13 +752,9 @@
 
             formMessage.className =
                 "form-message " + type;
-
         }
-
 
     </script>
 
-
 </body>
-
 </html>
